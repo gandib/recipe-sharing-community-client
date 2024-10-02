@@ -1,0 +1,119 @@
+"use client";
+
+import FXForm from "@/src/components/form/FXForm";
+import FXInput from "@/src/components/form/FXInput";
+import { useUserRegistration } from "@/src/hooks/auth.hook";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@nextui-org/button";
+import Link from "next/link";
+import { FieldValues } from "react-hook-form";
+import registerValidationSchema from "../../schemas/register.schemas";
+import { ChangeEvent, useState } from "react";
+
+export default function Register() {
+  const [imageFiles, setImageFiles] = useState<File[] | []>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[] | []>([]);
+  const { mutate: handleUserRagistration, isPending } = useUserRegistration();
+
+  const onSubmit = (data: FieldValues) => {
+    const formData = new FormData();
+    const userData = {
+      ...data,
+      image: " ",
+      role: "user",
+    };
+    console.log("inside", userData);
+    formData.append("data", JSON.stringify(userData));
+    console.log(imageFiles[0]);
+    formData.append("file", imageFiles[0]);
+
+    console.log(formData.get("file"));
+
+    handleUserRagistration(formData);
+  };
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files![0];
+    console.log(file);
+    setImageFiles([file]);
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setImagePreviews([reader.result as string]);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
+  if (isPending) {
+    //handle loading state
+  }
+
+  return (
+    <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center ">
+      <h3 className="my-2 text-2xl font-bold">
+        Register with Recipe Sharing Community
+      </h3>
+      <div className="w-[35%]">
+        <FXForm
+          onSubmit={onSubmit}
+          resolver={zodResolver(registerValidationSchema)}
+        >
+          <div className="py-3">
+            <FXInput name="name" label="Name" size="sm" />
+          </div>
+          <div className="py-3">
+            <FXInput name="email" type="email" label="Email" size="sm" />
+          </div>
+          <div className="py-3">
+            <FXInput
+              name="password"
+              type="password"
+              label="Password"
+              size="sm"
+            />
+          </div>
+          <div className="min-w-fit flex-1 h-12">
+            <label
+              className="bg-default-50/10 border-2 p-3 w-full h-full rounded-md flex items-center font-light"
+              htmlFor="image"
+            >
+              Upload image
+            </label>
+            <input
+              className="hidden"
+              type="file"
+              id="image"
+              onChange={(e) => handleImageChange(e)}
+            />
+          </div>
+          {imagePreviews && (
+            <div className="flex flex-wrap gap-5 my-5">
+              <div className="relative size-48 rounded-xl border-2 border-dashed border-default-300 p-2">
+                <img
+                  src={imagePreviews[0] as string}
+                  //   alt="item"
+                  className="h-full w-full object-cover object-center rounded-md"
+                />
+              </div>
+            </div>
+          )}
+
+          <Button
+            className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
+            size="lg"
+            type="submit"
+          >
+            Registration
+          </Button>
+        </FXForm>
+        <div className="text-center">
+          Already have an account? <Link href={"/login"}>Login</Link>
+        </div>
+      </div>
+    </div>
+  );
+}
