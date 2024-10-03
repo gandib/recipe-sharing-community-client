@@ -1,16 +1,27 @@
 "use client";
-import { useUser } from "@/src/context/user.provider";
-import { useGetUser } from "@/src/hooks/user.hook";
 import { Button } from "@nextui-org/button";
-import Image from "next/image";
 import Link from "next/link";
+import { useUser } from "@/src/context/user.provider";
+import { Spinner } from "@nextui-org/spinner";
+import Image from "next/image";
+import ProfileSidebarOptions from "./ProfileSidebarOptions";
+import { profileLinks } from "./constant";
+import { useGetUser } from "@/src/hooks/user.hook";
+import { useEffect } from "react";
 
-const Profile = () => {
+const ProfileSidebar = () => {
   const { user: userData, isLoading } = useUser();
   const { data: user, isPending } = useGetUser(userData?.email!);
+  // useEffect(() => {
+  //   if (userData?.email) {
+  //     handleGetUser(userData.email);
+  //   }
+  // }, [userData]);
+
+  console.log(user);
   return (
     <div>
-      <div className="rounded-xl bg-default-100 p-2">
+      {/* <div className="rounded-xl bg-default-100 p-2">
         <div className="h-[100px] w-full rounded-md ">
           <Image
             src={user?.data?.image as string}
@@ -34,9 +45,19 @@ const Profile = () => {
         >
           Update Profile
         </Button>
+      </div> */}
+
+      <div className="mt-3 space-y-2 min-h-screen rounded-xl bg-default-100 p-2">
+        {isLoading && (
+          <div className=" bg-black/10 fixed w-1/4 h-14 rounded-md backdrop-blur-md flex justify-center items-center">
+            <Spinner />
+          </div>
+        )}
+
+        <ProfileSidebarOptions links={profileLinks} />
       </div>
     </div>
   );
 };
 
-export default Profile;
+export default ProfileSidebar;

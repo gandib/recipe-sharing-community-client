@@ -53,9 +53,9 @@ export default function Register() {
   }
 
   return (
-    <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center ">
+    <div className="flex mt-6 w-full flex-col items-center justify-center mb-12">
       <h3 className="my-2 text-2xl font-bold">Register with Recipe Sharing</h3>
-      <div className="w-[35%]">
+      <div className="md:w-[50%] lg:w-[35%] w-[80%]">
         <FXForm
           onSubmit={onSubmit}
           resolver={zodResolver(registerValidationSchema)}

@@ -38,11 +38,10 @@ const NavbarDropDown = () => {
         <DropdownItem onClick={() => handleNavigation("/profile")}>
           Profile
         </DropdownItem>
-        <DropdownItem onClick={() => handleNavigation("/profile/settings")}>
-          Settings
-        </DropdownItem>
-        <DropdownItem onClick={() => handleNavigation("/profile/create-post")}>
-          Create Post
+        <DropdownItem
+          onClick={() => handleNavigation("/profile/update-profile")}
+        >
+          Update Profile
         </DropdownItem>
 
         <DropdownItem

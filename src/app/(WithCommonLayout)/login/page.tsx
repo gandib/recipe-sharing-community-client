@@ -59,7 +59,7 @@ const Login = () => {
       <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center ">
         <h3 className="my-2 text-2xl font-bold">Login with Recipe Sharing</h3>
         <p>Welcome Back! Let&lsquo;s Get Started</p>
-        <div className="w-[35%]">
+        <div className="md:w-[50%] lg:w-[35%] w-[80%]">
           <FXForm
             onSubmit={onSubmit}
             resolver={zodResolver(loginValidationSchema)}
