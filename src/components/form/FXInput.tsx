@@ -13,6 +13,7 @@ const FXInput = ({
   type = "text",
   label,
   name,
+  onChange,
 }: IProps) => {
   const {
     register,
@@ -29,6 +30,7 @@ const FXInput = ({
       required={required}
       type={type}
       label={label}
+      onChange={onChange!}
     />
   );
 };

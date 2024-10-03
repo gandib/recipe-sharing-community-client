@@ -54,9 +54,7 @@ export default function Register() {
 
   return (
     <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center ">
-      <h3 className="my-2 text-2xl font-bold">
-        Register with Recipe Sharing Community
-      </h3>
+      <h3 className="my-2 text-2xl font-bold">Register with Recipe Sharing</h3>
       <div className="w-[35%]">
         <FXForm
           onSubmit={onSubmit}
@@ -111,7 +109,10 @@ export default function Register() {
           </Button>
         </FXForm>
         <div className="text-center">
-          Already have an account? <Link href={"/login"}>Login</Link>
+          Already have an account?{" "}
+          <Link href={"/login"}>
+            <span className="cursor-pointer hover:text-green-500">Login</span>
+          </Link>
         </div>
       </div>
     </div>

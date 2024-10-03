@@ -41,6 +41,51 @@ export const loginUser = async (userData: FieldValues) => {
   }
 };
 
+export const forgetPassword = async (userData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.post(
+      "/auth/forget-password",
+      userData
+    );
+    // if (data?.success) {
+    //   cookies().set("accessToken", data?.token, { maxAge: 604800 });
+    // }
+
+    return data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error?.response?.data?.message);
+    } else {
+      throw new Error(error);
+    }
+  }
+};
+
+export const recoverPassword = async (userData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.post(
+      "/auth/reset-password",
+      userData.data,
+      {
+        headers: {
+          Authorization: `${userData.token}`,
+        },
+      }
+    );
+    if (data?.success) {
+      cookies().set("accessToken", data?.token, { maxAge: 604800 });
+    }
+
+    return data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error?.response?.data?.message);
+    } else {
+      throw new Error(error);
+    }
+  }
+};
+
 export const logout = () => {
   cookies().delete("accessToken");
 };

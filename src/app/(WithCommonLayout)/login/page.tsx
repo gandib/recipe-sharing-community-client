@@ -6,22 +6,27 @@ import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues } from "react-hook-form";
-import { useUserlogin } from "@/src/hooks/auth.hook";
+import { useForgetPassword, useUserlogin } from "@/src/hooks/auth.hook";
 import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "@/src/components/UI/Loading";
 import loginValidationSchema from "../../schemas/login.schemas";
 import { useUser } from "@/src/context/user.provider";
+import { useState } from "react";
 
 const Login = () => {
   const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect");
+  const redirect = searchParams?.get("redirect");
   const router = useRouter();
   const { setIsLoading } = useUser();
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
 
   console.log(redirect);
   const { mutate: handleUserLogin, isPending, isSuccess } = useUserlogin();
+  const { mutate: handleForgetPassword } = useForgetPassword();
 
   const onSubmit = (data: FieldValues) => {
+    setEmail(data.email);
     handleUserLogin(data);
     setIsLoading(true);
   };
@@ -34,13 +39,25 @@ const Login = () => {
     }
   }
 
+  const recoverPassword = (email: string) => {
+    const data = {
+      email,
+    };
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!regex.test(email)) {
+      setError("Please enter a valid email!");
+    } else {
+      setError("");
+      handleForgetPassword(data);
+    }
+  };
+
   return (
     <>
       {isPending && <Loading />}
       <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center ">
-        <h3 className="my-2 text-2xl font-bold">
-          Login with Recipe Sharing Community
-        </h3>
+        <h3 className="my-2 text-2xl font-bold">Login with Recipe Sharing</h3>
         <p>Welcome Back! Let&lsquo;s Get Started</p>
         <div className="w-[35%]">
           <FXForm
@@ -48,10 +65,25 @@ const Login = () => {
             resolver={zodResolver(loginValidationSchema)}
           >
             <div className="py-3">
-              <FXInput name="email" type="email" label="Email" />
+              <FXInput
+                onChange={(e) => setEmail(e.target.value)}
+                name="email"
+                type="email"
+                label="Email"
+              />
             </div>
+            <span className="text-sm text-rose-600">{error}</span>
             <div className="py-3">
               <FXInput name="password" type="password" label="Password" />
+            </div>
+
+            <div className="py-3">
+              <p
+                className="cursor-pointer hover:text-green-500"
+                onClick={() => recoverPassword(email)}
+              >
+                Forgot Password?
+              </p>
             </div>
 
             <Button
@@ -64,7 +96,11 @@ const Login = () => {
           </FXForm>
           <div className="text-center">
             Don&lsquo;t have an account?{" "}
-            <Link href={"/register"}>Register</Link>
+            <Link href={"/register"}>
+              <span className="cursor-pointer hover:text-green-500">
+                Register
+              </span>
+            </Link>
           </div>
         </div>
       </div>
