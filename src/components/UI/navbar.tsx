@@ -59,6 +59,15 @@ export const Navbar = () => {
               </NextLink>
             </NavbarItem>
           ))}
+          <NavbarItem>
+            <NextLink
+              href={
+                user?.role === "user" ? "/user-dashboard" : "/admin-dashboard"
+              }
+            >
+              Dashboard
+            </NextLink>
+          </NavbarItem>
         </ul>
       </NavbarContent>
 
@@ -104,6 +113,16 @@ export const Navbar = () => {
               </Link>
             </NavbarMenuItem>
           ))}
+          <NavbarItem>
+            <NextLink
+              href={
+                user?.role === "user" ? "/user-dashboard" : "/admin-dashboard"
+              }
+            >
+              Dashboard
+            </NextLink>
+          </NavbarItem>
+
           {user && user.email ? (
             <p
               onClick={handleLogout}

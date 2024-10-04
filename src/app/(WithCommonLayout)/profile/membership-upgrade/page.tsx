@@ -1,7 +1,9 @@
+import MembershipCard from "@/src/components/UI/MembershipCard";
+
 const MembershipUpgrade = () => {
   return (
     <div>
-      <h1>Hello, MembershipUpgrade!</h1>
+      <MembershipCard />
     </div>
   );
 };

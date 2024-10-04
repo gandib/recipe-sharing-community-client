@@ -13,10 +13,6 @@ export const siteConfig = {
       href: "/recipe-feed",
     },
     {
-      label: "Dashboard",
-      href: "/pricing",
-    },
-    {
       label: "Profile",
       href: "/profile",
     },
@@ -37,10 +33,6 @@ export const siteConfig = {
     {
       label: "Recipe Feed",
       href: "/recipe-feed",
-    },
-    {
-      label: "Dashboard",
-      href: "/pricing",
     },
     {
       label: "Profile",
