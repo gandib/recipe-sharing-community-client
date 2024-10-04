@@ -32,13 +32,6 @@ const Profile = () => {
             {user?.data?.bio}
           </p>
         </div>
-        <Button
-          as={Link}
-          className="mt-2 w-full rounded-md"
-          href="/profile/update-profile"
-        >
-          Update Profile
-        </Button>
       </div>
     </div>
   );

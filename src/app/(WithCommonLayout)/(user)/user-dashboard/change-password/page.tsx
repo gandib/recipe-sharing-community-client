@@ -3,7 +3,6 @@
 import userValidationSchema from "@/src/schemas/user.schema";
 import FXForm from "@/src/components/form/FXForm";
 import FXInput from "@/src/components/form/FXInput";
-import FXTextarea from "@/src/components/form/FXTextarea";
 import { useUser } from "@/src/context/user.provider";
 import { useUpdateUser } from "@/src/hooks/user.hook";
 import { zodResolver } from "@hookform/resolvers/zod";

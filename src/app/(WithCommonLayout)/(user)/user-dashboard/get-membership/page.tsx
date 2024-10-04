@@ -1,6 +1,6 @@
 import MembershipCard from "@/src/components/UI/MembershipCard";
 
-const MembershipUpgrade = () => {
+const GetMembership = () => {
   return (
     <div>
       <MembershipCard />
@@ -8,4 +8,4 @@ const MembershipUpgrade = () => {
   );
 };
 
-export default MembershipUpgrade;
+export default GetMembership;
