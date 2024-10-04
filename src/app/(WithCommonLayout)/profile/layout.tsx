@@ -9,7 +9,7 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="w-2/5 min-h-full bg-default-100">
           <ProfileSidebar />
         </div>
-        <div className="w-4/4">{children}</div>
+        <div className="w-4/5">{children}</div>
       </div>
     </Container>
   );

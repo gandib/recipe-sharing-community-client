@@ -7,8 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { FieldValues } from "react-hook-form";
-import registerValidationSchema from "../../schemas/register.schemas";
 import { ChangeEvent, useState } from "react";
+import registerValidationSchema from "@/src/schemas/register.schemas";
 
 export default function Register() {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);

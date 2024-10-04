@@ -23,6 +23,42 @@ export const updateUser = async (userData: FieldValues) => {
   }
 };
 
+export const updateUnfollowing = async (userData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.patch(
+      `/auth/update-unfollowing?id=${userData.id}`,
+      userData.data
+    );
+    revalidateTag("USER");
+
+    return data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error?.response?.data?.message);
+    } else {
+      throw new Error(error);
+    }
+  }
+};
+
+export const updateFollowing = async (userData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.patch(
+      `/auth/update-unfollowing?id=${userData.id}`,
+      userData.data
+    );
+    revalidateTag("USER");
+
+    return data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error?.response?.data?.message);
+    } else {
+      throw new Error(error);
+    }
+  }
+};
+
 export const getUser = async (email: string) => {
   try {
     const { data } = await axiosInstance.get(`/auth/${email}`);

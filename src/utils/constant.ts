@@ -5,4 +5,5 @@ export const protectedRoutes = [
   "/admin-dashboard/:page*",
   "/login",
   "/register",
+  "/profile",
 ];

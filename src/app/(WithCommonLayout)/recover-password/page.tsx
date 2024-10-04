@@ -9,7 +9,7 @@ import { useRecoverPassword } from "@/src/hooks/auth.hook";
 import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "@/src/components/UI/Loading";
 import { useUser } from "@/src/context/user.provider";
-import recoverPasswordValidationSchema from "../../schemas/recover-password.schemas";
+import recoverPasswordValidationSchema from "@/src/schemas/recover-password.schemas";
 
 const RecoverPassword = () => {
   const searchParams = useSearchParams();

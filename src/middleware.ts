@@ -7,8 +7,8 @@ const AuthRoutes = ["/login", "/register"];
 type TRole = keyof typeof roleBaseRoutes;
 
 const roleBaseRoutes = {
-  user: [/^\/user-dashboard/],
-  admin: [/^\/admin-dashboard/],
+  user: [/^\/user-dashboard/, /^\/profile/],
+  admin: [/^\/admin-dashboard/, /^\/profile/],
 };
 
 // This function can be marked `async` if using `await` inside
@@ -48,5 +48,6 @@ export const config = {
     "/admin-dashboard/:page*",
     "/login",
     "/register",
+    "/profile",
   ],
 };

@@ -11,7 +11,7 @@ const Profile = () => {
   return (
     <div>
       <div className="rounded-xl bg-default-100 p-2">
-        <div className="h-[100px] w-full rounded-md ">
+        <div className="h-[100px] w-full rounded-md flex gap-2">
           <Image
             src={user?.data?.image as string}
             alt="Profile"
@@ -19,6 +19,11 @@ const Profile = () => {
             width={100}
             className="rounded-xl"
           />
+          <div>
+            <p className=" rounded-full bg-primary-500 px-2 text-tiny uppercase text-white/90">
+              {user?.data?.membership}
+            </p>
+          </div>
         </div>
         <div className="my-3">
           <h1 className="text-2xl font-semibold">{user?.data?.name}</h1>

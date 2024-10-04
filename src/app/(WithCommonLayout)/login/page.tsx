@@ -9,9 +9,9 @@ import { FieldValues } from "react-hook-form";
 import { useForgetPassword, useUserlogin } from "@/src/hooks/auth.hook";
 import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "@/src/components/UI/Loading";
-import loginValidationSchema from "../../schemas/login.schemas";
 import { useUser } from "@/src/context/user.provider";
 import { useState } from "react";
+import loginValidationSchema from "@/src/schemas/login.schemas";
 
 const Login = () => {
   const searchParams = useSearchParams();
