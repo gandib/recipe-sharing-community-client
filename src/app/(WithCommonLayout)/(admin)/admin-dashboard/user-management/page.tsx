@@ -1,6 +1,7 @@
 "use client";
 import { useUser } from "@/src/context/user.provider";
 import {
+  useDeleteUser,
   useGetAllUser,
   useGetUser,
   useUpdateUserStatus,
@@ -22,6 +23,7 @@ const UserManagement = () => {
   const { user } = useUser();
   const { data } = useGetAllUser(email);
   const { mutate: statusUpdate } = useUpdateUserStatus(email);
+  const { mutate: deleteUser } = useDeleteUser(email);
 
   const handleStatus = (email: string, id: string, status: string) => {
     setEmail(email);
@@ -33,6 +35,15 @@ const UserManagement = () => {
       },
     };
     statusUpdate(userStatusData);
+  };
+
+  const handleDelete = (email: string, id: string) => {
+    setEmail(email);
+    const userDeletedData = {
+      id: id,
+    };
+    console.log(userDeletedData);
+    deleteUser(userDeletedData);
   };
 
   return (
@@ -63,7 +74,11 @@ const UserManagement = () => {
                 >
                   {userData.status === "unblocked" ? "blocked" : "unblocked"}
                 </Button>
-                <Button size="sm" className="bg-primary-500 text-white">
+                <Button
+                  onClick={() => handleDelete(userData?.email, userData?._id)}
+                  size="sm"
+                  className="bg-primary-500 text-white"
+                >
                   DELETE
                 </Button>
               </TableCell>

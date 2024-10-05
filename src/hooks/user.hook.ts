@@ -7,6 +7,7 @@ import {
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import {
+  deleteUser,
   getAllUser,
   getUser,
   updateFollowing,
@@ -72,6 +73,23 @@ export const useUpdateUserStatus = (email: string) => {
 
   return useMutation<any, Error, FieldValues>({
     mutationFn: async (userData) => await updateUserStatus(userData),
+
+    onSuccess(data, variables, context) {
+      toast.success(data.message);
+      // Invalidate the specific query using the query key with email
+      queryClient.invalidateQueries({ queryKey: ["USER", email] });
+    },
+    onError(error, variables, context) {
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useDeleteUser = (email: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<any, Error, FieldValues>({
+    mutationFn: async (userData) => await deleteUser(userData),
 
     onSuccess(data, variables, context) {
       toast.success(data.message);

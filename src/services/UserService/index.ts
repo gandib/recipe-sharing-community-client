@@ -59,6 +59,23 @@ export const updateUserStatus = async (userData: FieldValues) => {
   }
 };
 
+export const deleteUser = async (userData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.delete(
+      `/auth/delete-user?id=${userData.id}`
+    );
+    revalidateTag("USER");
+
+    return data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error?.response?.data?.message);
+    } else {
+      throw new Error(error);
+    }
+  }
+};
+
 export const updateFollowing = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.patch(
