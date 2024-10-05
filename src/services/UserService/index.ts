@@ -41,6 +41,24 @@ export const updateUnfollowing = async (userData: FieldValues) => {
   }
 };
 
+export const updateUserStatus = async (userData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.patch(
+      `/auth/update-user-status?id=${userData.id}`,
+      userData.data
+    );
+    revalidateTag("USER");
+
+    return data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error?.response?.data?.message);
+    } else {
+      throw new Error(error);
+    }
+  }
+};
+
 export const updateFollowing = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.patch(
@@ -62,6 +80,20 @@ export const updateFollowing = async (userData: FieldValues) => {
 export const getUser = async (email: string) => {
   try {
     const { data } = await axiosInstance.get(`/auth/${email}`);
+
+    return data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error?.response?.data?.message);
+    } else {
+      throw new Error(error);
+    }
+  }
+};
+
+export const getAllUser = async () => {
+  try {
+    const { data } = await axiosInstance.get(`/auth/all-user`);
 
     return data;
   } catch (error: any) {
