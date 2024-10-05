@@ -8,6 +8,7 @@ import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import {
   deleteUser,
+  getAllAdmin,
   getAllUser,
   getUser,
   updateFollowing,
@@ -117,5 +118,14 @@ export const useGetAllUser = (email: string) => {
   return useQuery({
     queryKey: ["USER", email],
     queryFn: async () => await getAllUser(),
+  });
+};
+
+export const useGetAllAdmin = (email: string) => {
+  const queryClient = useQueryClient();
+
+  return useQuery({
+    queryKey: ["USER", email],
+    queryFn: async () => await getAllAdmin(),
   });
 };

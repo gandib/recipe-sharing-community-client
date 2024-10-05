@@ -88,7 +88,7 @@ export default function Register() {
               onChange={(e) => handleImageChange(e)}
             />
           </div>
-          {imagePreviews && (
+          {imagePreviews.length > 0 && (
             <div className="flex flex-wrap gap-5 my-5">
               <div className="relative size-48 rounded-xl border-2 border-dashed border-default-300 p-2">
                 <img

@@ -1,7 +1,9 @@
+import AdminCard from "@/src/components/UI/AdminCard";
+
 const CreateAdmin = () => {
   return (
     <div>
-      <h1>Hello, CreateAdmin!</h1>
+      <AdminCard title="Create Admin" />
     </div>
   );
 };

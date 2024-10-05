@@ -14,6 +14,7 @@ const FXInput = ({
   label,
   name,
   onChange,
+  value,
 }: IProps) => {
   const {
     register,
@@ -31,6 +32,7 @@ const FXInput = ({
       type={type}
       label={label}
       onChange={onChange!}
+      value={value}
     />
   );
 };

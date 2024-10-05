@@ -3,7 +3,6 @@ import { useUser } from "@/src/context/user.provider";
 import {
   useDeleteUser,
   useGetAllUser,
-  useGetUser,
   useUpdateUserStatus,
 } from "@/src/hooks/user.hook";
 import { IUser } from "@/src/types";

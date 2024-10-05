@@ -29,4 +29,5 @@ export interface IInput {
   name: string;
   disabled?: boolean;
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  value?: any;
 }
