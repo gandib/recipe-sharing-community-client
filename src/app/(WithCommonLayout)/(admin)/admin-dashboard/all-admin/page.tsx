@@ -27,7 +27,7 @@ const AllAdmin = () => {
   const { mutate: statusUpdate } = useUpdateUserStatus(email);
   const { mutate: deleteUser } = useDeleteUser(email);
   const router = useRouter();
-
+  console.log(data);
   const handleStatus = (email: string, id: string, status: string) => {
     setEmail(email);
     const userStatusData = {
@@ -60,44 +60,51 @@ const AllAdmin = () => {
           <TableColumn>Name</TableColumn>
           <TableColumn>Email</TableColumn>
           <TableColumn>ACTION</TableColumn>
-          {/* <TableColumn>ACTION</TableColumn> */}
         </TableHeader>
         <TableBody>
-          {data?.data?.map((userData: IUser) => (
-            <TableRow key={userData._id}>
-              <TableCell>{userData.name}</TableCell>
-              <TableCell>{userData.email}</TableCell>
-              <TableCell className="flex justify-evenly">
-                <Button
-                  onClick={() =>
-                    handleStatus(
-                      userData?.email,
-                      userData?._id,
-                      userData?.status
-                    )
-                  }
-                  size="sm"
-                  className="bg-primary-500 text-white"
-                >
-                  {userData.status === "unblocked" ? "blocked" : "unblocked"}
-                </Button>
-                <Button
-                  onClick={() => handleUpdate(userData?.email)}
-                  size="sm"
-                  className="bg-primary-500 text-white"
-                >
-                  UPDATE
-                </Button>
-                <Button
-                  onClick={() => handleDelete(userData?.email, userData?._id)}
-                  size="sm"
-                  className="bg-primary-500 text-white"
-                >
-                  DELETE
-                </Button>
-              </TableCell>
+          {data?.data && Array.isArray(data.data) ? (
+            data.data.map((userData: IUser) => (
+              <TableRow key={userData._id}>
+                <TableCell>{userData.name}</TableCell>
+                <TableCell>{userData.email}</TableCell>
+                <TableCell className="flex justify-evenly">
+                  <Button
+                    onClick={() =>
+                      handleStatus(
+                        userData?.email,
+                        userData?._id,
+                        userData?.status
+                      )
+                    }
+                    size="sm"
+                    className="bg-primary-500 text-white"
+                  >
+                    {userData.status === "unblocked" ? "blocked" : "unblocked"}
+                  </Button>
+                  <Button
+                    onClick={() => handleUpdate(userData?.email)}
+                    size="sm"
+                    className="bg-primary-500 text-white"
+                  >
+                    UPDATE
+                  </Button>
+                  <Button
+                    onClick={() => handleDelete(userData?.email, userData?._id)}
+                    size="sm"
+                    className="bg-primary-500 text-white"
+                  >
+                    DELETE
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell>No data available</TableCell>
+              <TableCell>No data</TableCell>
+              <TableCell>No Data</TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
     </div>
