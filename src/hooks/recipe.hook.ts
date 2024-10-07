@@ -47,10 +47,10 @@ export const useGetAllMyRecipe = (email: string) => {
   });
 };
 
-export const useDeleterECIPE = (email: string) => {
+export const useDeleteRecipe = (email: string) => {
   const queryClient = useQueryClient();
 
-  return useMutation<any, Error, FieldValues>({
+  return useMutation<any, Error, string>({
     mutationFn: async (recipeData) => await deleteRecipe(recipeData),
 
     onSuccess(data, variables, context) {

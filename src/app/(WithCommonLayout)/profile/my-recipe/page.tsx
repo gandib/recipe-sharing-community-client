@@ -17,9 +17,10 @@ export type queryParams = {
 const MyRecipe = () => {
   const { user } = useUser();
   const { mutate: handleRecipe, data } = useGetAllMyRecipe(user?.email!);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(1);
   const [sort, setSort] = useState("-_id");
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   console.log(data);
   useEffect(() => {
@@ -33,6 +34,9 @@ const MyRecipe = () => {
     if (searchTerm) {
       query.push({ name: "searchTerm", value: searchTerm });
     }
+    if (currentPage) {
+      query.push({ name: "page", value: currentPage });
+    }
 
     console.log(
       query.forEach((item) => {
@@ -43,14 +47,21 @@ const MyRecipe = () => {
     if (user?.email) {
       handleRecipe({ id: user?._id, query });
     }
-  }, [user]);
+  }, [user, currentPage]);
 
   return (
     <div>
       <RecipeDisplayCard recipe={data?.data?.result} />
       <div className="mt-5 flex justify-center items-center">
-        <Pagination total={10} initialPage={1} />
+        {data?.data?.result?.length > 0 && (
+          <Pagination
+            total={data?.data?.meta.totalPage}
+            initialPage={currentPage}
+            onChange={(page) => setCurrentPage(page)}
+          />
+        )}
       </div>
+      <p>No Recipe available!</p>
     </div>
   );
 };

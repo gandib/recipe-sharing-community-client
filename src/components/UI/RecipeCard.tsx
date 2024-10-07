@@ -112,7 +112,9 @@ const RecipeCard = ({ title, id }: { title: string; id?: string }) => {
 
     console.log(formData.get("file"));
 
-    handleCreateRecipe(formData);
+    if (!id) {
+      handleCreateRecipe(formData);
+    }
 
     if (id) {
       const updatedData = {

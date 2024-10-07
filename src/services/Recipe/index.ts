@@ -72,9 +72,9 @@ export const getAllMyRecipe = async (query: {
   }
 };
 
-export const deleteRecipe = async (recipeData: FieldValues) => {
+export const deleteRecipe = async (recipeData: string) => {
   try {
-    const { data } = await axiosInstance.delete(`/recipe/${recipeData.id}`);
+    const { data } = await axiosInstance.delete(`/recipe/${recipeData}`);
     revalidateTag("RECIPE");
 
     return data;

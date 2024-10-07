@@ -1,7 +1,9 @@
+import RecipeCard from "@/src/components/UI/RecipeCard";
+
 const CreateRecipe = () => {
   return (
     <div>
-      <h1>Hello, CreateRecipe!</h1>
+      <RecipeCard title="Create Recipe" />
     </div>
   );
 };

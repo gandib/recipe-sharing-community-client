@@ -56,7 +56,10 @@ export default function AdminCard({
 
     console.log(formData.get("file"));
 
-    handleUserRagistration(formData);
+    if (!email) {
+      handleUserRagistration(formData);
+    }
+
     if (email) {
       const updatedData = {
         id: id,
