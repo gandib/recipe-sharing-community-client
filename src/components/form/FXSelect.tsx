@@ -15,6 +15,7 @@ const FXSelect = ({
   label,
   varient = "bordered",
   disabled,
+  required = false,
 }: IProps) => {
   const {
     register,
@@ -28,6 +29,7 @@ const FXSelect = ({
       className="min-w-full sm:min-w-[225px]"
       variant={varient}
       isDisabled={disabled}
+      required={required}
     >
       {options.map((option) => (
         <SelectItem key={option.key}>{option.label}</SelectItem>

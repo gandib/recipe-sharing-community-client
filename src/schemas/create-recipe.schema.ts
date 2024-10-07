@@ -6,7 +6,7 @@ const createRecipeValidationSchema = z.object({
     .string({ required_error: "Please enter your instructions!" })
     .optional(),
   tags: z.string({ required_error: "Please enter your tags!" }),
-  contentType: z.string({ required_error: "Please enter your content type!" }),
+  contentType: z.string({ required_error: "Please choose your content type!" }),
 });
 
 export default createRecipeValidationSchema;

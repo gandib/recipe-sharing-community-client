@@ -31,3 +31,18 @@ export interface IInput {
   onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: any;
 }
+
+export interface IRecipe {
+  _id: string;
+  user: IUser;
+  title: string;
+  image: string[];
+  upvote: any[];
+  downvote: any[];
+  tags: string;
+  contentType: "basic" | "premium";
+  status: "published" | "unpublished";
+  rating: any[];
+  comment: any[];
+  instructions: string;
+}
