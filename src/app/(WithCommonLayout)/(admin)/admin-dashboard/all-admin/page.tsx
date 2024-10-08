@@ -22,7 +22,7 @@ import { useState } from "react";
 
 const AllAdmin = () => {
   const [email, setEmail] = useState("");
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
   const { data } = useGetAllAdmin(email);
   const { mutate: statusUpdate } = useUpdateUserStatus(email);
   const { mutate: deleteUser } = useDeleteUser(email);
@@ -52,6 +52,10 @@ const AllAdmin = () => {
   const handleUpdate = (email: string) => {
     router.push(`/admin-dashboard/update-admin/${email}`);
   };
+
+  if (isLoading) {
+    <p>Loading...</p>;
+  }
 
   return (
     <div>

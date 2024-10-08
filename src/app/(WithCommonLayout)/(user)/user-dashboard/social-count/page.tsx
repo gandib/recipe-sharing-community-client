@@ -12,7 +12,7 @@ import {
 } from "@nextui-org/table";
 
 const SocialConnectivity = () => {
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
   const { data } = useGetUser(user?.email!);
   const { mutate: unFollowing } = useUpdateUnfollowing(user?.email!);
 
@@ -26,6 +26,10 @@ const SocialConnectivity = () => {
 
     unFollowing(unfollowingData);
   };
+
+  if (isLoading) {
+    <p>Loading...</p>;
+  }
 
   return (
     <div className="grid md:grid-cols-2 gap-2">

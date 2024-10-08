@@ -10,7 +10,7 @@ import { Button } from "@nextui-org/button";
 import { FieldValues } from "react-hook-form";
 
 export default function ChangePassword() {
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
   const { mutate: handleUpdateUser, isPending } = useUpdateUser(user?.email!);
 
   const onSubmit = (data: FieldValues) => {
@@ -26,6 +26,10 @@ export default function ChangePassword() {
 
   if (isPending) {
     //handle loading state
+  }
+
+  if (isLoading) {
+    <p>Loading...</p>;
   }
 
   return (

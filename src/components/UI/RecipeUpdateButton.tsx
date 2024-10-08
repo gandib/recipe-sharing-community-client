@@ -5,15 +5,25 @@ import { useRouter } from "next/navigation";
 import { use } from "react";
 
 const RecipeUpdateButton = ({ id }: { id: string }) => {
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
   const router = useRouter();
+
   const handleUpdate = () => {
     console.log(id);
     router.push(
       `${user?.role === "user" ? `/user-dashboard/update-recipe/${id}` : `/admin-dashboard/update-recipe/${id}`}`
     );
   };
-  return <Button onClick={() => handleUpdate()}>Update</Button>;
+
+  if (isLoading) {
+    <p>Loading...</p>;
+  }
+
+  return (
+    <Button size="sm" onClick={() => handleUpdate()}>
+      Update
+    </Button>
+  );
 };
 
 export default RecipeUpdateButton;

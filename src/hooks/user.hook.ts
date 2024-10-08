@@ -11,6 +11,7 @@ import {
   getAllAdmin,
   getAllUser,
   getUser,
+  getUserById,
   updateFollowing,
   updateUnfollowing,
   updateUser,
@@ -109,6 +110,15 @@ export const useGetUser = (email: string) => {
   return useQuery({
     queryKey: ["USER", email],
     queryFn: async () => await getUser(email),
+  });
+};
+
+export const useGetUserById = (id: string) => {
+  const queryClient = useQueryClient();
+
+  return useQuery({
+    queryKey: ["USER", id],
+    queryFn: async () => await getUserById(id),
   });
 };
 

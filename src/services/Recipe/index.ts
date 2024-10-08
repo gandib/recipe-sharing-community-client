@@ -72,6 +72,20 @@ export const getAllMyRecipe = async (query: {
   }
 };
 
+export const getAllMyTags = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.get(`/recipe/my-tags/${id}`);
+
+    return data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error?.response?.data?.message);
+    } else {
+      throw new Error(error);
+    }
+  }
+};
+
 export const deleteRecipe = async (recipeData: string) => {
   try {
     const { data } = await axiosInstance.delete(`/recipe/${recipeData}`);
@@ -108,6 +122,42 @@ export const updateRecipe = async (recipeData: FieldValues) => {
 export const getSingleRecipe = async (id: string) => {
   try {
     const { data } = await axiosInstance.get(`/recipe/${id}`);
+
+    return data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error?.response?.data?.message);
+    } else {
+      throw new Error(error);
+    }
+  }
+};
+
+export const updateUpvote = async (upvoteData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.patch(
+      `/recipe/upvote/${upvoteData.id}`,
+      upvoteData.data
+    );
+    revalidateTag("RECIPE");
+
+    return data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error?.response?.data?.message);
+    } else {
+      throw new Error(error);
+    }
+  }
+};
+
+export const updateDownvote = async (downvoteData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.patch(
+      `/recipe/downvote/${downvoteData.id}`,
+      downvoteData.data
+    );
+    revalidateTag("RECIPE");
 
     return data;
   } catch (error: any) {

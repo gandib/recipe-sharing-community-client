@@ -10,7 +10,7 @@ export type queryParams = {
 };
 
 const AllRecipe = () => {
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
   const { mutate: handleRecipe, data } = useGetAllRecipe(user?.email!);
   const [limit, setLimit] = useState(3);
   const [sort, setSort] = useState("-_id");
@@ -51,6 +51,10 @@ const AllRecipe = () => {
       handleRecipe(query);
     }
   }, [user]);
+
+  if (isLoading) {
+    <p>Loading...</p>;
+  }
 
   return (
     <div>

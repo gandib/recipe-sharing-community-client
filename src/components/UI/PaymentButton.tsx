@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import moment from "moment";
 
 const PaymentButton = ({ price }: { price: number }) => {
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
   const { mutate: handleMembershipPayment, data } = useMembershipPayment();
   console.log(data);
   if (data?.success) {
@@ -30,6 +30,11 @@ const PaymentButton = ({ price }: { price: number }) => {
     };
     handleMembershipPayment(paymentData);
   };
+
+  if (isLoading) {
+    <p>Loading...</p>;
+  }
+
   return (
     <div>
       <Button

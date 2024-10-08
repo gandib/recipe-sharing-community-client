@@ -12,7 +12,7 @@ import {
 } from "@nextui-org/table";
 
 const Following = () => {
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
   const { data } = useGetUser(user?.email!);
   const { mutate: unFollowing } = useUpdateUnfollowing(user?.email!);
 
@@ -26,6 +26,11 @@ const Following = () => {
 
     unFollowing(unfollowingData);
   };
+
+  if (isLoading) {
+    <p>Loading...</p>;
+  }
+
   return (
     <div>
       <Table aria-label="Example static collection table">

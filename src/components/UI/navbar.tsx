@@ -92,14 +92,14 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
+        className="hidden md:flex basis-1/5 sm:basis-full"
         justify="end"
       >
-        <NavbarItem className="hidden sm:flex gap-2">
+        <NavbarItem className="hidden lg:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
         {user?.email ? (
-          <NavbarItem className="hidden sm:flex gap-2">
+          <NavbarItem className="hidden lg:flex gap-2">
             <NavbarDropDown />
           </NavbarItem>
         ) : (
@@ -109,7 +109,7 @@ export const Navbar = () => {
         )}
       </NavbarContent>
 
-      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+      <NavbarContent className="lg:hidden basis-1 pl-4" justify="end">
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>

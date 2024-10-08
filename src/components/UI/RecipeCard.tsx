@@ -22,7 +22,7 @@ import createRecipeValidationSchema from "@/src/schemas/create-recipe.schema";
 import updateRecipeValidationSchema from "@/src/schemas/update-recipe.schema";
 
 const RecipeCard = ({ title, id }: { title: string; id?: string }) => {
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
   const [value, setValue] = useState("");
   const [instructions, setInstructions] = useState(" ");
   const { mutate: handleCreateRecipe, isPending } = useCreateRecipe(
@@ -154,6 +154,10 @@ const RecipeCard = ({ title, id }: { title: string; id?: string }) => {
       ],
     },
   };
+
+  if (isLoading) {
+    <p>Loading...</p>;
+  }
 
   return (
     <div className="flex mt-6 w-full flex-col items-center justify-center mb-12">

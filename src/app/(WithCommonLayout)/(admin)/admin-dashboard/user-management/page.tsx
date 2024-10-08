@@ -19,7 +19,7 @@ import { useState } from "react";
 
 const UserManagement = () => {
   const [email, setEmail] = useState("");
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
   const { data } = useGetAllUser(email);
   const { mutate: statusUpdate } = useUpdateUserStatus(email);
   const { mutate: deleteUser } = useDeleteUser(email);
@@ -44,6 +44,10 @@ const UserManagement = () => {
     console.log(userDeletedData);
     deleteUser(userDeletedData);
   };
+
+  if (isLoading) {
+    <p>Loading...</p>;
+  }
 
   return (
     <div>

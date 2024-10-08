@@ -12,8 +12,13 @@ import {
 } from "@nextui-org/table";
 
 const Follower = () => {
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
   const { data } = useGetUser(user?.email!);
+
+  if (isLoading) {
+    <p>Loading...</p>;
+  }
+
   return (
     <div>
       <Table aria-label="Example static collection table">
