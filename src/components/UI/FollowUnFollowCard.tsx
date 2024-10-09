@@ -46,27 +46,29 @@ const FollowUnFollowCard = ({ userId }: { userId: string }) => {
     <div>
       <h1>
         {userDataById?.data?.name}
-        {": "}
-        <Button
-          onClick={() =>
-            handleFollowUnfollow(
-              data?.data?.following?.some(
-                (following: any) => following._id === userId
+        {data?.data?._id !== userDataById?.data?._id && ": "}
+        {data?.data?._id !== userDataById?.data?._id && (
+          <Button
+            onClick={() =>
+              handleFollowUnfollow(
+                data?.data?.following?.some(
+                  (following: any) => following._id === userId
+                )
+                  ? "following"
+                  : "follow"
               )
-                ? "following"
-                : "follow"
+            }
+            size="sm"
+            variant="light"
+            className="text-green-500 text-sm"
+          >
+            {data?.data?.following?.some(
+              (following: any) => following._id === userId
             )
-          }
-          size="sm"
-          variant="light"
-          className="text-green-500 text-sm"
-        >
-          {data?.data?.following?.some(
-            (following: any) => following._id === userId
-          )
-            ? "following"
-            : "follow"}
-        </Button>
+              ? "following"
+              : "follow"}
+          </Button>
+        )}
       </h1>
     </div>
   );

@@ -93,14 +93,14 @@ export const useUpdateRecipe = (email: string) => {
   });
 };
 
-export const useGetSingleRecipe = (id: string) => {
-  const queryClient = useQueryClient();
+// export const useGetSingleRecipe = (id: string) => {
+//   const queryClient = useQueryClient();
 
-  return useQuery({
-    queryKey: ["RECIPE", id],
-    queryFn: async () => await getSingleRecipe(id),
-  });
-};
+//   return useQuery({
+//     queryKey: ["RECIPE", id],
+//     queryFn: async () => await getSingleRecipe(id),
+//   });
+// };
 
 export const useUpdateUpvote = (email: string) => {
   const queryClient = useQueryClient();

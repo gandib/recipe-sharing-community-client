@@ -1,5 +1,6 @@
 "use server";
 import { queryParams } from "@/src/app/(WithCommonLayout)/(admin)/admin-dashboard/all-recipe/page";
+import envConfig from "@/src/config/envConfig";
 import axiosInstance from "@/src/lib/AxiosInstance";
 import axios from "axios";
 import { revalidateTag } from "next/cache";
@@ -119,18 +120,35 @@ export const updateRecipe = async (recipeData: FieldValues) => {
   }
 };
 
-export const getSingleRecipe = async (id: string) => {
-  try {
-    const { data } = await axiosInstance.get(`/recipe/${id}`);
+// export const getSingleRecipe = async (id: string) => {
+//   try {
+//     const { data } = await axiosInstance.get(`/recipe/${id}`);
 
-    return data;
-  } catch (error: any) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error?.response?.data?.message);
-    } else {
-      throw new Error(error);
-    }
+//     return data;
+//   } catch (error: any) {
+//     if (axios.isAxiosError(error)) {
+//       throw new Error(error?.response?.data?.message);
+//     } else {
+//       throw new Error(error);
+//     }
+//   }
+// };
+
+export const getSingleRecipe = async (recipeId: string) => {
+  let fetchOptions = {};
+
+  fetchOptions = {
+    cache: "no-store",
+  };
+  const res = await fetch(
+    `${envConfig.baseApi}/recipe/${recipeId}`,
+    fetchOptions
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data!");
   }
+  return res.json();
 };
 
 export const updateUpvote = async (upvoteData: FieldValues) => {

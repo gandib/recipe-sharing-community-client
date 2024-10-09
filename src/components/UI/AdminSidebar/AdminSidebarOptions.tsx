@@ -6,7 +6,7 @@ type TLinkItem = {
 };
 const AdminSidebarOptions = ({ links }: { links: TLinkItem[] }) => {
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1 fixed">
       {links.map((link) => (
         <Link
           key={link?.href}

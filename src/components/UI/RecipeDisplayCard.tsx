@@ -1,5 +1,4 @@
 import { IRecipe } from "@/src/types";
-import { Button } from "@nextui-org/button";
 import {
   Card as NextUiCard,
   CardHeader,
@@ -12,6 +11,7 @@ import RecipeUpdateButton from "./RecipeUpdateButton";
 import UpvoteButton from "./UpvoteButton";
 import DownvoteButton from "./DownvoteButton";
 import FollowUnFollowCard from "./FollowUnFollowCard";
+import SeeDetailButton from "./SeeDetailButton";
 const RecipeDisplayCard = ({ recipe }: { recipe: IRecipe[] }) => {
   console.log(recipe);
 
@@ -73,7 +73,7 @@ const RecipeDisplayCard = ({ recipe }: { recipe: IRecipe[] }) => {
             <CardFooter className=" bottom-0 gap-2 justify-around border-t-1 border-zinc-100/50 bg-white/30">
               <RecipeUpdateButton id={data._id} />
               <RecipeDeleteButton id={data?._id} />
-              <Button size="sm">See Detail</Button>
+              <SeeDetailButton id={data?._id} />
             </CardFooter>
           </NextUiCard>
         ))}
