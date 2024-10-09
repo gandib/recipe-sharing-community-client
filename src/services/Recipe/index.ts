@@ -74,6 +74,26 @@ export const getAllRecipes = async (query: queryParams[]) => {
   }
 };
 
+export const getAllRecipeForStatusChange = async () => {
+  const url = `${envConfig.baseApi}/recipe/all-recipe`;
+
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch data!");
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching recipes:", error);
+    throw error;
+  }
+};
+
 export const getAllMyRecipe = async (query: queryParams[]) => {
   try {
     const params = new URLSearchParams();
@@ -132,7 +152,7 @@ export const getAllMyRecipes = async (query: queryParams[]) => {
 
 export const getAllMyTags = async (id: string) => {
   try {
-    const { data } = await axiosInstance.get(`/recipe/my-tags/${id}`);
+    const { data } = await axiosInstance.get(`/recipe/my-tags`);
 
     return data;
   } catch (error: any) {
@@ -141,6 +161,50 @@ export const getAllMyTags = async (id: string) => {
     } else {
       throw new Error(error);
     }
+  }
+};
+
+export const getAllMyTag = async () => {
+  const url = `${envConfig.baseApi}/recipe/my-tags`;
+  const token = cookies().get("accessToken")?.value;
+
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching my recipes:", error);
+    throw error;
+  }
+};
+
+export const getAllTag = async () => {
+  const url = `${envConfig.baseApi}/recipe/all-tags`;
+  const token = cookies().get("accessToken")?.value;
+
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching my recipes:", error);
+    throw error;
   }
 };
 
@@ -284,6 +348,25 @@ export const deleteRecipeComment = async (commentData: FieldValues) => {
   try {
     const { data } = await axiosInstance.delete(
       `/recipe/comment/${commentData.id}?commentId=${commentData.commentId}`
+    );
+    revalidateTag("RECIPE");
+
+    return data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error?.response?.data?.message);
+    } else {
+      throw new Error(error);
+    }
+  }
+};
+
+export const updateRecipeStatus = async (recipeData: FieldValues) => {
+  console.log(recipeData);
+  try {
+    const { data } = await axiosInstance.patch(
+      `/recipe/status/${recipeData.id}`,
+      recipeData.data
     );
     revalidateTag("RECIPE");
 

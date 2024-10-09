@@ -19,6 +19,7 @@ import { RotateCw, SearchIcon } from "lucide-react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { IRecipe } from "@/src/types";
 import { Button } from "@nextui-org/button";
+import RecipeHomeDisplayCard from "./RecipeHomeDisplayCard";
 
 export type queryParams = {
   name: string;
@@ -27,16 +28,11 @@ export type queryParams = {
 
 type TTags = { _id: string; tags: string };
 
-type TRecipeMeta = {
-  meta: { page: number; limit: number; total: number; totalPage: number };
-  result: IRecipe[];
-};
-
-const AdminDashboardCard = ({
+const RecipeFeedCard = ({
   recipe,
   tags,
 }: {
-  recipe: TRecipeMeta;
+  recipe: IRecipe[];
   tags: TTags[];
 }) => {
   const { user, isLoading } = useUser();
@@ -157,7 +153,7 @@ const AdminDashboardCard = ({
           </Autocomplete>
         )}
 
-        {recipe && recipe.result.length > 0 && (
+        {recipe && recipe.length > 0 && (
           <Autocomplete
             onInputChange={(value) =>
               setSort(value === "Most Upvoted" ? "-upvote" : "upvote")
@@ -182,20 +178,20 @@ const AdminDashboardCard = ({
         )}
       </div>
 
-      <RecipeDisplayCard recipe={recipeData || recipe?.result} />
+      <RecipeHomeDisplayCard user={user?._id!} recipe={recipeData || recipe} />
 
       <div className="mt-5 flex justify-center items-center">
-        {recipe?.result?.length > 0 && (
+        {recipe.length > 0 && (
           <Pagination
-            total={recipe?.meta.totalPage}
+            total={data?.data?.meta.totalPage}
             initialPage={currentPage}
             onChange={(page) => setCurrentPage(page)}
           />
         )}
       </div>
-      {recipe?.result?.length < 1 && <p>No Recipe available!</p>}
+      {recipe.length < 1 && <p>No Recipe available!</p>}
     </div>
   );
 };
 
-export default AdminDashboardCard;
+export default RecipeFeedCard;

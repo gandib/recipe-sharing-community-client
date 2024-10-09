@@ -1,9 +1,18 @@
 import Container from "@/src/components/UI/Container";
+import RecipeFeedCard from "@/src/components/UI/RecipeFeedCard";
+import { getAllRecipes, getAllTag } from "@/src/services/Recipe";
 
-const Home = () => {
+const Home = async () => {
+  const { data: allRecipe } = await getAllRecipes([
+    { name: "sort", value: "-upvote" },
+  ]);
+  console.log({ allRecipe });
+
+  const { data: allTag } = await getAllTag();
+  console.log({ allTag });
   return (
     <Container>
-      <h1>Hello, Home!</h1>
+      <RecipeFeedCard recipe={allRecipe?.result} tags={allTag} />
     </Container>
   );
 };

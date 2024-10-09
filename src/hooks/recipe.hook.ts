@@ -12,6 +12,7 @@ import {
   updateRating,
   updateRecipe,
   updateRecipeComment,
+  updateRecipeStatus,
   updateUpvote,
 } from "../services/Recipe";
 import { toast } from "sonner";
@@ -177,6 +178,23 @@ export const useDeleteRecipeComment = (email: string) => {
 
   return useMutation<any, Error, FieldValues>({
     mutationFn: async (commentData) => await deleteRecipeComment(commentData),
+
+    onSuccess(data, variables, context) {
+      toast.success(data.message);
+      // Invalidate the specific query using the query key with email
+      queryClient.invalidateQueries({ queryKey: ["RECIPE", email] });
+    },
+    onError(error, variables, context) {
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useUpdateRecipeStatus = (email: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<any, Error, FieldValues>({
+    mutationFn: async (recipeData) => await updateRecipeStatus(recipeData),
 
     onSuccess(data, variables, context) {
       toast.success(data.message);

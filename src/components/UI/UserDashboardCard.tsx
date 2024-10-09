@@ -26,7 +26,18 @@ export type queryParams = {
   value: boolean | React.Key;
 };
 
-const UserDashboardCard = ({ recipe }: { recipe: IRecipe[] }) => {
+type TRecipeMeta = {
+  meta: { page: number; limit: number; total: number; totalPage: number };
+  result: IRecipe[];
+};
+
+const UserDashboardCard = ({
+  recipe,
+  tags,
+}: {
+  recipe: TRecipeMeta;
+  tags: string[];
+}) => {
   const { user, isLoading } = useUser();
   const {
     mutate: handleRecipe,
@@ -130,22 +141,22 @@ const UserDashboardCard = ({ recipe }: { recipe: IRecipe[] }) => {
       </div>
 
       <div className="flex gap-2">
-        {myTags && myTags.data.length > 0 && (
+        {tags && tags.length > 0 && (
           <Autocomplete
             onInputChange={(value) => setTag(value)}
             label="Filter"
             className="w-20"
             size="sm"
           >
-            {myTags.data.map((tag: IRecipe) => (
-              <AutocompleteItem key={tag._id} value={tag.tags}>
-                {tag.tags}
+            {tags.map((tag: string) => (
+              <AutocompleteItem key={tag} value={tag}>
+                {tag}
               </AutocompleteItem>
             ))}
           </Autocomplete>
         )}
 
-        {recipeData && recipeData.length > 0 && (
+        {recipe && recipe?.result.length > 0 && (
           <Autocomplete
             onInputChange={(value) =>
               setSort(value === "Most Upvoted" ? "-upvote" : "upvote")
@@ -163,25 +174,25 @@ const UserDashboardCard = ({ recipe }: { recipe: IRecipe[] }) => {
             )}
           </Autocomplete>
         )}
-        {myTags && myTags.data.length > 0 && (
+        {tags && tags.length > 0 && (
           <Button className="rounded-lg h-11 bg-default-100" size="sm">
             <RotateCw onClick={() => setTag("")} />
           </Button>
         )}
       </div>
 
-      <RecipeDisplayCard recipe={recipeData || recipe} />
+      <RecipeDisplayCard recipe={recipeData || recipe?.result} />
 
       <div className="mt-5 flex justify-center items-center">
-        {data?.data?.result?.length > 0 && (
+        {recipe?.result?.length > 0 && (
           <Pagination
-            total={data?.data?.meta.totalPage}
+            total={recipe?.meta.totalPage}
             initialPage={currentPage}
             onChange={(page) => setCurrentPage(page)}
           />
         )}
       </div>
-      {data?.data?.result?.length < 1 && <p>No Recipe available!</p>}
+      {recipe?.result?.length < 1 && <p>No Recipe available!</p>}
     </div>
   );
 };
