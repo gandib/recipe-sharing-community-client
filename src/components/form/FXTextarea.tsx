@@ -4,7 +4,12 @@ import { useFormContext, useWatch } from "react-hook-form";
 
 interface IProps extends IInput {}
 
-const FXTextarea = ({ name, label, varient = "bordered" }: IProps) => {
+const FXTextarea = ({
+  name,
+  label,
+  varient = "bordered",
+  disabled,
+}: IProps) => {
   const {
     register,
     formState: { errors },
@@ -19,6 +24,7 @@ const FXTextarea = ({ name, label, varient = "bordered" }: IProps) => {
       minRows={6}
       variant={varient}
       value={currentValue || ""}
+      disabled={disabled}
     />
   );
 };

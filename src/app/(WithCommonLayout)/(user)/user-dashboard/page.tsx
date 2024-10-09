@@ -1,7 +1,14 @@
-const UserDashboard = () => {
+import UserDashboardCard from "@/src/components/UI/UserDashboardCard";
+import { getAllMyRecipes } from "@/src/services/Recipe";
+
+const UserDashboard = async () => {
+  const { data: myRecipe } = await getAllMyRecipes([
+    { name: "sort", value: "-upvote" },
+  ]);
+  console.log({ myRecipe });
   return (
     <div>
-      <h1>Hello, UserDashboard for Display My Recipe!</h1>
+      <UserDashboardCard recipe={myRecipe?.result} />
     </div>
   );
 };

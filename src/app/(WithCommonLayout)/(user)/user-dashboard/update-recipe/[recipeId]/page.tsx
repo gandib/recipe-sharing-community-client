@@ -1,9 +1,15 @@
 import RecipeCard from "@/src/components/UI/RecipeCard";
+import { getSingleRecipe } from "@/src/services/Recipe";
 
-const UpdateRecipe = ({ params }: { params: { recipeId: string } }) => {
+const UpdateRecipe = async ({ params }: { params: { recipeId: string } }) => {
+  const { data } = await getSingleRecipe(params.recipeId);
   return (
     <div>
-      <RecipeCard title="Update Recipe" id={params.recipeId} />
+      <RecipeCard
+        singleRecipeData={data}
+        title="Update Recipe"
+        id={params.recipeId}
+      />
     </div>
   );
 };

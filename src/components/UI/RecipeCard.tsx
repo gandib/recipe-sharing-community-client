@@ -12,27 +12,31 @@ import { Button } from "@nextui-org/button";
 import { FieldValues } from "react-hook-form";
 import FXSelect from "@/src/components/form/FXSelect";
 import { useUser } from "@/src/context/user.provider";
-import {
-  useCreateRecipe,
-  useGetSingleRecipe,
-  useUpdateRecipe,
-} from "@/src/hooks/recipe.hook";
+import { useCreateRecipe, useUpdateRecipe } from "@/src/hooks/recipe.hook";
 import { zodResolver } from "@hookform/resolvers/zod";
 import createRecipeValidationSchema from "@/src/schemas/create-recipe.schema";
 import updateRecipeValidationSchema from "@/src/schemas/update-recipe.schema";
+import { IRecipe } from "@/src/types";
 
-const RecipeCard = ({ title, id }: { title: string; id?: string }) => {
+const RecipeCard = ({
+  title,
+  id,
+  singleRecipeData,
+}: {
+  title: string;
+  id?: string;
+  singleRecipeData?: IRecipe;
+}) => {
   const { user, isLoading } = useUser();
   const [value, setValue] = useState("");
   const [instructions, setInstructions] = useState(" ");
   const { mutate: handleCreateRecipe, isPending } = useCreateRecipe(
     user?.email!
   );
-  const { data: singleRecipeData } = useGetSingleRecipe(id!);
-  const [recipeTitle, setRecipeTitle] = useState(singleRecipeData?.data?.title);
-  const [tags, setTags] = useState(singleRecipeData?.data?.tags);
+  const [recipeTitle, setRecipeTitle] = useState(singleRecipeData?.title!);
+  const [tags, setTags] = useState(singleRecipeData?.tags!);
   const [instruction, setInstruction] = useState(
-    singleRecipeData?.data?.instructions
+    singleRecipeData?.instructions!
   );
   const { mutate: handleUpdateRecipe } = useUpdateRecipe(user?.email!);
 
@@ -41,10 +45,10 @@ const RecipeCard = ({ title, id }: { title: string; id?: string }) => {
   console.log({ id });
 
   useEffect(() => {
-    if (singleRecipeData?.data) {
-      setRecipeTitle(singleRecipeData.data.title);
-      setTags(singleRecipeData.data.tags);
-      setInstruction(singleRecipeData.data.instructions);
+    if (singleRecipeData) {
+      setRecipeTitle(singleRecipeData.title);
+      setTags(singleRecipeData.tags);
+      setInstruction(singleRecipeData.instructions);
     }
   }, [singleRecipeData]);
 
@@ -124,7 +128,7 @@ const RecipeCard = ({ title, id }: { title: string; id?: string }) => {
           tags: tags,
           contentType: data.contentType
             ? data.contentType
-            : singleRecipeData?.data?.contentType,
+            : singleRecipeData?.contentType,
           instructions:
             instructions.length > 0 ? instructionsWithoutImages : instruction,
         },
@@ -132,6 +136,7 @@ const RecipeCard = ({ title, id }: { title: string; id?: string }) => {
       setInstructions(
         instructions.length > 0 ? instructionsWithoutImages : instruction
       );
+
       console.log(updatedData);
       handleUpdateRecipe(updatedData);
     }

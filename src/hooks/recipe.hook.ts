@@ -3,16 +3,19 @@ import { FieldValues } from "react-hook-form";
 import {
   createRecipe,
   deleteRecipe,
+  deleteRecipeComment,
   getAllMyRecipe,
   getAllMyTags,
   getAllRecipe,
   getSingleRecipe,
   updateDownvote,
+  updateRating,
   updateRecipe,
+  updateRecipeComment,
   updateUpvote,
 } from "../services/Recipe";
 import { toast } from "sonner";
-import { queryParams } from "../app/(WithCommonLayout)/(admin)/admin-dashboard/all-recipe/page";
+import { queryParams } from "../components/UI/AdminDashboardCard";
 
 export const useCreateRecipe = (email: string) => {
   const queryClient = useQueryClient();
@@ -54,8 +57,7 @@ export const useGetAllMyRecipe = (email: string) => {
 
   return useMutation({
     mutationKey: ["RECIPE", email],
-    mutationFn: async (query: { id: string; query: queryParams[] }) =>
-      await getAllMyRecipe(query),
+    mutationFn: async (query: queryParams[]) => await getAllMyRecipe(query),
   });
 };
 
@@ -124,6 +126,57 @@ export const useUpdateDownvote = (email: string) => {
 
   return useMutation<any, Error, FieldValues>({
     mutationFn: async (downvoteData) => await updateDownvote(downvoteData),
+
+    onSuccess(data, variables, context) {
+      toast.success(data.message);
+      // Invalidate the specific query using the query key with email
+      queryClient.invalidateQueries({ queryKey: ["RECIPE", email] });
+    },
+    onError(error, variables, context) {
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useUpdateRating = (email: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<any, Error, FieldValues>({
+    mutationFn: async (ratingData) => await updateRating(ratingData),
+
+    onSuccess(data, variables, context) {
+      toast.success(data.message);
+      // Invalidate the specific query using the query key with email
+      queryClient.invalidateQueries({ queryKey: ["RECIPE", email] });
+    },
+    onError(error, variables, context) {
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useUpdateRecipeComment = (email: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<any, Error, FieldValues>({
+    mutationFn: async (commentData) => await updateRecipeComment(commentData),
+
+    onSuccess(data, variables, context) {
+      toast.success(data.message);
+      // Invalidate the specific query using the query key with email
+      queryClient.invalidateQueries({ queryKey: ["RECIPE", email] });
+    },
+    onError(error, variables, context) {
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useDeleteRecipeComment = (email: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<any, Error, FieldValues>({
+    mutationFn: async (commentData) => await deleteRecipeComment(commentData),
 
     onSuccess(data, variables, context) {
       toast.success(data.message);

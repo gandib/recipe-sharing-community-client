@@ -40,11 +40,13 @@ const RecipeDisplayCard = ({ recipe }: { recipe: IRecipe[] }) => {
                 {data.rating && data.rating.length > 0 ? (
                   <h4 className="mt-2 rounded flex items-center  p-1 text-base md:text-base font-medium text-green-500">
                     Rating:{" "}
-                    {(
-                      data.rating.reduce(
-                        (pre, next) => pre.rating + next.rating
-                      ) / data.rating.length
-                    ).toFixed(1)}
+                    {data?.rating?.length &&
+                      (
+                        data.rating.reduce(
+                          (pre, next) => pre + next.rating,
+                          0
+                        ) / data.rating.length
+                      ).toFixed(1)}
                   </h4>
                 ) : (
                   <h4 className="mt-2 rounded  p-1 text-base md:text-base font-medium text-green-500">
