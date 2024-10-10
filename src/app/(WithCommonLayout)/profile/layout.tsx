@@ -10,7 +10,7 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="md:hidden">
         <SidebarMenu links={profileLinks} />
       </div>
-      <div className="my-3 flex w-full gap-6 justify-center">
+      <div className="my-3 flex w-full gap-6 ">
         <div className="md:w-1/5 hidden md:flex min-h-full bg-default-100">
           <ProfileSidebar />
         </div>
