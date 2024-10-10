@@ -6,8 +6,7 @@ const MyRecipe = async () => {
     { name: "sort", value: "-upvote" },
   ]);
   const { data: allMyTag } = await getAllMyTag();
-  console.log({ allMyTag });
-  console.log(myRecipe);
+
   return (
     <div>
       <MyRecipeCard recipe={myRecipe} tags={allMyTag} />

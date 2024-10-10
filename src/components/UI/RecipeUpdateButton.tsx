@@ -9,7 +9,6 @@ const RecipeUpdateButton = ({ id }: { id: string }) => {
   const router = useRouter();
 
   const handleUpdate = () => {
-    console.log(id);
     router.push(
       `${user?.role === "user" ? `/user-dashboard/update-recipe/${id}` : `/admin-dashboard/update-recipe/${id}`}`
     );

@@ -362,7 +362,6 @@ export const deleteRecipeComment = async (commentData: FieldValues) => {
 };
 
 export const updateRecipeStatus = async (recipeData: FieldValues) => {
-  console.log(recipeData);
   try {
     const { data } = await axiosInstance.patch(
       `/recipe/status/${recipeData.id}`,

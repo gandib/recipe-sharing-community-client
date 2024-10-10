@@ -6,10 +6,9 @@ const Home = async () => {
   const { data: allRecipe } = await getAllRecipes([
     { name: "sort", value: "-upvote" },
   ]);
-  console.log({ allRecipe });
 
   const { data: allTag } = await getAllTag();
-  console.log({ allTag });
+
   return (
     <Container>
       <RecipeFeedCard recipe={allRecipe} tags={allTag} />

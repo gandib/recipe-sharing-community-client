@@ -15,6 +15,7 @@ import SeeDetailButton from "./SeeDetailButton";
 import { Button } from "@nextui-org/button";
 import { TwitterIcon } from "../icons";
 import { FacebookIcon } from "@/src/assets/icons";
+import { number } from "zod";
 const RecipeHomeDisplayCard = ({
   recipe,
   user,
@@ -26,15 +27,13 @@ const RecipeHomeDisplayCard = ({
   shareUrl?: string;
   role: string;
 }) => {
-  console.log(recipe);
-  console.log(user === recipe[1]?.user?._id);
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 grow ">
       {recipe &&
         recipe.length > 0 &&
-        recipe?.map((data: IRecipe) => (
+        recipe?.map((data: IRecipe, index) => (
           <NextUiCard
-            key={data._id}
+            key={index}
             isFooterBlurred
             className="  hover:shadow-2xl"
           >

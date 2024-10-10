@@ -41,7 +41,7 @@ const UserManagement = () => {
     const userDeletedData = {
       id: id,
     };
-    console.log(userDeletedData);
+
     deleteUser(userDeletedData);
   };
 

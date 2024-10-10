@@ -32,19 +32,17 @@ export default function Register() {
       image: " ",
       role: "user",
     };
-    console.log("inside", userData);
-    formData.append("data", JSON.stringify(userData));
-    console.log(imageFiles[0]);
-    formData.append("file", imageFiles[0]);
 
-    console.log(formData.get("file"));
+    formData.append("data", JSON.stringify(userData));
+
+    formData.append("file", imageFiles[0]);
 
     handleUserRagistration(formData);
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
-    console.log(file);
+
     setImageFiles([file]);
 
     if (file) {

@@ -8,9 +8,7 @@ import UserSidebarOptions from "./UserSidebarOptions";
 
 const UserSidebar = () => {
   const { user: userData, isLoading } = useUser();
-  const { data: user } = useGetUser(userData?.email!);
 
-  console.log(user);
   return (
     <div className="">
       <div className="mt-3 space-y-2 min-h-screen rounded-xl bg-default-100 p-2">

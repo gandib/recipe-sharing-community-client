@@ -54,9 +54,7 @@ const MyRecipeCard = ({
   const { mutate: handleTags, data: myTags } = useGetAllMyTags(user?.email!);
 
   const searchText = useDebounce(watch("search"));
-  console.log(searchText);
 
-  console.log(data);
   useEffect(() => {
     setRecipeData(data?.data?.result);
 
@@ -87,9 +85,7 @@ const MyRecipeCard = ({
     }
   }, [user, currentPage, searchText, tag, sort]);
 
-  const onSubmit = (data: FieldValues) => {
-    console.log(data);
-  };
+  const onSubmit = (data: FieldValues) => {};
 
   useEffect(() => {
     if (!searchText) {
@@ -106,14 +102,11 @@ const MyRecipeCard = ({
   }
 
   // const sorted = recipeData?.sort((a, b) => b.upvote.length - a.upvote.length);
-  // console.log(sorted);
 
   const sortBy = [
     { name: "Most Upvoted", value: "-upvote" },
     { name: "Less Upvoted", value: "upvote" },
   ];
-
-  console.log(sort);
 
   return (
     <div>

@@ -31,7 +31,6 @@ const Login = () => {
     };
   }, []);
 
-  console.log(redirect);
   const { mutate: handleUserLogin, isPending, isSuccess } = useUserlogin();
   const { mutate: handleForgetPassword } = useForgetPassword();
 

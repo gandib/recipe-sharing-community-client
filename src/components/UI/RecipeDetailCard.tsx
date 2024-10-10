@@ -33,8 +33,6 @@ const RecipeDetailCard = ({ recipe }: { recipe: IRecipe }) => {
   const [rate, setRate] = useState(5);
   const [commentError, setCommentError] = useState("");
 
-  console.log(recipe);
-
   const handleRating = () => {
     const ratingData = {
       id: recipe?._id,
@@ -61,7 +59,6 @@ const RecipeDetailCard = ({ recipe }: { recipe: IRecipe }) => {
   };
 
   const handleDeleteComment = (id: string) => {
-    console.log(id);
     const commentData = {
       id: recipe?._id,
       commentId: id,

@@ -9,7 +9,6 @@ const UpvoteButton = ({ data }: { data: IRecipe }) => {
   const { user, isLoading } = useUser();
   const { mutate: upvote } = useUpdateUpvote(user?.email!);
   const handleUpvote = () => {
-    console.log(data._id);
     const upvoteData = {
       id: data._id,
       data: {

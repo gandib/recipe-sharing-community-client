@@ -8,7 +8,6 @@ const RecipeDeleteButton = ({ id }: { id: string }) => {
   const { user, isLoading } = useUser();
   const { mutate: deleteRecipe } = useDeleteRecipe(user?.email!);
   const handleDelete = () => {
-    console.log(id);
     deleteRecipe(id);
   };
 

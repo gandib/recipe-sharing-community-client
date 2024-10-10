@@ -27,7 +27,7 @@ const AllAdmin = () => {
   const { mutate: statusUpdate } = useUpdateUserStatus(email);
   const { mutate: deleteUser } = useDeleteUser(email);
   const router = useRouter();
-  console.log(data);
+
   const handleStatus = (email: string, id: string, status: string) => {
     setEmail(email);
     const userStatusData = {
@@ -45,7 +45,7 @@ const AllAdmin = () => {
     const userDeletedData = {
       id: id,
     };
-    console.log(userDeletedData);
+
     deleteUser(userDeletedData);
   };
 

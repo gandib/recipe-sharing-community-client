@@ -9,7 +9,7 @@ import moment from "moment";
 const PaymentButton = ({ price }: { price: number }) => {
   const { user, isLoading } = useUser();
   const { mutate: handleMembershipPayment, data } = useMembershipPayment();
-  console.log(data);
+
   if (data?.success) {
     window.location.href = data?.data?.payment_url;
   }

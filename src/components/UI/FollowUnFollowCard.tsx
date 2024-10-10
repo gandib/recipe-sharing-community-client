@@ -17,7 +17,6 @@ const FollowUnFollowCard = ({ userId }: { userId: string }) => {
   const { mutate: updateUnFollowing } = useUpdateUnfollowing(user?.email!);
 
   const handleFollowUnfollow = (followUnfollow: string) => {
-    console.log(followUnfollow, userId);
     if (followUnfollow === "follow") {
       const followData = {
         id: userId,
@@ -27,7 +26,6 @@ const FollowUnFollowCard = ({ userId }: { userId: string }) => {
       };
       updateFollower(followData);
     } else {
-      console.log(followUnfollow);
       const unFollowData = {
         id: user?._id,
         data: {

@@ -7,7 +7,6 @@ const AdminDashboard = async () => {
   ]);
 
   const { data: allTag } = await getAllTag();
-  console.log({ allTag });
 
   return (
     <div>

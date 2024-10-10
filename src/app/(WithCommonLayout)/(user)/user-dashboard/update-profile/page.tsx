@@ -41,8 +41,6 @@ export default function UpdateProfile() {
       profileData.data.bio = data.bio;
     }
 
-    console.log("inside", profileData);
-
     handleUpdateUser(profileData!);
   };
 

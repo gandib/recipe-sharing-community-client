@@ -9,7 +9,7 @@ const StatusChange = async () => {
   //     { name: "sort", value: "-upvote" },
   //   ]);
   const { data: allRecipe } = await getAllRecipeForStatusChange();
-  console.log(allRecipe);
+
   return (
     <div>
       <StatusChangeCard recipe={allRecipe} />

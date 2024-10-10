@@ -12,13 +12,7 @@ import { useEffect } from "react";
 const ProfileSidebar = () => {
   const { user: userData, isLoading } = useUser();
   const { data: user, isPending } = useGetUser(userData?.email!);
-  // useEffect(() => {
-  //   if (userData?.email) {
-  //     handleGetUser(userData.email);
-  //   }
-  // }, [userData]);
 
-  console.log(user);
   return (
     <div className="">
       <div className="mt-3 space-y-2 min-h-screen rounded-xl bg-default-100 p-2">

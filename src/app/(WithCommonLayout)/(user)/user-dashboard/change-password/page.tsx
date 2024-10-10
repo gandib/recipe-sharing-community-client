@@ -19,8 +19,6 @@ export default function ChangePassword() {
       data: data,
     };
 
-    console.log("inside", profileData);
-
     handleUpdateUser(profileData!);
   };
 

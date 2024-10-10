@@ -40,10 +40,6 @@ const RecipeCard = ({
   );
   const { mutate: handleUpdateRecipe } = useUpdateRecipe(user?.email!);
 
-  console.log(singleRecipeData);
-
-  console.log({ id });
-
   useEffect(() => {
     if (singleRecipeData) {
       setRecipeTitle(singleRecipeData.title);
@@ -90,11 +86,9 @@ const RecipeCard = ({
   };
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
     const imageSources = extractImages(value);
     const instructionsWithoutImages = removeImagesFromContent(value);
     setInstructions(instructionsWithoutImages);
-    console.log("Instructions without images:", instructionsWithoutImages);
 
     const formData = new FormData();
     imageSources.forEach((src, index) => {
@@ -111,10 +105,8 @@ const RecipeCard = ({
       user: user?._id,
       contentType: user?.membership === "basic" ? "free" : data.contentType,
     };
-    console.log("inside", recipeData);
-    formData.append("data", JSON.stringify(recipeData));
 
-    console.log(formData.get("file"));
+    formData.append("data", JSON.stringify(recipeData));
 
     if (!id) {
       handleCreateRecipe(formData);
@@ -137,7 +129,6 @@ const RecipeCard = ({
         instructions.length > 0 ? instructionsWithoutImages : instruction
       );
 
-      console.log(updatedData);
       handleUpdateRecipe(updatedData);
     }
   };

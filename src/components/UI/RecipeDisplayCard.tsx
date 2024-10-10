@@ -13,8 +13,6 @@ import DownvoteButton from "./DownvoteButton";
 import FollowUnFollowCard from "./FollowUnFollowCard";
 import SeeDetailButton from "./SeeDetailButton";
 const RecipeDisplayCard = ({ recipe }: { recipe: IRecipe[] }) => {
-  console.log(recipe);
-
   return (
     <div className="grid lg:grid-cols-2 gap-2 grow">
       {recipe &&

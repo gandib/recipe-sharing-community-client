@@ -17,7 +17,6 @@ const RecoverPassword = () => {
   const router = useRouter();
   const { setIsLoading } = useUser();
 
-  console.log(redirect);
   const {
     mutate: handleRecoverPassword,
     isPending,
@@ -25,7 +24,6 @@ const RecoverPassword = () => {
   } = useRecoverPassword();
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
     const recoverData = {
       token: searchParams?.get("token"),
       data: {
@@ -33,7 +31,7 @@ const RecoverPassword = () => {
         newPassword: data.newPassword,
       },
     };
-    console.log(recoverData);
+
     handleRecoverPassword(recoverData);
     setIsLoading(true);
   };

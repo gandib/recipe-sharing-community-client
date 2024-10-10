@@ -1,9 +1,13 @@
 "use client";
 
 import { useUser } from "@/src/context/user.provider";
-import { useGetAllMyTags, useGetAllRecipe } from "@/src/hooks/recipe.hook";
-import { useEffect, useRef, useState } from "react";
-import { Pagination } from "@nextui-org/pagination";
+import { useGetAllRecipe } from "@/src/hooks/recipe.hook";
+import { useEffect, useState } from "react";
+import {
+  Pagination,
+  PaginationItem,
+  PaginationCursor,
+} from "@nextui-org/pagination";
 import { FieldValues, useForm } from "react-hook-form";
 import useDebounce from "@/src/hooks/debounce.hook";
 import { Input } from "@nextui-org/input";
@@ -12,7 +16,6 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { IRecipe } from "@/src/types";
 import { Button } from "@nextui-org/button";
 import RecipeHomeDisplayCard from "./RecipeHomeDisplayCard";
-import Loading from "./Loading";
 
 export type queryParams = {
   name: string;
@@ -40,75 +43,68 @@ const RecipeFeedCard = ({
     isPending,
     isSuccess,
   } = useGetAllRecipe();
+  const [limit, setLimit] = useState(recipe?.result?.length);
   const [sort, setSort] = useState("-upvote");
   const [currentPage, setCurrentPage] = useState(1);
   const { register, handleSubmit, watch } = useForm();
-  const [recipeData, setRecipeData] = useState<IRecipe[]>([]);
+  const [recipeData, setRecipeData] = useState<[]>([]);
   const [tag, setTag] = useState("");
-  const { mutate: handleTags, data: myTags } = useGetAllMyTags(user?.email!);
-  const [shareUrl, setShareUrl] = useState("");
-  const loadingRef = useRef<HTMLDivElement | null>(null);
+  const [contentType, setContentType] = useState("free");
+
+  const searchText = useDebounce(watch("search"));
 
   useEffect(() => {
-    setShareUrl(window.location.href);
-  }, []);
+    setRecipeData(data?.data?.result);
 
-  const fetchRecipes = async () => {
-    const query: queryParams[] = [
-      { name: "sort", value: sort },
-      { name: "page", value: currentPage },
-      { name: "limit", value: 9 },
-    ];
-
+    const query: queryParams[] = [];
+    if (limit) {
+      query.push({ name: "limit", value: limit });
+    }
+    if (sort) {
+      query.push({ name: "sort", value: sort });
+    }
+    if (searchText) {
+      query.push({ name: "searchTerm", value: searchText });
+    }
     if (tag) {
       query.push({ name: "tags", value: tag });
     }
-
-    await handleRecipe(query);
-    handleTags(user?._id!);
-  };
-
-  useEffect(() => {
-    fetchRecipes();
-  }, [user, tag, sort, currentPage]);
-
-  useEffect(() => {
-    if (isSuccess && data) {
-      setRecipeData((prevData) => [...prevData, ...data.data.result]);
-    }
-  }, [isSuccess, data]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && !isPending) {
-        setCurrentPage((prev) => prev + 1);
-      }
-    });
-
-    if (loadingRef.current) {
-      observer.observe(loadingRef.current);
+    console.log(query);
+    handleRecipe(query);
+    // if (user?.email) {
+    //   handleTags(user?._id);
+    // }
+    if (user?.membership === "basic" || !user?.email) {
+      query.push({ name: "contentType", value: "free" });
     }
 
-    return () => {
-      if (loadingRef.current) {
-        observer.unobserve(loadingRef.current);
-      }
-    };
-  }, [loadingRef, isPending]);
+    if (searchText) {
+      handleRecipe(query);
+    }
+  }, [user, searchText, tag, sort]);
+
+  const onSubmit = (data: FieldValues) => {};
+
+  useEffect(() => {
+    if (!searchText) {
+      setRecipeData(data?.data?.result);
+    }
+
+    if (!isPending && isSuccess && data && searchText) {
+      setRecipeData(data?.data?.result ?? []);
+    }
+  }, [isPending, isSuccess, data, searchText]);
 
   if (isLoading) {
-    return <Loading />;
+    <p>Loading...</p>;
   }
 
-  const onSubmit = (data: FieldValues) => {
-    console.log(data);
-  };
+  // const sorted = recipeData?.sort((a, b) => b.upvote.length - a.upvote.length);
+
   const sortBy = [
     { name: "Most Upvoted", value: "-upvote" },
     { name: "Less Upvoted", value: "upvote" },
   ];
-
-  console.log(sort, { recipeData });
 
   return (
     <div>
@@ -149,7 +145,7 @@ const RecipeFeedCard = ({
           </Autocomplete>
         )}
 
-        {recipe && recipe?.result?.length > 0 && (
+        {recipe && recipe.result.length > 0 && (
           <Autocomplete
             onInputChange={(value) =>
               setSort(value === "Most Upvoted" ? "-upvote" : "upvote")
@@ -175,15 +171,9 @@ const RecipeFeedCard = ({
       </div>
 
       <RecipeHomeDisplayCard
-        user={user?._id!}
         recipe={recipeData || recipe?.result}
-        shareUrl={shareUrl}
         role={user?.role!}
       />
-
-      <div ref={loadingRef} className="loading-indicator">
-        {isPending && <p>Loading more recipes...</p>}
-      </div>
 
       {/* <div className="mt-5 flex justify-center items-center">
         {recipe?.result?.length > 0 && (

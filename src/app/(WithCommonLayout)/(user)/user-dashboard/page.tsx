@@ -7,7 +7,6 @@ const UserDashboard = async () => {
   ]);
 
   const { data: allMyTag } = await getAllMyTag();
-  console.log({ allMyTag });
 
   return (
     <div>

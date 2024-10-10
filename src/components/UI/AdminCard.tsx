@@ -30,7 +30,6 @@ export default function AdminCard({
   const [id, setId] = useState(data?.data?._id);
   const { mutate: handleUpdate } = useUpdateUser(email!);
 
-  console.log(name);
   useEffect(() => {
     if (data?.data) {
       setName(data.data.name);
@@ -49,12 +48,10 @@ export default function AdminCard({
       bio: bio ? bio : data.bio,
       role: "admin",
     };
-    console.log("inside", userData);
-    formData.append("data", JSON.stringify(userData));
-    console.log(imageFiles[0]);
-    formData.append("file", imageFiles[0]);
 
-    console.log(formData.get("file"));
+    formData.append("data", JSON.stringify(userData));
+
+    formData.append("file", imageFiles[0]);
 
     if (!email) {
       handleUserRagistration(formData);
@@ -65,14 +62,13 @@ export default function AdminCard({
         id: id,
         data: userData,
       };
-      console.log(updatedData);
       handleUpdate(updatedData);
     }
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
-    console.log(file);
+
     setImageFiles([file]);
 
     if (file) {

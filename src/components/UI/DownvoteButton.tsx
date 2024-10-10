@@ -9,7 +9,6 @@ const DownvoteButton = ({ data }: { data: IRecipe }) => {
   const { user, isLoading } = useUser();
   const { mutate: downvote } = useUpdateDownvote(user?.email!);
   const handleDownvote = () => {
-    console.log(data?._id);
     const downvoteData = {
       id: data?._id,
       data: {
