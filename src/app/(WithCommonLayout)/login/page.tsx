@@ -10,8 +10,9 @@ import { useForgetPassword, useUserlogin } from "@/src/hooks/auth.hook";
 import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "@/src/components/UI/Loading";
 import { useUser } from "@/src/context/user.provider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import loginValidationSchema from "@/src/schemas/login.schemas";
+import "../../../../src/styles/animation.css";
 
 const Login = () => {
   const searchParams = useSearchParams();
@@ -20,6 +21,15 @@ const Login = () => {
   const { setIsLoading } = useUser();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+
+    return () => {
+      setIsVisible(false);
+    };
+  }, []);
 
   console.log(redirect);
   const { mutate: handleUserLogin, isPending, isSuccess } = useUserlogin();
@@ -54,7 +64,9 @@ const Login = () => {
   };
 
   return (
-    <>
+    <div
+      className={`transition-opacity duration-500 ${isVisible ? "fade-enter-active" : "fade-enter"}`}
+    >
       {isPending && <Loading />}
       <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center ">
         <h3 className="my-2 text-2xl font-bold">Login with Recipe Sharing</h3>
@@ -104,7 +116,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

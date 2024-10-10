@@ -4,12 +4,25 @@ import { useGetUser } from "@/src/hooks/user.hook";
 import { Button } from "@nextui-org/button";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import "../../../../src/styles/animation.css";
 
 const Profile = () => {
   const { user: userData, isLoading } = useUser();
   const { data: user, isPending } = useGetUser(userData?.email!);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+
+    return () => {
+      setIsVisible(false);
+    };
+  }, []);
   return (
-    <div>
+    <div
+      className={`transition-opacity duration-500 ${isVisible ? "fade-enter-active" : "fade-enter"}`}
+    >
       <div className="rounded-xl bg-default-100 p-2">
         <div className="h-[100px] w-full rounded-md flex gap-2">
           <Image

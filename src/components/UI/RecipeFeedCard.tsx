@@ -12,6 +12,7 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { IRecipe } from "@/src/types";
 import { Button } from "@nextui-org/button";
 import RecipeHomeDisplayCard from "./RecipeHomeDisplayCard";
+import Loading from "./Loading";
 
 export type queryParams = {
   name: string;
@@ -96,7 +97,7 @@ const RecipeFeedCard = ({
   }, [loadingRef, isPending]);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   const onSubmit = (data: FieldValues) => {

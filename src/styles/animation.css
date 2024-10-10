@@ -1,0 +1,23 @@
+/* styles/animations.css */
+
+.fade-enter {
+  opacity: 0;
+  transform: translateY(20px); /* Slight downward movement */
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0); /* Original position */
+  transition:
+    opacity 300ms ease-in,
+    transform 300ms ease-in; /* Transition properties */
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-out; /* Transition properties */
+}
