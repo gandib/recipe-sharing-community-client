@@ -173,6 +173,7 @@ const RecipeFeedCard = ({
       <RecipeHomeDisplayCard
         recipe={recipeData || recipe?.result}
         role={user?.role!}
+        user={user?._id}
       />
 
       {/* <div className="mt-5 flex justify-center items-center">

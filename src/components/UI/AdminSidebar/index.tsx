@@ -12,7 +12,7 @@ const AdminSidebar = () => {
 
   return (
     <div className="">
-      <div className="mt-3 space-y-2 min-h-screen rounded-xl bg-default-100 p-2">
+      <div className="mt-3 w-4 space-y-2 min-h-screen rounded-xl bg-default-100">
         {isLoading && (
           <div className=" bg-black/10 fixed w-1/4 h-14 rounded-md backdrop-blur-md flex justify-center items-center">
             <Spinner />
