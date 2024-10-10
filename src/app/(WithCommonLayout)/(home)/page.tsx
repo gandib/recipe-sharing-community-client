@@ -12,7 +12,7 @@ const Home = async () => {
   console.log({ allTag });
   return (
     <Container>
-      <RecipeFeedCard recipe={allRecipe?.result} tags={allTag} />
+      <RecipeFeedCard recipe={allRecipe} tags={allTag} />
     </Container>
   );
 };

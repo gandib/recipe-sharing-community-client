@@ -25,7 +25,7 @@ const UpvoteButton = ({ data }: { data: IRecipe }) => {
   return (
     <div>
       <ThumbsUp
-        className={`${data?.upvote.includes(user?._id) ? "text-green-500" : ""}`}
+        className={`${data?.upvote.includes(user?._id) ? "text-green-500 hover:text-blue-500 cursor-pointer" : "hover:text-blue-500 cursor-pointer"}`}
         onClick={handleUpvote}
       />
     </div>

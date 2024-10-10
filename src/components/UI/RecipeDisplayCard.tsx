@@ -20,7 +20,11 @@ const RecipeDisplayCard = ({ recipe }: { recipe: IRecipe[] }) => {
       {recipe &&
         recipe.length > 0 &&
         recipe?.map((data: IRecipe) => (
-          <NextUiCard key={data._id} isFooterBlurred className="  ">
+          <NextUiCard
+            key={data._id}
+            isFooterBlurred
+            className=" hover:shadow-2xl "
+          >
             <CardHeader className="h-[450px] sm:h-[500px] md:h-[600px] lg:h-[520px] flex-col items-start">
               {data?.image && data?.image?.length > 0 && (
                 <Image

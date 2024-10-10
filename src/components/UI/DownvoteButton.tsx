@@ -25,7 +25,7 @@ const DownvoteButton = ({ data }: { data: IRecipe }) => {
   return (
     <div>
       <ThumbsDown
-        className={`${data?.downvote.includes(user?._id) ? "text-green-500" : ""}`}
+        className={`${data?.downvote.includes(user?._id) ? "text-green-500 hover:text-blue-500 cursor-pointer" : "hover:text-blue-500 cursor-pointer"}`}
         onClick={handleDownvote}
       />
     </div>

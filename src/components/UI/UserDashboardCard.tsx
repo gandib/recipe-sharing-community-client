@@ -1,17 +1,9 @@
 "use client";
 import RecipeDisplayCard from "@/src/components/UI/RecipeDisplayCard";
 import { useUser } from "@/src/context/user.provider";
-import {
-  useGetAllMyRecipe,
-  useGetAllMyTags,
-  useGetAllRecipe,
-} from "@/src/hooks/recipe.hook";
+import { useGetAllMyRecipe, useGetAllMyTags } from "@/src/hooks/recipe.hook";
 import { useEffect, useState } from "react";
-import {
-  Pagination,
-  PaginationItem,
-  PaginationCursor,
-} from "@nextui-org/pagination";
+import { Pagination } from "@nextui-org/pagination";
 import { FieldValues, useForm } from "react-hook-form";
 import useDebounce from "@/src/hooks/debounce.hook";
 import { Input } from "@nextui-org/input";

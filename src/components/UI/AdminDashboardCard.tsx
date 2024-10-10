@@ -45,7 +45,7 @@ const AdminDashboardCard = ({
     data,
     isPending,
     isSuccess,
-  } = useGetAllRecipe(user?.email!);
+  } = useGetAllRecipe();
   const [limit, setLimit] = useState(10);
   const [sort, setSort] = useState("-upvote");
   const [currentPage, setCurrentPage] = useState(1);

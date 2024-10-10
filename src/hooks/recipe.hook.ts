@@ -35,11 +35,11 @@ export const useCreateRecipe = (email: string) => {
   });
 };
 
-export const useGetAllRecipe = (email: string) => {
+export const useGetAllRecipe = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: ["RECIPE", email],
+    mutationKey: ["RECIPE"],
     mutationFn: async (query: queryParams[]) => await getAllRecipe(query),
   });
 };
