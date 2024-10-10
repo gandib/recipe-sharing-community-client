@@ -46,7 +46,7 @@ Recipe Sharing Community is your go-to platform for browsing a wide variety of r
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/gandib/recipe-sharing-community-client
+   git clone https://recipe-sharing-community-client-silk.vercel.app/
    cd recipe-sharing-community-client
    git clone https://recipe-sharing-community-server-beryl.vercel.app/
    cd recipe-sharing-community-server
