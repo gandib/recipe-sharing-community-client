@@ -71,7 +71,7 @@ const AllAdmin = () => {
               <TableRow key={userData._id}>
                 <TableCell>{userData.name}</TableCell>
                 <TableCell>{userData.email}</TableCell>
-                <TableCell className="flex justify-evenly">
+                <TableCell className="flex justify-evenly gap-2">
                   <Button
                     onClick={() =>
                       handleStatus(

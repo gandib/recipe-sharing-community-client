@@ -52,7 +52,7 @@ export default function UpdateProfile() {
   }
 
   return (
-    <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center ">
+    <div className="flex mt-6 h-[calc(100vh-200px)] w-full flex-col items-center justify-center ">
       <h3 className="my-2 text-2xl font-bold">Update Profile</h3>
       <div className="w-[80%]">
         <FXForm
