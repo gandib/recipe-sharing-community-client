@@ -259,13 +259,27 @@ export const TrashIcon = () => {
 };
 export const FacebookIcon = () => {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 512 512"
-      className="text-blue-600"
-      height={24}
-    >
-      <path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256C0 376 82.7 476.8 194.2 504.5V334.2H141.4V256h52.8V222.3c0-87.1 39.4-127.5 125-127.5c16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1c-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287V510.1C413.8 494.8 512 386.9 512 256h0z" />
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+      <linearGradient
+        id="a"
+        x1="-277.375"
+        x2="-277.375"
+        y1="406.6018"
+        y2="407.5726"
+        gradientTransform="matrix(40 0 0 -39.7778 11115.001 16212.334)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" stop-color="#0062e0" />
+        <stop offset="1" stop-color="#19afff" />
+      </linearGradient>
+      <path
+        fill="url(#a)"
+        d="M16.7 39.8C7.2 38.1 0 29.9 0 20 0 9 9 0 20 0s20 9 20 20c0 9.9-7.2 18.1-16.7 19.8l-1.1-.9h-4.4l-1.1.9z"
+      />
+      <path
+        fill="#fff"
+        d="m27.8 25.6.9-5.6h-5.3v-3.9c0-1.6.6-2.8 3-2.8H29V8.2c-1.4-.2-3-.4-4.4-.4-4.6 0-7.8 2.8-7.8 7.8V20h-5v5.6h5v14.1c1.1.2 2.2.3 3.3.3 1.1 0 2.2-.1 3.3-.3V25.6h4.4z"
+      />
     </svg>
   );
 };

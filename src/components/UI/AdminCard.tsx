@@ -89,7 +89,7 @@ export default function AdminCard({
   return (
     <div className="flex mt-6 w-full flex-col items-center justify-center mb-12">
       <h3 className="my-2 text-2xl font-bold">{title}</h3>
-      <div className="md:w-[50%] lg:w-[50%] w-[80%]">
+      <div className="w-full sm:w-[80%]">
         <FXForm
           onSubmit={onSubmit}
           resolver={zodResolver(

@@ -158,7 +158,7 @@ const RecipeCard = ({
   return (
     <div className="flex mt-6 w-full flex-col items-center justify-center mb-12">
       <h3 className="my-2 text-2xl font-bold">{title}</h3>
-      <div className="w-[80%]">
+      <div className="w-full sm:w-[80%]">
         <FXForm
           onSubmit={onSubmit}
           resolver={zodResolver(
@@ -202,6 +202,7 @@ const RecipeCard = ({
               value={value || instruction}
               onChange={setValue}
               placeholder="Please type instructions and give an image"
+              className=""
             />
           </div>
           {!instructions && (

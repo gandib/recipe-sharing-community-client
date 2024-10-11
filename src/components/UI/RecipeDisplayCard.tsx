@@ -23,7 +23,7 @@ const RecipeDisplayCard = ({ recipe }: { recipe: IRecipe[] }) => {
             isFooterBlurred
             className=" hover:shadow-2xl "
           >
-            <CardHeader className="h-[450px] sm:h-[500px] md:h-[600px] lg:h-[550px] flex-col items-start">
+            <CardHeader className=" h-[470px] sm:h-[500px] md:h-[600px] lg:h-[550px] flex-col items-start">
               {data?.image && data?.image?.length > 0 && (
                 <Image
                   width={500}

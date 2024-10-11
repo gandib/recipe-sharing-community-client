@@ -96,7 +96,7 @@ const RecipeHomeDisplayCard = ({
                   <div className="flex items-center justify-end mx-2">
                     <Button
                       as="a"
-                      href={`https://www.x.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl!)}`}
+                      href={`https://www.x.com/sharer/sharer.php?u=${encodeURIComponent(`${window.location}/profile/${data?._id}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600  flex
@@ -108,7 +108,7 @@ const RecipeHomeDisplayCard = ({
                     </Button>
                     <Button
                       as="a"
-                      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl!)}`}
+                      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${window.location}/profile/${data?._id}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="  flex

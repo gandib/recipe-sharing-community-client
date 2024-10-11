@@ -33,7 +33,7 @@ const StatusChangeCard = ({ recipe }: { recipe: IRecipe[] }) => {
   }
   return (
     <div>
-      <div className="">
+      {/* <div className="">
         <Card aria-label="Example static collection table">
           <div className="grid grid-cols-2 m-6">
             <h1 className="col-span-1">Title</h1>
@@ -62,7 +62,45 @@ const StatusChangeCard = ({ recipe }: { recipe: IRecipe[] }) => {
             </CardBody>
           ))}
         </Card>
-      </div>
+      </div> */}
+
+      <Table aria-label="Example static collection table">
+        <TableHeader>
+          <TableColumn>Title</TableColumn>
+          <TableColumn>ACTION</TableColumn>
+        </TableHeader>
+        <TableBody>
+          {recipe && Array.isArray(recipe) ? (
+            recipe.map((data: IRecipe) => (
+              <TableRow key={data._id}>
+                <TableCell>{data.title}</TableCell>
+                <TableCell className="flex justify-evenly gap-2">
+                  <Button
+                    onClick={() =>
+                      handleStatus(
+                        data?._id,
+                        data?.status === "published"
+                          ? "unpublished"
+                          : "published"
+                      )
+                    }
+                    variant="flat"
+                    className="bg-primary-500 text-white"
+                    size="sm"
+                  >
+                    {data?.status === "published" ? "unpublished" : "published"}
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell>No data available</TableCell>
+              <TableCell>No data</TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
 };
