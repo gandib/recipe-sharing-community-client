@@ -257,9 +257,13 @@ export const updateRecipe = async (recipeData: FieldValues) => {
 
 export const getSingleRecipe = async (recipeId: string) => {
   let fetchOptions = {};
+  const token = cookies().get("accessToken")?.value;
 
   fetchOptions = {
     cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   };
   const res = await fetch(
     `${envConfig.baseApi}/recipe/${recipeId}`,
