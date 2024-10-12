@@ -69,7 +69,7 @@ const RecipeFeedCard = ({
     if (tag) {
       query.push({ name: "tags", value: tag });
     }
-    console.log(query);
+
     handleRecipe(query);
     // if (user?.email) {
     //   handleTags(user?._id);

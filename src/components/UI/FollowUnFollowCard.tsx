@@ -8,6 +8,7 @@ import {
   useUpdateUnfollowing,
 } from "@/src/hooks/user.hook";
 import { Button } from "@nextui-org/button";
+import { toast } from "sonner";
 
 const FollowUnFollowCard = ({ userId }: { userId: string }) => {
   const { user, isLoading } = useUser();
@@ -17,6 +18,9 @@ const FollowUnFollowCard = ({ userId }: { userId: string }) => {
   const { mutate: updateUnFollowing } = useUpdateUnfollowing(user?.email!);
 
   const handleFollowUnfollow = (followUnfollow: string) => {
+    if (!user?._id) {
+      return toast("You are not logged in!");
+    }
     if (followUnfollow === "follow") {
       const followData = {
         id: userId,

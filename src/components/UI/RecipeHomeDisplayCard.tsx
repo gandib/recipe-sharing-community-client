@@ -92,7 +92,7 @@ const RecipeHomeDisplayCard = ({
                   )}
                 </div>
 
-                {user && (
+                {
                   <div className="flex items-center justify-end mx-2">
                     <Button
                       as="a"
@@ -119,7 +119,7 @@ const RecipeHomeDisplayCard = ({
                       <FacebookIcon />
                     </Button>
                   </div>
-                )}
+                }
               </div>
             </CardBody>
 
@@ -130,9 +130,7 @@ const RecipeHomeDisplayCard = ({
               {user && (user === data?.user?._id || role === "admin") && (
                 <RecipeDeleteButton id={data?._id} />
               )}
-              {user && (user === data?.user?._id || role === "admin") && (
-                <SeeDetailButton id={data?._id} />
-              )}
+              {user && <SeeDetailButton id={data?._id} />}
             </CardFooter>
           </NextUiCard>
         ))}
