@@ -11,9 +11,9 @@ const Home = async () => {
 
   const { data: allTag } = await getAllTag();
 
-  const ff = cookies().get("accessToken")?.value;
-  console.log(ff);
-  // const decoded = await jwtDecode(ff as string);
+  // const token = cookies().get("accessToken")?.value;
+  // console.log(token);
+  // const decoded = await jwtDecode(token as string);
   // console.log(decoded);
 
   return (

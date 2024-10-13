@@ -47,30 +47,33 @@ const FollowUnFollowCard = ({ userId }: { userId: string }) => {
   return (
     <div>
       <h1>
-        {userDataById?.data?.name}
-        {data?.data?._id !== userDataById?.data?._id && ": "}
-        {data?.data?._id !== userDataById?.data?._id && (
-          <Button
-            onClick={() =>
-              handleFollowUnfollow(
-                data?.data?.following?.some(
-                  (following: any) => following._id === userId
+        {userDataById?.data?.name ? userDataById?.data?.name : "Deleted User"}
+        {data?.data?._id !== userDataById?.data?._id &&
+          userDataById?.data?.name &&
+          ": "}
+        {data?.data?._id !== userDataById?.data?._id &&
+          userDataById?.data?.name && (
+            <Button
+              onClick={() =>
+                handleFollowUnfollow(
+                  data?.data?.following?.some(
+                    (following: any) => following._id === userId
+                  )
+                    ? "following"
+                    : "follow"
                 )
-                  ? "following"
-                  : "follow"
+              }
+              size="sm"
+              variant="light"
+              className="text-green-500 text-sm"
+            >
+              {data?.data?.following?.some(
+                (following: any) => following._id === userId
               )
-            }
-            size="sm"
-            variant="light"
-            className="text-green-500 text-sm"
-          >
-            {data?.data?.following?.some(
-              (following: any) => following._id === userId
-            )
-              ? "following"
-              : "follow"}
-          </Button>
-        )}
+                ? "following"
+                : "follow"}
+            </Button>
+          )}
       </h1>
     </div>
   );
