@@ -37,6 +37,7 @@ const UserDashboardCard = ({
   const [recipeData, setRecipeData] = useState<[]>([]);
   const [tag, setTag] = useState("");
   const [totalPage, setTotalPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const searchText = useDebounce(watch("search"));
 
@@ -72,7 +73,7 @@ const UserDashboardCard = ({
     if (query.length > 0) {
       fetchData();
     }
-  }, [user, currentPage, searchText, tag, sort, totalPage]);
+  }, [user, currentPage, searchText, tag, sort, totalPage, loading]);
 
   const onSubmit = (data: FieldValues) => {};
 
@@ -152,7 +153,10 @@ const UserDashboardCard = ({
         )}
       </div>
 
-      <RecipeDisplayCard recipe={recipeData || recipe?.result} />
+      <RecipeDisplayCard
+        recipe={recipeData || recipe?.result}
+        setLoading={setLoading}
+      />
 
       <div className="mt-5 flex justify-center items-center">
         {recipe?.result?.length > 0 && (

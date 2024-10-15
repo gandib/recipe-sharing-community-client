@@ -32,6 +32,7 @@ const RecipeDetailCard = ({ recipe }: { recipe: IRecipe }) => {
   const { mutate: deleteComment } = useDeleteRecipeComment(user?.email!);
   const [rate, setRate] = useState(5);
   const [commentError, setCommentError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleRating = () => {
     const ratingData = {
@@ -178,7 +179,7 @@ const RecipeDetailCard = ({ recipe }: { recipe: IRecipe }) => {
 
           <CardFooter className=" bottom-0 gap-2 justify-around border-t-1 border-zinc-100/50 bg-white/30">
             <RecipeUpdateButton id={recipe._id} />
-            <RecipeDeleteButton id={recipe?._id} />
+            <RecipeDeleteButton id={recipe?._id} setLoading={setLoading} />
             <SeeDetailButton id={recipe?._id} />
           </CardFooter>
         </NextUiCard>

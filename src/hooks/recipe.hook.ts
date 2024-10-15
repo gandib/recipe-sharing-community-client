@@ -62,18 +62,50 @@ export const useGetAllMyRecipe = (email: string) => {
   });
 };
 
+// export const useDeleteRecipe = (email: string) => {
+//   const queryClient = useQueryClient();
+
+//   return useMutation<any, Error, string>({
+//     mutationFn: async (recipeData) => await deleteRecipe(recipeData),
+
+//     onSuccess(data, variables, context) {
+//       toast.success(data.message);
+//       // Invalidate the specific query using the query key with email
+//       queryClient.invalidateQueries({ queryKey: ["RECIPE", email] });
+//     },
+//     onError(error, variables, context) {
+//       toast.error(error.message);
+//     },
+//   });
+// };
+
 export const useDeleteRecipe = (email: string) => {
   const queryClient = useQueryClient();
 
   return useMutation<any, Error, string>({
     mutationFn: async (recipeData) => await deleteRecipe(recipeData),
 
-    onSuccess(data, variables, context) {
+    onSuccess(data, recipeId, context) {
       toast.success(data.message);
-      // Invalidate the specific query using the query key with email
-      queryClient.invalidateQueries({ queryKey: ["RECIPE", email] });
+
+      // Update cache for the user's recipes directly
+      queryClient.setQueryData(["RECIPE", email], (oldData: any) => {
+        if (!oldData) return;
+
+        // Filter out the deleted recipe by ID
+        const updatedRecipes = oldData.result.filter(
+          (recipe: any) => recipe._id !== recipeId
+        );
+
+        // Return updated data
+        return {
+          ...oldData,
+          result: updatedRecipes, // Update the result array
+        };
+      });
     },
-    onError(error, variables, context) {
+
+    onError(error, recipeId, context) {
       toast.error(error.message);
     },
   });

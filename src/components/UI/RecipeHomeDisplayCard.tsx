@@ -15,17 +15,19 @@ import SeeDetailButton from "./SeeDetailButton";
 import { Button } from "@nextui-org/button";
 import { TwitterIcon } from "../icons";
 import { FacebookIcon } from "@/src/assets/icons";
-import { number } from "zod";
+import { Dispatch, SetStateAction } from "react";
 const RecipeHomeDisplayCard = ({
   recipe,
   user,
   shareUrl,
   role,
+  setLoading,
 }: {
   recipe: IRecipe[];
   user?: string;
   shareUrl?: string;
   role: string;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }) => {
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 grow ">
@@ -128,7 +130,7 @@ const RecipeHomeDisplayCard = ({
                 <RecipeUpdateButton id={data._id} />
               )}
               {user && (user === data?.user?._id || role === "admin") && (
-                <RecipeDeleteButton id={data?._id} />
+                <RecipeDeleteButton id={data?._id} setLoading={setLoading} />
               )}
               {user && <SeeDetailButton id={data?._id} />}
             </CardFooter>

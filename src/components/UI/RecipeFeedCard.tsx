@@ -38,6 +38,7 @@ const RecipeFeedCard = ({
   const { register, handleSubmit, watch } = useForm();
   const [recipeData, setRecipeData] = useState<[]>([]);
   const [tag, setTag] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const searchText = useDebounce(watch("search"));
 
@@ -70,7 +71,7 @@ const RecipeFeedCard = ({
     if (query) {
       fetchData();
     }
-  }, [user, searchText, tag, sort]);
+  }, [user, searchText, tag, sort, loading]);
 
   const onSubmit = (data: FieldValues) => {};
 
@@ -151,6 +152,7 @@ const RecipeFeedCard = ({
         recipe={recipeData || recipe?.result}
         role={user?.role!}
         user={user?._id}
+        setLoading={setLoading}
       />
 
       {/* <div className="mt-5 flex justify-center items-center">
