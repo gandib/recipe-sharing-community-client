@@ -56,18 +56,25 @@ export const getAllRecipes = async (query: queryParams[]) => {
     });
   }
   const url = `${envConfig.baseApi}/recipe?${params.toString()}`;
+  const token = cookies().get("accessToken")?.value;
 
   try {
     const res = await fetch(url, {
       method: "GET",
       cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch data!");
+    const data = await res.json();
+
+    // Ensure data structure is correct
+    if (!data || !data.data.result) {
+      throw new Error("Invalid data format");
     }
 
-    return res.json();
+    return data;
   } catch (error) {
     console.error("Error fetching recipes:", error);
     throw error;

@@ -4,6 +4,7 @@ import { getAllRecipes, getAllTag } from "@/src/services/Recipe";
 const AdminDashboard = async () => {
   const { data: allRecipe } = await getAllRecipes([
     { name: "sort", value: "-upvote" },
+    { name: "limit", value: 10 },
   ]);
 
   const { data: allTag } = await getAllTag();

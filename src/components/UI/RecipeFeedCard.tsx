@@ -1,13 +1,7 @@
 "use client";
 
 import { useUser } from "@/src/context/user.provider";
-import { useGetAllRecipe } from "@/src/hooks/recipe.hook";
 import { useEffect, useState } from "react";
-import {
-  Pagination,
-  PaginationItem,
-  PaginationCursor,
-} from "@nextui-org/pagination";
 import { FieldValues, useForm } from "react-hook-form";
 import useDebounce from "@/src/hooks/debounce.hook";
 import { Input } from "@nextui-org/input";
@@ -16,6 +10,7 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { IRecipe } from "@/src/types";
 import { Button } from "@nextui-org/button";
 import RecipeHomeDisplayCard from "./RecipeHomeDisplayCard";
+import { getAllRecipes } from "@/src/services/Recipe";
 
 export type queryParams = {
   name: string;
@@ -37,24 +32,17 @@ const RecipeFeedCard = ({
   tags: TTags[];
 }) => {
   const { user, isLoading } = useUser();
-  const {
-    mutate: handleRecipe,
-    data,
-    isPending,
-    isSuccess,
-  } = useGetAllRecipe();
   const [limit, setLimit] = useState(recipe?.result?.length);
   const [sort, setSort] = useState("-upvote");
   const [currentPage, setCurrentPage] = useState(1);
   const { register, handleSubmit, watch } = useForm();
   const [recipeData, setRecipeData] = useState<[]>([]);
   const [tag, setTag] = useState("");
-  const [contentType, setContentType] = useState("free");
 
   const searchText = useDebounce(watch("search"));
 
   useEffect(() => {
-    setRecipeData(data?.data?.result);
+    // setRecipeData(data?.result);
 
     const query: queryParams[] = [];
     if (limit) {
@@ -70,36 +58,25 @@ const RecipeFeedCard = ({
       query.push({ name: "tags", value: tag });
     }
 
-    handleRecipe(query);
-    // if (user?.email) {
-    //   handleTags(user?._id);
-    // }
-    if (user?.membership === "basic" || !user?.email) {
+    if (!user || user?.membership !== "premium") {
       query.push({ name: "contentType", value: "free" });
     }
 
-    if (searchText) {
-      handleRecipe(query);
+    const fetchData = async () => {
+      const { data: allRecipe } = await getAllRecipes(query);
+      setRecipeData(allRecipe?.result);
+    };
+
+    if (query) {
+      fetchData();
     }
   }, [user, searchText, tag, sort]);
 
   const onSubmit = (data: FieldValues) => {};
 
-  useEffect(() => {
-    if (!searchText) {
-      setRecipeData(data?.data?.result);
-    }
-
-    if (!isPending && isSuccess && data && searchText) {
-      setRecipeData(data?.data?.result ?? []);
-    }
-  }, [isPending, isSuccess, data, searchText]);
-
   if (isLoading) {
     <p>Loading...</p>;
   }
-
-  // const sorted = recipeData?.sort((a, b) => b.upvote.length - a.upvote.length);
 
   const sortBy = [
     { name: "Most Upvoted", value: "-upvote" },

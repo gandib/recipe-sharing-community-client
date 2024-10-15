@@ -6,12 +6,12 @@ import { Button } from "@nextui-org/button";
 
 const RecipeDeleteButton = ({ id }: { id: string }) => {
   const { user, isLoading } = useUser();
-  const { mutate: deleteRecipe } = useDeleteRecipe(user?.email!);
+  const { mutate: deleteRecipe, isPending } = useDeleteRecipe(user?.email!);
   const handleDelete = () => {
     deleteRecipe(id);
   };
 
-  if (isLoading) {
+  if (isLoading || isPending) {
     <p>Loading...</p>;
   }
 

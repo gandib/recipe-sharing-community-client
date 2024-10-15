@@ -1,11 +1,6 @@
 "use client";
 import RecipeDisplayCard from "@/src/components/UI/RecipeDisplayCard";
 import { useUser } from "@/src/context/user.provider";
-import {
-  useGetAllMyRecipe,
-  useGetAllMyTags,
-  useGetAllRecipe,
-} from "@/src/hooks/recipe.hook";
 import { useEffect, useState } from "react";
 import {
   Pagination,
@@ -19,6 +14,7 @@ import { RotateCw, SearchIcon } from "lucide-react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { IRecipe } from "@/src/types";
 import { Button } from "@nextui-org/button";
+import { getAllRecipes } from "@/src/services/Recipe";
 
 export type queryParams = {
   name: string;
@@ -40,24 +36,21 @@ const AdminDashboardCard = ({
   tags: TTags[];
 }) => {
   const { user, isLoading } = useUser();
-  const {
-    mutate: handleRecipe,
-    data,
-    isPending,
-    isSuccess,
-  } = useGetAllRecipe();
   const [limit, setLimit] = useState(10);
   const [sort, setSort] = useState("-upvote");
   const [currentPage, setCurrentPage] = useState(1);
   const { register, handleSubmit, watch } = useForm();
   const [recipeData, setRecipeData] = useState<[]>([]);
   const [tag, setTag] = useState("");
-  const { mutate: handleTags, data: myTags } = useGetAllMyTags(user?.email!);
+  const [totalPage, setTotalPage] = useState(1);
 
   const searchText = useDebounce(watch("search"));
 
   useEffect(() => {
-    setRecipeData(data?.data?.result);
+    // setRecipeData(data?.data?.result);
+    if (searchText || tag) {
+      setCurrentPage(1);
+    }
 
     const query: queryParams[] = [];
     if (limit) {
@@ -76,33 +69,22 @@ const AdminDashboardCard = ({
       query.push({ name: "tags", value: tag });
     }
 
-    if (user?.email) {
-      handleRecipe(query);
-      handleTags(user?._id);
-    }
+    const fetchData = async () => {
+      const { data: allRecipe } = await getAllRecipes(query);
+      setRecipeData(allRecipe?.result);
+      setTotalPage(allRecipe?.meta?.totalPage);
+    };
 
-    if (user?.email && searchText) {
-      handleRecipe(query);
+    if (query.length > 0) {
+      fetchData();
     }
-  }, [user, currentPage, searchText, tag, sort]);
+  }, [user, currentPage, searchText, tag, sort, totalPage]);
 
   const onSubmit = (data: FieldValues) => {};
-
-  useEffect(() => {
-    if (!searchText) {
-      setRecipeData(data?.data?.result);
-    }
-
-    if (!isPending && isSuccess && data && searchText) {
-      setRecipeData(data?.data?.result ?? []);
-    }
-  }, [isPending, isSuccess, data, searchText]);
 
   if (isLoading) {
     <p>Loading...</p>;
   }
-
-  // const sorted = recipeData?.sort((a, b) => b.upvote.length - a.upvote.length);
 
   const sortBy = [
     { name: "Most Upvoted", value: "-upvote" },
@@ -135,7 +117,10 @@ const AdminDashboardCard = ({
       <div className="flex gap-2">
         {tags && tags.length > 0 && (
           <Autocomplete
-            onInputChange={(value) => setTag(value)}
+            onInputChange={(value) => {
+              setTag(value);
+              setCurrentPage(1);
+            }}
             label="Filter"
             className="w-20"
             size="sm"
@@ -178,8 +163,8 @@ const AdminDashboardCard = ({
       <div className="mt-5 flex justify-center items-center">
         {recipe?.result?.length > 0 && (
           <Pagination
-            total={recipe?.meta.totalPage}
-            initialPage={currentPage}
+            total={totalPage}
+            page={currentPage}
             onChange={(page) => setCurrentPage(page)}
           />
         )}
