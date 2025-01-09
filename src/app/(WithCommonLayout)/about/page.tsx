@@ -1,6 +1,7 @@
 "use client";
 import Container from "@/src/components/UI/Container";
-import { Card, Avatar } from "@nextui-org/react";
+import { Card } from "@nextui-org/card";
+import { Avatar } from "@nextui-org/avatar";
 import "../../../../src/styles/animation.css";
 import { useEffect, useState } from "react";
 

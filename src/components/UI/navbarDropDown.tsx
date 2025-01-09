@@ -2,13 +2,13 @@
 import { useUser } from "@/src/context/user.provider";
 import { logout } from "@/src/services/AuthService";
 import { protectedRoutes } from "@/src/utils/constant";
-import { Avatar } from "@nextui-org/avatar";
+import { Avatar } from "@nextui-org/react";
 import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-} from "@nextui-org/dropdown";
+} from "@nextui-org/react";
 import { usePathname, useRouter } from "next/navigation";
 
 const NavbarDropDown = () => {
@@ -25,7 +25,7 @@ const NavbarDropDown = () => {
     setIsLoading(true);
 
     if (protectedRoutes.some((route) => pathname.match(route))) {
-      router.push("/");
+      router.push("/login");
     }
   };
 
@@ -35,17 +35,21 @@ const NavbarDropDown = () => {
         <Avatar className="cursor-pointer" src={user?.image} />
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
-        <DropdownItem onClick={() => handleNavigation("/profile")}>
+        <DropdownItem
+          onPress={() => handleNavigation("/profile")}
+          key={"Profile"}
+        >
           Profile
         </DropdownItem>
         <DropdownItem
-          onClick={() => handleNavigation("/profile/update-profile")}
+          onPress={() => handleNavigation("/profile/update-profile")}
+          key={"UpdateProfile"}
         >
           Update Profile
         </DropdownItem>
 
         <DropdownItem
-          onClick={handleLogout}
+          onPress={handleLogout}
           key="delete"
           className="text-danger"
           color="danger"

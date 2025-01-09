@@ -9,7 +9,7 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from "@nextui-org/table";
+} from "@nextui-org/react";
 
 const SocialConnectivity = () => {
   const { user, isLoading } = useUser();

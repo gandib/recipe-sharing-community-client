@@ -2,14 +2,14 @@
 import RecipeDisplayCard from "@/src/components/UI/RecipeDisplayCard";
 import { useUser } from "@/src/context/user.provider";
 import { useEffect, useState } from "react";
-import { Pagination } from "@nextui-org/pagination";
+import { Pagination } from "@nextui-org/react";
 import { FieldValues, useForm } from "react-hook-form";
 import useDebounce from "@/src/hooks/debounce.hook";
-import { Input } from "@nextui-org/input";
+import { Input } from "@nextui-org/react";
 import { RotateCw, SearchIcon } from "lucide-react";
-import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
+import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { IRecipe } from "@/src/types";
-import { Button } from "@nextui-org/button";
+import { Button } from "@nextui-org/react";
 import { getAllMyRecipes } from "@/src/services/Recipe";
 
 export type queryParams = {

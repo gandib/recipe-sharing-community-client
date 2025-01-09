@@ -6,7 +6,7 @@ import {
   useUpdateUserStatus,
 } from "@/src/hooks/user.hook";
 import { IUser } from "@/src/types";
-import { Button } from "@nextui-org/button";
+import { Button } from "@nextui-org/react";
 import {
   Table,
   TableBody,
@@ -14,7 +14,7 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from "@nextui-org/table";
+} from "@nextui-org/react";
 import { useState } from "react";
 
 const UserManagement = () => {

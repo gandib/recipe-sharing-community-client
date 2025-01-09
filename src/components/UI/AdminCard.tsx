@@ -4,7 +4,7 @@ import FXForm from "@/src/components/form/FXForm";
 import FXInput from "@/src/components/form/FXInput";
 import { useUserRegistration } from "@/src/hooks/auth.hook";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@nextui-org/button";
+import { Button } from "@nextui-org/react";
 import { FieldValues } from "react-hook-form";
 import { ChangeEvent, useEffect, useState } from "react";
 import registerValidationSchema from "@/src/schemas/register.schemas";

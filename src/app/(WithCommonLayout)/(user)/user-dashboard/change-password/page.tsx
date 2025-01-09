@@ -6,7 +6,7 @@ import FXInput from "@/src/components/form/FXInput";
 import { useUser } from "@/src/context/user.provider";
 import { useUpdateUser } from "@/src/hooks/user.hook";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@nextui-org/button";
+import { Button } from "@nextui-org/react";
 import { FieldValues } from "react-hook-form";
 
 export default function ChangePassword() {

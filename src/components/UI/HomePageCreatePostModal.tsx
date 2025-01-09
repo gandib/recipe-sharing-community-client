@@ -1,14 +1,21 @@
 "use client";
+import { Button } from "@nextui-org/react";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/react";
 import React, { useState, useEffect, ChangeEvent } from "react";
 import dynamic from "next/dynamic"; // Dynamically import Quill
-
 const ReactQuill = dynamic(() => import("react-quill"), {
   ssr: false,
 });
 import "react-quill-new/dist/quill.snow.css";
 import FXForm from "@/src/components/form/FXForm";
 import FXInput from "@/src/components/form/FXInput";
-import { Button } from "@nextui-org/react";
 import { FieldValues } from "react-hook-form";
 import FXSelect from "@/src/components/form/FXSelect";
 import { useUser } from "@/src/context/user.provider";
@@ -18,15 +25,20 @@ import createRecipeValidationSchema from "@/src/schemas/create-recipe.schema";
 import updateRecipeValidationSchema from "@/src/schemas/update-recipe.schema";
 import { IRecipe } from "@/src/types";
 
-const RecipeCard = ({
+const HomePageCreatePostModal = ({
+  isOpen,
+  setIsOpen,
   title,
   id,
   singleRecipeData,
 }: {
+  isOpen: boolean;
+  setIsOpen: any;
   title: string;
   id?: string;
   singleRecipeData?: IRecipe;
 }) => {
+  const { onOpen, onOpenChange } = useDisclosure();
   const { user, isLoading } = useUser();
   const [value, setValue] = useState("");
   const [instructions, setInstructions] = useState(" ");
@@ -131,6 +143,8 @@ const RecipeCard = ({
 
       handleUpdateRecipe(updatedData);
     }
+
+    setIsOpen(false);
   };
 
   const modules = {
@@ -154,71 +168,101 @@ const RecipeCard = ({
   if (isLoading) {
     <p>Loading...</p>;
   }
-
   return (
-    <div className="flex mt-6 w-full flex-col items-center justify-center mb-12">
-      <h3 className="my-2 text-2xl font-bold">{title}</h3>
-      <div className="w-full sm:w-[80%]">
-        <FXForm
-          onSubmit={onSubmit}
-          resolver={zodResolver(
-            id ? updateRecipeValidationSchema : createRecipeValidationSchema
-          )}
-        >
-          <div className="py-3">
-            <FXInput
-              name="title"
-              label="Title"
-              size="sm"
-              required={true}
-              value={recipeTitle}
-              onChange={(e) => setRecipeTitle(e.target.value)}
-            />
-          </div>
-          <div className="py-3">
-            <FXInput
-              name="tags"
-              label="Tags"
-              size="sm"
-              required={true}
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-            />
-          </div>
-          <div className="py-3">
-            <FXSelect
-              options={contentOptions}
-              name="contentType"
-              label="Content Type"
-              size="sm"
-              required={true}
-            />
-          </div>
+    <div className="w-full">
+      <Button onPress={onOpen}>Open Modal</Button>
+      <Modal size="5xl" isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent className="w-full">
+          {(onClose) => (
+            <>
+              {/* <ModalHeader className="flex flex-col gap-1">
+                Modal Title
+              </ModalHeader> */}
+              <ModalBody>
+                <div className="flex mt-6 w-full flex-col items-center justify-center mb-12">
+                  <h3 className="my-2 text-2xl font-bold">{title}</h3>
+                  <div className="w-full sm:w-[100%]">
+                    <FXForm
+                      onSubmit={onSubmit}
+                      resolver={zodResolver(
+                        id
+                          ? updateRecipeValidationSchema
+                          : createRecipeValidationSchema
+                      )}
+                    >
+                      <div className="py-3">
+                        <FXInput
+                          name="title"
+                          label="Title"
+                          size="sm"
+                          required={true}
+                          value={recipeTitle}
+                          onChange={(e) => setRecipeTitle(e.target.value)}
+                        />
+                      </div>
+                      <div className="py-3">
+                        <FXInput
+                          name="tags"
+                          label="Tags"
+                          size="sm"
+                          required={true}
+                          value={tags}
+                          onChange={(e) => setTags(e.target.value)}
+                        />
+                      </div>
+                      <div className="py-3">
+                        <FXSelect
+                          options={contentOptions}
+                          name="contentType"
+                          label="Content Type"
+                          size="sm"
+                          required={true}
+                        />
+                      </div>
 
-          <div>
-            <ReactQuill
-              modules={modules}
-              theme="snow"
-              value={value || instruction}
-              onChange={setValue}
-              placeholder="Please type instructions and give an image"
-              className=""
-            />
-          </div>
-          {!instructions && (
-            <p className="text-xs text-red-500">Please enter instructions!</p>
+                      <div>
+                        <ReactQuill
+                          modules={modules}
+                          theme="snow"
+                          value={value || instruction}
+                          onChange={setValue}
+                          placeholder="Please type instructions and give an image"
+                        />
+                      </div>
+                      {!instructions && (
+                        <p className="text-xs text-red-500">
+                          Please enter instructions!
+                        </p>
+                      )}
+                      <Button
+                        className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
+                        size="lg"
+                        type="submit"
+                      >
+                        Submit
+                      </Button>
+                    </FXForm>
+                  </div>
+                </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  color="danger"
+                  variant="light"
+                  onPress={() => setIsOpen(onClose)}
+                >
+                  Close
+                </Button>
+                {/* <Button color="primary" onPress={() => setIsOpen(onClose)}>
+                  Action
+                </Button> */}
+              </ModalFooter>
+            </>
           )}
-          <Button
-            className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
-            size="lg"
-            type="submit"
-          >
-            Submit
-          </Button>
-        </FXForm>
-      </div>
+        </ModalContent>
+      </Modal>
     </div>
   );
 };
 
-export default RecipeCard;
+export default HomePageCreatePostModal;

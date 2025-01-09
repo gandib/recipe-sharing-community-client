@@ -1,5 +1,7 @@
 "use client";
-import { Input, Button, Textarea, Card } from "@nextui-org/react";
+import { Input, Textarea } from "@nextui-org/react";
+import { Card } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import "../../../../src/styles/animation.css";
 

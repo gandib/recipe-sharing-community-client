@@ -4,7 +4,7 @@ import {
   CardHeader,
   CardFooter,
   CardBody,
-} from "@nextui-org/card";
+} from "@nextui-org/react";
 import Image from "next/image";
 import RecipeDeleteButton from "./RecipeDeleteButton";
 import RecipeUpdateButton from "./RecipeUpdateButton";

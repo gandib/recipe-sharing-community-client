@@ -1,7 +1,7 @@
 import { useUser } from "@/src/context/user.provider";
 import { useMembershipPayment } from "@/src/hooks/payment.hook";
-import { Button } from "@nextui-org/button";
-import { Card as NextUiCard, CardHeader, CardFooter } from "@nextui-org/card";
+import { Button } from "@nextui-org/react";
+import { Card as NextUiCard, CardHeader, CardFooter } from "@nextui-org/react";
 import { format } from "date-fns";
 import { CheckCircle } from "lucide-react";
 import PaymentButton from "./PaymentButton";

@@ -2,7 +2,7 @@
 
 import FXForm from "@/src/components/form/FXForm";
 import FXInput from "@/src/components/form/FXInput";
-import { Button } from "@nextui-org/button";
+import { Button } from "@nextui-org/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues } from "react-hook-form";
 import { useRecoverPassword } from "@/src/hooks/auth.hook";

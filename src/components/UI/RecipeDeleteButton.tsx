@@ -2,7 +2,7 @@
 
 import { useUser } from "@/src/context/user.provider";
 import { useDeleteRecipe } from "@/src/hooks/recipe.hook";
-import { Button } from "@nextui-org/button";
+import { Button } from "@nextui-org/react";
 import { Dispatch, SetStateAction } from "react";
 
 const RecipeDeleteButton = ({

@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@nextui-org/button";
+import { Button } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
 const NotFoundPage = () => {

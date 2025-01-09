@@ -45,4 +45,6 @@ export interface IRecipe {
   rating: any[];
   comment: any[];
   instructions: string;
+  createdAt: string;
+  updatedAt: string;
 }

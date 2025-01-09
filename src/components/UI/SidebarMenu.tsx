@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@nextui-org/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@nextui-org/popover";
+import { Button } from "@nextui-org/react";
+import { Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";

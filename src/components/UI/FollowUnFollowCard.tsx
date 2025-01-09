@@ -7,7 +7,7 @@ import {
   useUpdateFollowing,
   useUpdateUnfollowing,
 } from "@/src/hooks/user.hook";
-import { Button } from "@nextui-org/button";
+import { Button } from "@nextui-org/react";
 import { toast } from "sonner";
 
 const FollowUnFollowCard = ({ userId }: { userId: string }) => {

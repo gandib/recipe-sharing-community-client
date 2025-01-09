@@ -1,6 +1,6 @@
 import "@/src/styles/globals.css";
 import { Metadata, Viewport } from "next";
-import { Link } from "@nextui-org/link";
+import { Link } from "@nextui-org/react";
 import clsx from "clsx";
 
 import { siteConfig } from "@/src/config/site";
@@ -40,7 +40,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+        <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
           {children}
         </Providers>
       </body>

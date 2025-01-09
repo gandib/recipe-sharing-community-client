@@ -9,7 +9,7 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from "@nextui-org/table";
+} from "@nextui-org/react";
 
 const Following = () => {
   const { user, isLoading } = useUser();

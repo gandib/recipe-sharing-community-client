@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardFooter,
   CardBody,
-} from "@nextui-org/card";
+} from "@nextui-org/react";
 import Image from "next/image";
 import RecipeDeleteButton from "./RecipeDeleteButton";
 import RecipeUpdateButton from "./RecipeUpdateButton";
@@ -21,10 +21,11 @@ import {
 } from "@/src/hooks/recipe.hook";
 import { useState } from "react";
 import { Cross, Delete, DeleteIcon, Minus, Plus, Star } from "lucide-react";
-import { Button } from "@nextui-org/button";
+import { Button } from "@nextui-org/react";
 import FXForm from "../form/FXForm";
 import FXTextarea from "../form/FXTextarea";
 import { FieldValues } from "react-hook-form";
+
 const RecipeDetailCard = ({ recipe }: { recipe: IRecipe }) => {
   const { user, isLoading } = useUser();
   const { mutate: postRating } = useUpdateRating(user?.email!);

@@ -1,8 +1,8 @@
 "use client";
-import { Button } from "@nextui-org/button";
+import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { useUser } from "@/src/context/user.provider";
-import { Spinner } from "@nextui-org/spinner";
+import { Spinner } from "@nextui-org/react";
 import Image from "next/image";
 import ProfileSidebarOptions from "./ProfileSidebarOptions";
 import { profileLinks } from "./constant";

@@ -7,9 +7,9 @@ import {
   NavbarBrand,
   NavbarItem,
   NavbarMenuItem,
-} from "@nextui-org/navbar";
-import { Link } from "@nextui-org/link";
-import { link as linkStyles } from "@nextui-org/theme";
+} from "@nextui-org/react";
+import { Link } from "@nextui-org/react";
+import { link as linkStyles } from "@nextui-org/react";
 import NextLink from "next/link";
 import clsx from "clsx";
 import { siteConfig } from "@/src/config/site";
@@ -17,15 +17,32 @@ import { Logo } from "@/src/components/icons";
 import NavbarDropDown from "./navbarDropDown";
 import { ThemeSwitch } from "./theme-switch";
 import { useUser } from "@/src/context/user.provider";
-import { Button } from "@nextui-org/button";
+import { Button } from "@nextui-org/react";
 import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/src/services/AuthService";
 import { protectedRoutes } from "@/src/utils/constant";
+import { Input } from "@nextui-org/react";
+import { SearchIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
+import useDebounce from "@/src/hooks/debounce.hook";
+import { queryParams } from "./AdminDashboardCard";
+import { getAllMyRecipes } from "@/src/services/Recipe";
+import { IRecipe } from "@/src/types";
+
+type TRecipeMeta = {
+  meta: { page: number; limit: number; total: number; totalPage: number };
+  result: IRecipe[];
+};
 
 export const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { user, setIsLoading } = useUser();
+  const [recipeData, setRecipeData] = useState<TRecipeMeta>();
+  const { register, handleSubmit, watch, setValue } = useForm();
+  const searchText = useDebounce(watch("search"));
+  const [loading, setLoading] = useState(true);
 
   const handleLogout = () => {
     logout();
@@ -35,16 +52,58 @@ export const Navbar = () => {
       router.push("/");
     }
   };
+
+  useEffect(() => {
+    const query: queryParams[] = [];
+    query.push({ name: "limit", value: 10 });
+    query.push({ name: "searchTerm", value: searchText });
+
+    const fetchData = async () => {
+      const { data: allRecipes } = await getAllMyRecipes(query);
+      setRecipeData(allRecipes);
+      setLoading(false);
+    };
+
+    if (searchText) {
+      setLoading(true);
+      fetchData();
+    } else {
+      setRecipeData(undefined); // Clear the product data when search text is cleared
+    }
+  }, [searchText]);
+
+  const onSubmit = (data: FieldValues) => {};
   return (
-    <NextUINavbar maxWidth="xl" position="sticky">
+    <NextUINavbar
+      className="border-b-1 fixed bg-default-50"
+      maxWidth="2xl"
+      position="sticky"
+    >
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Logo />
-            <p className="font-bold text-inherit">Recipe</p>
+            <Logo className="text-gray-700" />
+            <p className="font-bold text-inherit text-gray-700">Recipe</p>
           </NextLink>
         </NavbarBrand>
-        <ul className="hidden lg:flex gap-4 justify-start ml-2">
+
+        <div className="flex justify-center items-center my-2">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Input
+              {...register("search")}
+              aria-label="Search"
+              placeholder="Search..."
+              size="md"
+              startContent={
+                <SearchIcon className="pointer-events-none flex-shrink-0 text-base text-default-400" />
+              }
+              color="primary"
+              type="text"
+            />
+          </form>
+        </div>
+
+        {/* <ul className="hidden lg:flex gap-4 justify-start ml-2">
           <NavbarItem>
             <NextLink
               className={`text-lg ${pathname === "/" ? "text-primary-500" : ""}`}
@@ -88,7 +147,7 @@ export const Navbar = () => {
               </Link>
             </NavbarMenuItem>
           ))}
-        </ul>
+        </ul> */}
       </NavbarContent>
 
       <NavbarContent

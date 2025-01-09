@@ -1,8 +1,8 @@
-import { Spinner } from "@nextui-org/spinner";
+import { Spinner } from "@nextui-org/react";
 
 const Loading = () => {
   return (
-    <div className="h-screen flex justify-center items-center">
+    <div className="h-screen flex justify-center items-center mt-20">
       <Spinner size="lg" />
     </div>
   );

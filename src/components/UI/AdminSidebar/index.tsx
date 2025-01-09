@@ -1,7 +1,7 @@
 "use client";
 
 import { useUser } from "@/src/context/user.provider";
-import { Spinner } from "@nextui-org/spinner";
+import { Spinner } from "@nextui-org/react";
 import { useGetUser } from "@/src/hooks/user.hook";
 import AdminSidebarOptions from "./AdminSidebarOptions";
 import { adminLinks } from "./constant";

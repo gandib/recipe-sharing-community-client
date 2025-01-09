@@ -2,7 +2,7 @@
 
 import { useUser } from "@/src/context/user.provider";
 import { useMembershipPayment } from "@/src/hooks/payment.hook";
-import { Button } from "@nextui-org/button";
+import { Button } from "@nextui-org/react";
 import { format } from "date-fns";
 import moment from "moment";
 

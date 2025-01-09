@@ -3,8 +3,8 @@
 import { useUser } from "@/src/context/user.provider";
 import { useUpdateRecipeStatus } from "@/src/hooks/recipe.hook";
 import { IRecipe } from "@/src/types";
-import { Button } from "@nextui-org/button";
-import { Card, CardBody } from "@nextui-org/card";
+import { Button } from "@nextui-org/react";
+import { Card, CardBody } from "@nextui-org/react";
 import {
   Table,
   TableBody,
