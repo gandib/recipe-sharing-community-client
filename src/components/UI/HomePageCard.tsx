@@ -11,12 +11,12 @@ const HomePageCard = ({
   recipe: { result: IRecipe[]; meta: any };
 }) => {
   return (
-    <div className="grid grid-cols-4 gap-4">
-      <div className="col-span-1">
+    <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="hidden lg:flex lg:col-span-1">
         <HomePageTimeCard />
       </div>
 
-      <div className="col-span-2">
+      <div className="md:col-span-2 mt-4 lg:mt-0">
         {/* create new post section */}
         <HomePageCreatePost />
 
@@ -26,12 +26,14 @@ const HomePageCard = ({
         </div>
       </div>
 
-      <div className="col-span-1">
-        {/* my groups */}
-        <HomePageMyGroups />
+      <div className="hidden md:flex md:col-span-1 mt-4 lg:mt-0">
+        <div>
+          {/* my groups */}
+          <HomePageMyGroups />
 
-        {/* following */}
-        <HomePageFollowing />
+          {/* following */}
+          <HomePageFollowing />
+        </div>
       </div>
     </div>
   );
