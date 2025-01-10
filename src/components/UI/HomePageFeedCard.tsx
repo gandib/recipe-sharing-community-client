@@ -9,7 +9,7 @@ const HomePageFeedCard = ({
   recipe: { result: IRecipe[]; meta: any };
 }) => {
   return (
-    <div className="grid gap-8">
+    <div className="grid gap-4">
       {recipe &&
         recipe.result.length > 0 &&
         recipe?.result?.map((data: IRecipe) => (

@@ -110,8 +110,11 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
 
       {/* Content */}
       <div>
-        <h1 className="mb-4 mt-8 text-xl font-semibold text-secondary-500">
+        <h1 className="mb-4 mt-4 italic text-base font-semibold text-secondary-500">
           {data?.tags}
+        </h1>
+        <h1 className=" my-2 text-xl font-semibold text-gray-600">
+          {data?.title}
         </h1>
 
         <div className="recipe-instructions text-gray-700">

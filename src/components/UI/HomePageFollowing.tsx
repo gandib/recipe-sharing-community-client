@@ -5,7 +5,7 @@ import { User } from "@nextui-org/react";
 const HomePageFollowing = () => {
   return (
     <div className="bg-gray-100 rounded p-6 sticky top-20">
-      <h1 className="text-base text-gray-700 font-semibold mb-6">
+      <h1 className="text-base text-gray-600 font-bold mb-6">
         Who's following
       </h1>
       <div className="flex text-gray-700 justify-between pb-2">
