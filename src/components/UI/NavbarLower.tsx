@@ -30,12 +30,14 @@ import {
   Zap,
 } from "lucide-react";
 import { useState } from "react";
+import { useGetUser } from "@/src/hooks/user.hook";
 
 export const NavbarLower = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { user, setIsLoading } = useUser();
   const [showMegaMenu, setShowMegaMenu] = useState(false);
+  const { data } = useGetUser(user?.email!);
 
   const handleLogout = () => {
     logout();
@@ -45,7 +47,7 @@ export const NavbarLower = () => {
       router.push("/");
     }
   };
-
+  console.log(data);
   return (
     <NextUINavbar
       className="border-t-1 border-b-1 mt-16 hidden lg:flex"
@@ -188,7 +190,14 @@ export const NavbarLower = () => {
       >
         <NavbarItem className="hidden lg:flex gap-2">
           <div>
-            <p>Followers: 204</p>
+            <p>
+              Followers:{" "}
+              <span className="text-primary-500">
+                {data?.data?.follower?.length > 0
+                  ? data?.data?.follower?.length
+                  : "0"}
+              </span>
+            </p>
           </div>
         </NavbarItem>
       </NavbarContent>
