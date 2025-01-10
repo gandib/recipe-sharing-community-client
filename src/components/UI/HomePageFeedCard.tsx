@@ -11,7 +11,7 @@ const HomePageFeedCard = ({
   return (
     <div className="grid gap-4">
       {recipe &&
-        recipe.result.length > 0 &&
+        recipe?.result?.length > 0 &&
         recipe?.result?.map((data: IRecipe) => (
           <HomePageDisplayCard key={data?._id} data={data} />
         ))}

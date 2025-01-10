@@ -7,19 +7,19 @@ import React from "react";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Container>
+    <div className="mx-auto w-full flex-grow min-h-screen">
       <div className="md:hidden">
         <SidebarMenu links={adminLinks} />
       </div>
-      <div className="my-3 flex w-full gap-3 justify-center">
-        <div className=" md:w-2/6 min-h-full bg-default-100">
+      <div className="flex w-full gap-3 justify-center">
+        <div className="w-1/12 md:w-2/6 lg:w-1/6 hidden md:flex min-h-full bg-gray-600">
           <div className="hidden md:flex">
             <AdminSidebar />
           </div>
         </div>
-        <div className="w-11/12 md:5/6">{children}</div>
+        <div className="w-11/12 md:w-4/6 lg:w-5/6">{children}</div>
       </div>
-    </Container>
+    </div>
   );
 };
 

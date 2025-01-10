@@ -2,8 +2,9 @@
 
 import { useUser } from "@/src/context/user.provider";
 import { IRecipe } from "@/src/types";
-import { Avatar } from "@nextui-org/react";
+import { Avatar, Button } from "@nextui-org/react";
 import {
+  DeleteIcon,
   Ellipsis,
   Flag,
   Globe,
@@ -19,6 +20,16 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import DeletePostModal from "./DeletePostModal";
+import {
+  useDeleteRecipeComment,
+  useUpdateDownvote,
+  useUpdateRecipeComment,
+  useUpdateUpvote,
+} from "@/src/hooks/recipe.hook";
+import ShareModal from "./ShareModal";
+import FXForm from "../form/FXForm";
+import FXTextarea from "../form/FXTextarea";
+import { FieldValues } from "react-hook-form";
 
 const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
   const [seeMore, setSeeMore] = useState(false);
@@ -26,15 +37,66 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
   const { user, isLoading } = useUser();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const { mutate: upvote } = useUpdateUpvote(user?.email!);
+  const { mutate: downvote } = useUpdateDownvote(user?.email!);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
+  const [commentShow, setCommentShow] = useState(false);
+  const [commentError, setCommentError] = useState("");
+  const { mutate: updateComment } = useUpdateRecipeComment(user?.email!);
+  const { mutate: deleteComment } = useDeleteRecipeComment(user?.email!);
 
   const handleDelete = () => {
     setShowOptions(false);
     setIsOpen(true);
   };
 
+  const handleUpvote = () => {
+    const upvoteData = {
+      id: data._id,
+      data: {
+        upvote: user?._id,
+      },
+    };
+    upvote(upvoteData);
+  };
+
+  const handleDownvote = () => {
+    const downvoteData = {
+      id: data?._id,
+      data: {
+        downvote: user?._id,
+      },
+    };
+    downvote(downvoteData);
+  };
+
+  const onSubmit = (formData: FieldValues) => {
+    if (!formData.comment) {
+      return setCommentError("Please provide a comment!");
+    }
+    const commentData = {
+      id: data?._id,
+      data: {
+        user: user?._id,
+        comment: formData.comment,
+      },
+    };
+    updateComment(commentData);
+  };
+
+  const handleDeleteComment = (id: string) => {
+    const commentData = {
+      id: data?._id,
+      commentId: id,
+    };
+    deleteComment(commentData);
+  };
+
   if (isLoading) {
     <p>Loading...</p>;
   }
+
   return (
     <div className="bg-gray-100 rounded p-4">
       <div className="flex justify-between items-start relative">
@@ -164,19 +226,88 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
 
       {/* Action Buttons */}
       <div className="flex text-gray-700 mt-4">
-        <div className="flex items-center border text-sm px-2 py-1 rounded cursor-pointer hover:bg-primary-500 hover:text-white">
+        <div
+          onClick={handleUpvote}
+          className={`flex items-center border text-sm px-2 py-1 rounded cursor-pointer ${data?.upvote.includes(user?._id) ? "text-green-500 hover:text-blue-500" : "hover:text-blue-500"}`}
+        >
           <ThumbsUp size={20} /> <span className="pl-2">Like</span>
         </div>
-        <div className="flex items-center text-sm border p-2 mx-4 rounded cursor-pointer hover:bg-primary-500 hover:text-white">
+        <div
+          onClick={handleDownvote}
+          className={`flex items-center text-sm border p-2 mx-4 rounded cursor-pointer ${data?.downvote.includes(user?._id) ? "text-green-500 hover:text-blue-500 cursor-pointer" : "hover:text-blue-500"}`}
+        >
           <ThumbsDown size={20} /> <span className="pl-2">Unlike</span>
         </div>
-        <div className="flex items-center text-sm border p-2 rounded cursor-pointer hover:bg-primary-500 hover:text-white">
+        <div
+          onClick={() => setCommentShow(!commentShow)}
+          className="flex items-center text-sm border p-2 rounded cursor-pointer hover:text-primary-500"
+        >
           <MessageSquare size={20} /> <span className="pl-2">Comment</span>
         </div>
-        <div className="flex items-center text-sm border p-2 mx-4 rounded cursor-pointer hover:bg-primary-500 hover:text-white">
+        <div
+          onClick={() => setIsShareOpen(true)}
+          className="flex items-center text-sm border p-2 mx-4 rounded cursor-pointer hover:text-primary-500"
+        >
           <Share2Icon size={20} /> <span className="pl-2">Share</span>
         </div>
       </div>
+      {isShareOpen && (
+        <ShareModal
+          id={data._id}
+          isOpen={isShareOpen}
+          setIsOpen={setIsShareOpen}
+        />
+      )}
+
+      {commentShow && (
+        <div className="pt-2">
+          <div>
+            <div className="text-gray-600">
+              <FXForm onSubmit={onSubmit}>
+                <FXTextarea label="Type a comment" name="comment" />
+                <p className="text-sm text-red-500">{commentError}</p>
+                <Button
+                  className="my-4 text-gray-600"
+                  type="submit"
+                  variant="bordered"
+                >
+                  Submit
+                </Button>
+              </FXForm>
+            </div>
+          </div>
+
+          {data.comment.length > 0 && (
+            <div>
+              <p className="text-green-500"> Comments:</p>
+              {data?.comment &&
+                data?.comment.length > 0 &&
+                data?.comment?.map((comment) => (
+                  <div className="my-2 text-gray-600 flex">
+                    <Avatar src={comment.user.image} />
+                    <div className="bg-white w-full rounded p-2 ml-2">
+                      <p
+                        key={comment._id}
+                        className="flex gap-2 text-sm font-semibold"
+                      >
+                        {comment.user.name}{" "}
+                        {user?._id === comment.user._id && (
+                          <DeleteIcon
+                            className="text-red-500 cursor-pointer hover:text-red-800"
+                            onClick={() => handleDeleteComment(comment._id)}
+                          />
+                        )}
+                      </p>
+                      <p className="text-sm" key={comment._id}>
+                        {comment.comment}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
