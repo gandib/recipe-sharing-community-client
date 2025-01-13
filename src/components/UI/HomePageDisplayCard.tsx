@@ -236,7 +236,7 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
           onClick={handleDownvote}
           className={`flex items-center text-sm border p-2 mx-4 rounded cursor-pointer ${data?.downvote.includes(user?._id) ? "text-green-500 hover:text-blue-500 cursor-pointer" : "hover:text-blue-500"}`}
         >
-          <ThumbsDown size={20} /> <span className="pl-2">Unlike</span>
+          <ThumbsDown size={20} /> <span className="pl-2">Dislike</span>
         </div>
         <div
           onClick={() => setCommentShow(!commentShow)}

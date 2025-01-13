@@ -27,6 +27,7 @@ import {
   Menu,
   SearchIcon,
   UserRound,
+  UsersRound,
   Zap,
 } from "lucide-react";
 import { useState } from "react";
@@ -169,6 +170,23 @@ export const NavbarLower = () => {
                 </div>
               </NextLink>
             </NavbarItem>
+            {/* <NavbarItem>
+              <NextLink
+                className={`text-lg ${pathname === "/my-group" ? "text-secondary-500" : "text-primary-500"}`}
+                href={"/my-group"}
+              >
+                <div className="relative flex items-center group">
+                  <UsersRound
+                    className={`text-gray-500 transition-all group-hover:opacity-0 group-hover:translate-y-4 ${pathname === "/my-group" ? "text-secondary-500" : "text-primary-500"}`}
+                  />
+                  <p
+                    className={`absolute left-1/2 -translate-x-1/2 translate-y-4 opacity-0 text-base  group-hover:translate-y-0 group-hover:opacity-100 transition-all ${pathname === "/my-group" ? "text-secondary-500" : "text-primary-500"}`}
+                  >
+                    Group
+                  </p>
+                </div>
+              </NextLink>
+            </NavbarItem> */}
           </>
           {/* {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
@@ -229,6 +247,14 @@ export const NavbarLower = () => {
                 className={`text-lg ${pathname === "/user-dashboard" ? "text-primary-500" : ""} ${pathname === "/admin-dashboard" ? "text-primary-500" : ""}`}
               >
                 Dashboard
+              </NextLink>
+            </NavbarItem>
+            <NavbarItem>
+              <NextLink
+                href={"/my-group"}
+                className={`text-lg ${pathname === "/my-group" ? "text-primary-500" : ""}`}
+              >
+                Group
               </NextLink>
             </NavbarItem>
           </>
