@@ -30,6 +30,8 @@ import ShareModal from "./ShareModal";
 import FXForm from "../form/FXForm";
 import FXTextarea from "../form/FXTextarea";
 import { FieldValues } from "react-hook-form";
+import FollowUnFollowCard from "./FollowUnFollowCard";
+import HomePageFollowUnFollowCard from "./HomePageFollowUnfollowCard";
 
 const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
   const [seeMore, setSeeMore] = useState(false);
@@ -108,9 +110,12 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
             className="rounded-full bg-primary-500"
           />
           <div className="pl-2">
-            <p className="text-sm font-bold text-primary-500">
-              {data?.user?.name}
-            </p>
+            <div className="text-sm flex items-center font-bold text-primary-500">
+              <p> {data?.user?.name}</p>
+              <div className="">
+                <HomePageFollowUnFollowCard userId={data?.user?._id} />
+              </div>
+            </div>
             <p className="text-tiny flex text-gray-600">
               <Globe size={"14px"} />
               <span className="pl-1">

@@ -10,7 +10,7 @@ import {
 import { Button } from "@nextui-org/react";
 import { toast } from "sonner";
 
-const FollowUnFollowCard = ({ userId }: { userId: string }) => {
+const HomePageFollowUnFollowCard = ({ userId }: { userId: string }) => {
   const { user, isLoading } = useUser();
   const { data } = useGetUser(user?.email!);
   const { data: userDataById } = useGetUserById(userId);
@@ -47,10 +47,6 @@ const FollowUnFollowCard = ({ userId }: { userId: string }) => {
   return (
     <div>
       <h1>
-        {userDataById?.data?.name ? userDataById?.data?.name : "Deleted User"}
-        {data?.data?._id !== userDataById?.data?._id &&
-          userDataById?.data?.name &&
-          ": "}
         {data?.data?._id !== userDataById?.data?._id &&
           userDataById?.data?.name && (
             <Button
@@ -79,4 +75,4 @@ const FollowUnFollowCard = ({ userId }: { userId: string }) => {
   );
 };
 
-export default FollowUnFollowCard;
+export default HomePageFollowUnFollowCard;

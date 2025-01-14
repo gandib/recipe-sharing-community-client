@@ -12,8 +12,11 @@ const HomePageRecentPost = ({
 }) => {
   const router = useRouter();
   return (
-    <div className="w-full sticky top-5 bg-gray-100 rounded p-4">
+    <div className="w-full min-h-[180px] sticky top-5 bg-gray-100 rounded p-4">
       <h1 className="text-gray-600 font-bold">Recent Posts</h1>
+      {recipes?.result?.length < 1 && (
+        <p className="text-base w-full mt-6">No recent post found!</p>
+      )}
       {recipes &&
         recipes.result.length > 0 &&
         recipes.result.slice(0, 5).map((recipe: IRecipe) => (

@@ -62,7 +62,7 @@ export default function ProfilePage() {
             </div>
           </div>
         );
-      case "Followers":
+      case "Following":
         return (
           <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen mt-4">
             <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-4">
@@ -93,7 +93,7 @@ export default function ProfilePage() {
             </div>
           </div>
         );
-      case "Following":
+      case "Followers":
         return (
           <div className="container mx-auto max-w-7xl pt-4 mt-4 px-6 flex-grow min-h-screen">
             <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-4">

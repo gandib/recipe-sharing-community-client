@@ -10,12 +10,21 @@ import { FieldValues } from "react-hook-form";
 import { ChangeEvent, useEffect, useState } from "react";
 import registerValidationSchema from "@/src/schemas/register.schemas";
 import "../../../../src/styles/animation.css";
+import loginPic from "@/src/assets/login2.jpg";
+import Image from "next/image";
+import Loading from "@/src/components/UI/Loading";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreviews, setImagePreviews] = useState<string[] | []>([]);
-  const { mutate: handleUserRagistration, isPending } = useUserRegistration();
+  const {
+    mutate: handleUserRagistration,
+    isPending,
+    isSuccess,
+  } = useUserRegistration();
   const [isVisible, setIsVisible] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setIsVisible(true);
@@ -60,11 +69,19 @@ export default function Register() {
     //handle loading state
   }
 
+  useEffect(() => {
+    if (!isPending && isSuccess) {
+      router.push("/login");
+    }
+  }, [isPending, isSuccess, router]);
+
   return (
-    <div
-      className={`transition-opacity duration-500 ${isVisible ? "fade-enter-active" : "fade-enter"}`}
-    >
+    <div className="flex min-h-screen justify-center items-center">
+      <div className="hidden lg:flex">
+        <Image src={loginPic} width={1000} height={1000} alt="login" />
+      </div>
       <div className="flex mt-6 w-full flex-col items-center justify-center mb-12">
+        {/* {isPending && <Loading />} */}
         <h3 className="my-2 text-2xl font-bold">
           Register with Recipe Sharing
         </h3>

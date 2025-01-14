@@ -13,55 +13,11 @@ import { useUser } from "@/src/context/user.provider";
 import { useEffect, useState } from "react";
 import loginValidationSchema from "@/src/schemas/login.schemas";
 import "../../../../src/styles/animation.css";
+import loginPic from "@/src/assets/login2.jpg";
+import Image from "next/image";
 
 const Login = () => {
-  // const searchParams = useSearchParams();
-  // const redirect = searchParams?.get("redirect");
-  // const router = useRouter();
-  // const { setIsLoading } = useUser();
-  // const [email, setEmail] = useState("");
-  // const [error, setError] = useState("");
   const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-
-    return () => {
-      setIsVisible(false);
-    };
-  }, []);
-
-  // const { mutate: handleUserLogin, isPending, isSuccess } = useUserlogin();
-  // const { mutate: handleForgetPassword } = useForgetPassword();
-
-  // const onSubmit = (data: FieldValues) => {
-  //   setEmail(data.email);
-  //   handleUserLogin(data);
-  //   setIsLoading(true);
-  // };
-
-  // if (!isPending && isSuccess) {
-  //   if (redirect) {
-  //     router.push(redirect);
-  //   } else {
-  //     router.push("/");
-  //   }
-  // }
-
-  // const recoverPassword = (email: string) => {
-  //   const data = {
-  //     email,
-  //   };
-  //   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-  //   if (!regex.test(email)) {
-  //     setError("Please enter a valid email!");
-  //   } else {
-  //     setError("");
-  //     handleForgetPassword(data);
-  //   }
-  // };
-
   const searchParams = useSearchParams();
   const redirect = searchParams?.get("redirect");
   const router = useRouter();
@@ -70,6 +26,14 @@ const Login = () => {
 
   const { mutate: handleUserLogin, isPending, isSuccess } = useUserlogin();
   const { mutate: handleForgetPassword } = useForgetPassword();
+
+  useEffect(() => {
+    setIsVisible(true);
+
+    return () => {
+      setIsVisible(false);
+    };
+  }, []);
 
   const { register, handleSubmit, setValue, watch } = useForm({
     resolver: zodResolver(loginValidationSchema),
@@ -104,11 +68,12 @@ const Login = () => {
   };
 
   return (
-    <div
-      className={`transition-opacity duration-500 mt-16 ${isVisible ? "fade-enter-active" : "fade-enter"}`}
-    >
-      {isPending && <Loading />}
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="hidden lg:flex">
+        <Image src={loginPic} width={1000} height={1000} alt="login" />
+      </div>
       <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center ">
+        {isPending && <Loading />}
         <h3 className="my-2 text-2xl font-bold">Login with Recipe Sharing</h3>
         <p>Welcome Back! Let&lsquo;s Get Started</p>
 
