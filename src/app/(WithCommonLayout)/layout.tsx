@@ -7,8 +7,8 @@ export default function layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   return (
     <div className="relative flex flex-col min-h-screen">
-      <Navbar />
-      {pathname !== "/login" && <NavbarLower />}
+      <NavbarLower />
+      {/* {pathname !== "/login" && <NavbarLower />} */}
       <main>{children}</main>
     </div>
   );

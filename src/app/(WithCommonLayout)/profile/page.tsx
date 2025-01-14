@@ -64,7 +64,7 @@ export default function ProfilePage() {
         );
       case "Followers":
         return (
-          <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen">
+          <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen mt-4">
             <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-4">
               {user?.data?.following?.map((following: IUser, index: number) => (
                 <Card
@@ -95,7 +95,7 @@ export default function ProfilePage() {
         );
       case "Following":
         return (
-          <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen">
+          <div className="container mx-auto max-w-7xl pt-4 mt-4 px-6 flex-grow min-h-screen">
             <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-4">
               {user?.data?.follower?.map((follower: IUser, index: number) => (
                 <Card
@@ -119,7 +119,7 @@ export default function ProfilePage() {
         );
       case "About":
         return (
-          <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen">
+          <div className="container mx-auto max-w-7xl pt-4 mt-4 px-6 flex-grow min-h-screen">
             <div className="text-xl">{user?.data?.bio}</div>
           </div>
         );
@@ -137,7 +137,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen mt-16 lg:mt-0">
+    <div className="min-h-screen  lg:mt-0">
       {/* Header Section */}
       <div className="relative">
         <div className="h-56 bg-blue-600"></div>
@@ -176,10 +176,10 @@ export default function ProfilePage() {
       </div>
 
       {/* Content Section */}
-      <div className="mt-10 p-4 grid lg:grid-cols-3 gap-4 container mx-auto">
+      <div className="  grid lg:grid-cols-3 gap-4 container mx-auto">
         <div className="lg:col-span-2">{renderContent()}</div>
 
-        <div className="hidden lg:flex lg:col-span-1 bg-gray-100 p-4 mt-3 rounded text-gray-800 ">
+        <div className="hidden lg:flex lg:col-span-1  p-4 rounded text-gray-800 sticky top-5">
           <div className="hidden flex-col lg:flex lg:col-span-1">
             <HomePageRecentPost recipes={recipe!} />
           </div>

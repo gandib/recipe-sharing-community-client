@@ -12,7 +12,7 @@ const HomePageRecentPost = ({
 }) => {
   const router = useRouter();
   return (
-    <div className="w-full sticky top-20 bg-gray-100 rounded p-4">
+    <div className="w-full sticky top-5 bg-gray-100 rounded p-4">
       <h1 className="text-gray-600 font-bold">Recent Posts</h1>
       {recipes &&
         recipes.result.length > 0 &&

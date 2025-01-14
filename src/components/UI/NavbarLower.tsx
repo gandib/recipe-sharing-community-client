@@ -30,15 +30,27 @@ import {
   UsersRound,
   Zap,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetUser } from "@/src/hooks/user.hook";
+import { IRecipe } from "@/src/types";
+import { FieldValues, useForm } from "react-hook-form";
+import useDebounce from "@/src/hooks/debounce.hook";
+import { queryParams } from "./AdminDashboardCard";
+import { getAllMyRecipes } from "@/src/services/Recipe";
+
+type TRecipeMeta = {
+  meta: { page: number; limit: number; total: number; totalPage: number };
+  result: IRecipe[];
+};
 
 export const NavbarLower = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { user, setIsLoading } = useUser();
-  const [showMegaMenu, setShowMegaMenu] = useState(false);
-  const { data } = useGetUser(user?.email!);
+  const [recipeData, setRecipeData] = useState<TRecipeMeta>();
+  const { register, handleSubmit, watch, setValue } = useForm();
+  const searchText = useDebounce(watch("search"));
+  const [loading, setLoading] = useState(true);
 
   const handleLogout = () => {
     logout();
@@ -48,13 +60,104 @@ export const NavbarLower = () => {
       router.push("/");
     }
   };
-  console.log(data);
+
+  useEffect(() => {
+    const query: queryParams[] = [];
+    query.push({ name: "limit", value: 10 });
+    query.push({ name: "searchTerm", value: searchText });
+
+    const fetchData = async () => {
+      const { data: allRecipes } = await getAllMyRecipes(query);
+      setRecipeData(allRecipes);
+      setLoading(false);
+    };
+
+    if (searchText) {
+      setLoading(true);
+      fetchData();
+    } else {
+      setRecipeData(undefined); // Clear the product data when search text is cleared
+    }
+  }, [searchText]);
+
+  const onSubmit = (data: FieldValues) => {};
   return (
     <NextUINavbar
-      className="border-t-1 border-b-1 mt-16 hidden lg:flex"
+      className="border-t-1 border-b-1 "
       maxWidth="2xl"
       position="static"
     >
+      <NavbarContent className="basis-1/5 sm:basis-full mr-8" justify="start">
+        <NavbarBrand as="li" className="gap-3 max-w-fit">
+          <NextLink className="flex justify-start items-center gap-1" href="/">
+            <Logo className="text-gray-700" />
+            <p className="font-bold text-inherit text-gray-700">Recipe</p>
+          </NextLink>
+        </NavbarBrand>
+
+        <div className="flex justify-center items-center my-2 w-40 sm:w-60 lg:w-48">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Input
+              {...register("search")}
+              aria-label="Search"
+              placeholder="Search..."
+              size="md"
+              startContent={
+                <SearchIcon className="pointer-events-none flex-shrink-0 text-base text-default-400" />
+              }
+              color="primary"
+              type="text"
+            />
+          </form>
+        </div>
+
+        {/* <ul className="hidden lg:flex gap-4 justify-start ml-2">
+          <NavbarItem>
+            <NextLink
+              className={`text-lg ${pathname === "/" ? "text-primary-500" : ""}`}
+              href="/"
+            >
+              Recipe Feed
+            </NextLink>
+          </NavbarItem>
+          {user?.email && (
+            <>
+              <NavbarItem>
+                <NextLink
+                  className={`text-lg ${pathname === "/profile" ? "text-primary-500" : ""}`}
+                  href="/profile"
+                >
+                  Profile
+                </NextLink>
+              </NavbarItem>
+              <NavbarItem>
+                <NextLink
+                  href={
+                    user?.role === "user"
+                      ? "/user-dashboard"
+                      : "/admin-dashboard"
+                  }
+                  className={`text-lg ${pathname === "/user-dashboard" ? "text-primary-500" : ""} ${pathname === "/admin-dashboard" ? "text-primary-500" : ""}`}
+                >
+                  Dashboard
+                </NextLink>
+              </NavbarItem>
+            </>
+          )}
+          {siteConfig.navMenuItems.map((item, index) => (
+            <NavbarMenuItem key={`${item}-${index}`}>
+              <Link
+                color={pathname === item.href ? "primary" : "foreground"}
+                href={item.href}
+                size="lg"
+              >
+                {item.label}
+              </Link>
+            </NavbarMenuItem>
+          ))}
+        </ul> */}
+      </NavbarContent>
+
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         {/* <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
@@ -62,7 +165,7 @@ export const NavbarLower = () => {
             <p className="font-bold text-inherit">Recipe</p>
           </NextLink>
         </NavbarBrand> */}
-        <NavbarContent className="hidden lg:flex basis-1 pl-4" justify="start">
+        {/* <NavbarContent className="hidden lg:flex basis-1 pl-4" justify="start">
           <NavbarItem>
             <div
               className={`relative text-base font-bold cursor-pointer `}
@@ -71,15 +174,15 @@ export const NavbarLower = () => {
             >
               <h1 className="text-base font-bold flex">
                 <Menu />
-              </h1>
+              </h1> */}
 
-              {/* Mega Menu */}
-              {showMegaMenu && (
+        {/* Mega Menu */}
+        {/* {showMegaMenu && (
                 <div className="absolute left-0 top-full mt-5 w-[200px] min-h-screen shadow-lg rounded-md p-4 ml-[-35px] z-50 bg-gray-100">
-                  <div className="grid gap-4">
-                    {/* Individual Links */}
+                  <div className="grid gap-4"> */}
+        {/* Individual Links */}
 
-                    <NextLink href="/profile" legacyBehavior>
+        {/* <NextLink href="/profile" legacyBehavior>
                       <a
                         className={`font-medium cursor-pointer  hover:text-primary-500`}
                       >
@@ -113,9 +216,12 @@ export const NavbarLower = () => {
               )}
             </div>
           </NavbarItem>
-        </NavbarContent>
+        </NavbarContent> */}
 
-        <ul className="hidden lg:flex gap-16 justify-center items-center">
+        <NavbarContent
+          justify="center"
+          className="hidden lg:flex gap-16 justify-center items-center"
+        >
           <NavbarItem>
             <NextLink
               className={`text-lg ${pathname === "/" ? "text-secondary-500" : "text-primary-500"}`}
@@ -199,10 +305,33 @@ export const NavbarLower = () => {
               </Link>
             </NavbarMenuItem>
           ))} */}
-        </ul>
+        </NavbarContent>
       </NavbarContent>
 
       <NavbarContent
+        className="hidden md:flex basis-1/5 sm:basis-full"
+        justify="end"
+      >
+        <NavbarItem className="hidden lg:flex gap-2">
+          <ThemeSwitch />
+        </NavbarItem>
+        {user?.email ? (
+          <NavbarItem className="hidden lg:flex gap-2">
+            <NavbarDropDown />
+          </NavbarItem>
+        ) : (
+          <NavbarItem className="hidden sm:flex gap-2">
+            <Link href="/login">Login</Link>
+          </NavbarItem>
+        )}
+      </NavbarContent>
+
+      <NavbarContent className="lg:hidden basis-1 pl-4" justify="end">
+        <ThemeSwitch />
+        <NavbarMenuToggle />
+      </NavbarContent>
+
+      {/* <NavbarContent
         className="hidden md:flex basis-1/5 sm:basis-full"
         justify="end"
       >
@@ -218,7 +347,7 @@ export const NavbarLower = () => {
             </p>
           </div>
         </NavbarItem>
-      </NavbarContent>
+      </NavbarContent> */}
 
       <NavbarMenu>
         <div className="mx-4 mt-20 flex flex-col gap-2">

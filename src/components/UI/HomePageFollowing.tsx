@@ -45,7 +45,7 @@ const HomePageFollowing = () => {
     <p>Loading...</p>;
   }
   return (
-    <div className="bg-gray-100 rounded p-6 sticky top-20">
+    <div className="bg-gray-100 rounded p-6 sticky top-5">
       <h1 className="text-base text-gray-600 font-bold mb-6">
         Who's following
       </h1>
