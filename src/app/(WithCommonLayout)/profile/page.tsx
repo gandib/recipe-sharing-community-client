@@ -51,14 +51,13 @@ export default function ProfilePage() {
     switch (activeTab) {
       case "Timeline":
         return (
-          <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen">
-            <div className="md:col-span-2 mt-4 lg:mt-0">
+          <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen lg:col-span-2 mt-4 lg:mt-0 ">
+            <div className="">
               {/* create new post section */}
               <HomePageCreatePost />
 
               <div className=" mb-8">
                 <HomePageFeedCard recipe={recipe!} />
-                {/* <HomePageFeedCard /> */}
               </div>
             </div>
           </div>
@@ -177,10 +176,10 @@ export default function ProfilePage() {
       </div>
 
       {/* Content Section */}
-      <div className="mt-10 p-4 grid md:grid-cols-3 gap-4 ">
-        <div className="md:col-span-2 ">{renderContent()}</div>
+      <div className="mt-10 p-4 grid lg:grid-cols-3 gap-4 container mx-auto">
+        <div className="lg:col-span-2">{renderContent()}</div>
 
-        <div className="hidden md:flex md:col-span-1 bg-gray-100 p-4 mt-3 rounded text-gray-800 ">
+        <div className="hidden lg:flex lg:col-span-1 bg-gray-100 p-4 mt-3 rounded text-gray-800 ">
           <div className="hidden flex-col lg:flex lg:col-span-1">
             <HomePageRecentPost recipes={recipe!} />
           </div>

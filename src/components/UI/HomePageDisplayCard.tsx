@@ -225,30 +225,30 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex text-gray-700 mt-4">
+      <div className="flex text-gray-700 mt-1">
         <div
           onClick={handleUpvote}
-          className={`flex items-center border text-sm px-2 py-1 rounded cursor-pointer ${data?.upvote.includes(user?._id) ? "text-green-500 hover:text-blue-500" : "hover:text-blue-500"}`}
+          className={`flex items-center  text-sm px-2 py-1 rounded cursor-pointer ${data?.upvote.includes(user?._id) ? "text-green-500 hover:text-blue-500" : "hover:text-blue-500"}`}
         >
-          <ThumbsUp size={20} /> <span className="pl-2">Like</span>
+          <ThumbsUp size={20} />
         </div>
         <div
           onClick={handleDownvote}
-          className={`flex items-center text-sm border p-2 mx-4 rounded cursor-pointer ${data?.downvote.includes(user?._id) ? "text-green-500 hover:text-blue-500 cursor-pointer" : "hover:text-blue-500"}`}
+          className={`flex items-center text-sm  p-2 mx-4 rounded cursor-pointer ${data?.downvote.includes(user?._id) ? "text-green-500 hover:text-blue-500 cursor-pointer" : "hover:text-blue-500"}`}
         >
-          <ThumbsDown size={20} /> <span className="pl-2">Dislike</span>
+          <ThumbsDown size={20} />
         </div>
         <div
           onClick={() => setCommentShow(!commentShow)}
-          className="flex items-center text-sm border p-2 rounded cursor-pointer hover:text-primary-500"
+          className="flex items-center text-sm p-2 rounded cursor-pointer hover:text-primary-500"
         >
-          <MessageSquare size={20} /> <span className="pl-2">Comment</span>
+          <MessageSquare size={20} />
         </div>
         <div
           onClick={() => setIsShareOpen(true)}
-          className="flex items-center text-sm border p-2 mx-4 rounded cursor-pointer hover:text-primary-500"
+          className="flex items-center text-sm  p-2 mx-4 rounded cursor-pointer hover:text-primary-500"
         >
-          <Share2Icon size={20} /> <span className="pl-2">Share</span>
+          <Share2Icon size={20} />
         </div>
       </div>
       {isShareOpen && (

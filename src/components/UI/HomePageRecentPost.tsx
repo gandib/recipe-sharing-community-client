@@ -23,7 +23,7 @@ const HomePageRecentPost = ({
           >
             <Image
               src={recipe.image[0]}
-              width={100}
+              width={70}
               height={50}
               alt="Time with nature"
               className="h-full rounded"
@@ -31,9 +31,9 @@ const HomePageRecentPost = ({
             <div className="px-2 w-full flex flex-col h-[50px] ">
               <h2
                 onClick={() => router.push(`/profile/${recipe._id}`)}
-                className="text-gray-600 text-base font-bold cursor-pointer hover:text-primary-500"
+                className="text-gray-600 text-sm font-semibold cursor-pointer hover:text-primary-500"
               >
-                {recipe.title.slice(0, 30) + "..."}
+                {recipe.title.slice(0, 25) + "..."}
               </h2>
               <p className="text-tiny py-2 text-gray-600">
                 {moment(recipe.createdAt).format("MMM DD, YYYY")}
