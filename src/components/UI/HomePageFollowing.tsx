@@ -45,10 +45,8 @@ const HomePageFollowing = () => {
     <p>Loading...</p>;
   }
   return (
-    <div className="bg-gray-100 rounded p-6 sticky top-5">
-      <h1 className="text-base text-gray-600 font-bold mb-6">
-        Who's following
-      </h1>
+    <div className="bg-default-100 rounded p-6 sticky top-5">
+      <h1 className="text-base  font-bold mb-6">Who's following</h1>
       {data?.data?.follower?.length < 1 && "No follower found"}
       {data?.data?.follower?.map(
         (follower: {
@@ -57,10 +55,7 @@ const HomePageFollowing = () => {
           membership: string;
           name: string;
         }) => (
-          <div
-            key={follower._id}
-            className="flex text-gray-700 justify-between pb-2"
-          >
+          <div key={follower._id} className="flex  justify-between pb-2">
             <div className="flex">
               <User
                 avatarProps={{

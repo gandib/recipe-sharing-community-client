@@ -4,9 +4,9 @@ import { Avatar } from "@nextui-org/react";
 
 const HomePageMyGroups = () => {
   return (
-    <div className="bg-gray-100 rounded p-6 mb-6 ">
-      <h1 className="text-base text-gray-600 font-bold mb-6">Your Groups</h1>
-      <div className="flex text-gray-700 justify-between pb-2">
+    <div className="bg-default-100 rounded p-6 mb-6 ">
+      <h1 className="text-base  font-bold mb-6">Your Groups</h1>
+      <div className="flex  justify-between pb-2">
         <div className="flex">
           <Avatar
             src={"https://i.pravatar.cc/150?u=a04258114e29026702d"}

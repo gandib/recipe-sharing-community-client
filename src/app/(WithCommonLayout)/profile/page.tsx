@@ -179,7 +179,7 @@ export default function ProfilePage() {
       <div className="  grid lg:grid-cols-3 gap-4 container mx-auto">
         <div className="lg:col-span-2">{renderContent()}</div>
 
-        <div className="hidden lg:flex lg:col-span-1  p-4 rounded text-gray-800 sticky top-5">
+        <div className="hidden lg:flex lg:col-span-1  p-4 rounded  sticky top-5">
           <div className="hidden flex-col lg:flex lg:col-span-1">
             <HomePageRecentPost recipes={recipe!} />
           </div>

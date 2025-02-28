@@ -100,7 +100,7 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
   }
 
   return (
-    <div className="bg-gray-100 rounded p-4">
+    <div className="bg-default-100 rounded p-4">
       <div className="flex justify-between items-start relative">
         {/* Avatar and User Info */}
         <div className="flex">
@@ -116,7 +116,7 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
                 <HomePageFollowUnFollowCard userId={data?.user?._id} />
               </div>
             </div>
-            <p className="text-tiny flex text-gray-600">
+            <p className="text-tiny flex">
               <Globe size={"14px"} />
               <span className="pl-1">
                 Published: {moment(data?.createdAt).format("MMM DD, YYYY")}
@@ -132,7 +132,7 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
             className="cursor-pointer"
           />
           {showOptions && (
-            <div className="absolute right-0 top-full mt-2 w-[150px] shadow-lg rounded-md p-4 bg-gray-100 z-50 ">
+            <div className="absolute right-0 top-full mt-2 w-[150px] shadow-lg rounded-md p-4 bg-default-200 z-50 text-default-900">
               <div className="grid gap-4">
                 {user?._id === data?.user?._id && (
                   <div
@@ -142,7 +142,7 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
                       );
                       setShowOptions(false);
                     }}
-                    className="text-gray-700 cursor-pointer flex items-center hover:text-primary-500"
+                    className=" cursor-pointer flex items-center hover:text-primary-500"
                   >
                     <Pen size={20} /> <span className="pl-2">Edit Post</span>
                   </div>
@@ -150,7 +150,7 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
                 {user?._id === data?.user?._id && (
                   <div
                     onClick={handleDelete}
-                    className="text-gray-700 cursor-pointer flex items-center hover:text-primary-500"
+                    className=" cursor-pointer flex items-center hover:text-primary-500"
                   >
                     <Trash2 size={20} />{" "}
                     <span className="pl-2">Delete Post</span>
@@ -161,7 +161,7 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
                   onClick={() => {
                     setShowOptions(false);
                   }}
-                  className="text-gray-700 cursor-pointer flex items-center hover:text-primary-500"
+                  className=" cursor-pointer flex items-center hover:text-primary-500"
                 >
                   <Flag size={20} /> <span className="pl-2">Report Post</span>
                 </div>
@@ -180,11 +180,9 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
         <h1 className="mb-4 mt-4 italic text-base font-semibold text-secondary-500">
           {data?.tags}
         </h1>
-        <h1 className=" my-2 text-xl font-semibold text-gray-600">
-          {data?.title}
-        </h1>
+        <h1 className=" my-2 text-xl font-semibold ">{data?.title}</h1>
 
-        <div className="recipe-instructions text-gray-700">
+        <div className="recipe-instructions ">
           {!seeMore ? (
             <>
               <div
@@ -230,7 +228,7 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex text-gray-700 mt-1">
+      <div className="flex  mt-1">
         <div
           onClick={handleUpvote}
           className={`flex items-center  text-sm px-2 py-1 rounded cursor-pointer ${data?.upvote.includes(user?._id) ? "text-green-500 hover:text-blue-500" : "hover:text-blue-500"}`}
@@ -267,15 +265,11 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
       {commentShow && (
         <div className="pt-2">
           <div>
-            <div className="text-gray-600">
+            <div className="">
               <FXForm onSubmit={onSubmit}>
                 <FXTextarea label="Type a comment" name="comment" />
                 <p className="text-sm text-red-500">{commentError}</p>
-                <Button
-                  className="my-4 text-gray-600"
-                  type="submit"
-                  variant="bordered"
-                >
+                <Button className="my-4 " type="submit" variant="bordered">
                   Submit
                 </Button>
               </FXForm>
@@ -288,9 +282,9 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
               {data?.comment &&
                 data?.comment.length > 0 &&
                 data?.comment?.map((comment) => (
-                  <div className="my-2 text-gray-600 flex">
+                  <div className="my-2  flex">
                     <Avatar src={comment.user.image} />
-                    <div className="bg-white w-full rounded p-2 ml-2">
+                    <div className="bg-default-200 w-full rounded p-2 ml-2">
                       <p
                         key={comment._id}
                         className="flex gap-2 text-sm font-semibold"

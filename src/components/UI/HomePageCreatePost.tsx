@@ -8,8 +8,8 @@ const HomePageCreatePost = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="bg-gray-100 rounded p-6 mb-6">
-      <p className="text-base font-semibold text-gray-700">Create New Post</p>
+    <div className="bg-default-100 rounded p-6 mb-6">
+      <p className="text-base font-semibold ">Create New Post</p>
       <input
         className="rounded-3xl py-3 pr-3 pl-8 w-full my-4 text-sm"
         placeholder="Create New Post"
@@ -25,15 +25,11 @@ const HomePageCreatePost = () => {
       <div className="flex items-center gap-8">
         <div className="flex items-center">
           <ImageIcon className="text-green-500 " />
-          <p className="text-tiny font-semibold pl-2 text-gray-700">
-            Photo/Video
-          </p>
+          <p className="text-tiny font-semibold pl-2 ">Photo/Video</p>
         </div>
         <div className="flex items-center">
           <Smile className="text-yellow-500 " />
-          <p className="text-tiny font-semibold pl-2 text-gray-700">
-            Feeling/Activity
-          </p>
+          <p className="text-tiny font-semibold pl-2 ">Feeling/Activity</p>
         </div>
       </div>
     </div>
