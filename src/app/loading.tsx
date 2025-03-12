@@ -6,7 +6,7 @@ export default function loading() {
   return (
     <div>
       <NavbarLower />
-      <div className="flex justify-center items-center mt-20">
+      <div className="flex justify-center items-center">
         <Spinner />
       </div>
     </div>

@@ -1,5 +1,5 @@
 "use client";
-import { Navbar } from "@/src/components/UI/navbar";
+
 import { NavbarLower } from "@/src/components/UI/NavbarLower";
 import { usePathname } from "next/navigation";
 

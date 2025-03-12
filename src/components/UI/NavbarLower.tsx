@@ -87,7 +87,7 @@ export const NavbarLower = () => {
   }
   return (
     <NextUINavbar
-      className="border-t-1 border-b-1 "
+      className="border-t-1 border-b-1 fixed "
       maxWidth="2xl"
       position="static"
     >
@@ -261,25 +261,25 @@ export const NavbarLower = () => {
                 </div>
               </NextLink>
             </NavbarItem>
-            <NavbarItem>
-              <NextLink
-                className={`text-lg ${pathname === "/user-dashboard" ? "text-secondary-500" : "text-primary-500"} ${pathname === "/admin-dashboard" ? "text-secondary-500" : "text-primary-500"}`}
-                href={
-                  user?.role === "user" ? "/user-dashboard" : "/admin-dashboard"
-                }
-              >
-                <div className="relative flex items-center group">
-                  <LayoutDashboard
-                    className={`text-gray-500 transition-all group-hover:opacity-0 group-hover:translate-y-4 ${pathname === "/user-dashboard" ? "text-secondary-500" : "text-primary-500"} ${pathname === "/admin-dashboard" ? "text-secondary-500" : "text-primary-500"} `}
-                  />
-                  <p
-                    className={`absolute left-1/2 -translate-x-1/2 translate-y-4 opacity-0 text-base  group-hover:translate-y-0 group-hover:opacity-100 transition-all ${pathname === "/user-dashboard" ? "text-secondary-500" : "text-primary-500"} ${pathname === "/admin-dashboard" ? "text-secondary-500" : "text-primary-500"}`}
-                  >
-                    Dashboard
-                  </p>
-                </div>
-              </NextLink>
-            </NavbarItem>
+            {user?.role === "admin" ? (
+              <NavbarItem>
+                <NextLink
+                  className={`text-lg ${pathname === "/user-dashboard" ? "text-secondary-500" : "text-primary-500"} ${pathname === "/admin-dashboard" ? "text-secondary-500" : "text-primary-500"}`}
+                  href={"/admin-dashboard"}
+                >
+                  <div className="relative flex items-center group">
+                    <LayoutDashboard
+                      className={`text-gray-500 transition-all group-hover:opacity-0 group-hover:translate-y-4 ${pathname === "/user-dashboard" ? "text-secondary-500" : "text-primary-500"} ${pathname === "/admin-dashboard" ? "text-secondary-500" : "text-primary-500"} `}
+                    />
+                    <p
+                      className={`absolute left-1/2 -translate-x-1/2 translate-y-4 opacity-0 text-base  group-hover:translate-y-0 group-hover:opacity-100 transition-all ${pathname === "/user-dashboard" ? "text-secondary-500" : "text-primary-500"} ${pathname === "/admin-dashboard" ? "text-secondary-500" : "text-primary-500"}`}
+                    >
+                      Dashboard
+                    </p>
+                  </div>
+                </NextLink>
+              </NavbarItem>
+            ) : null}
             {/* <NavbarItem>
               <NextLink
                 className={`text-lg ${pathname === "/my-group" ? "text-secondary-500" : "text-primary-500"}`}
@@ -372,24 +372,24 @@ export const NavbarLower = () => {
                 Profile
               </NextLink>
             </NavbarItem>
-            <NavbarItem>
-              <NextLink
-                href={
-                  user?.role === "user" ? "/user-dashboard" : "/admin-dashboard"
-                }
-                className={`text-lg ${pathname === "/user-dashboard" ? "text-primary-500" : ""} ${pathname === "/admin-dashboard" ? "text-primary-500" : ""}`}
-              >
-                Dashboard
-              </NextLink>
-            </NavbarItem>
-            <NavbarItem>
+            {user?.role === "admin" ? (
+              <NavbarItem>
+                <NextLink
+                  href={"/admin-dashboard"}
+                  className={`text-lg  ${pathname === "/admin-dashboard" ? "text-primary-500" : ""}`}
+                >
+                  Dashboard
+                </NextLink>
+              </NavbarItem>
+            ) : null}
+            {/* <NavbarItem>
               <NextLink
                 href={"/my-group"}
                 className={`text-lg ${pathname === "/my-group" ? "text-primary-500" : ""}`}
               >
                 Group
               </NextLink>
-            </NavbarItem>
+            </NavbarItem> */}
           </>
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>

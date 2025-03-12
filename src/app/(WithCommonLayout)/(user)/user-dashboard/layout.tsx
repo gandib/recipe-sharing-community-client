@@ -16,7 +16,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="w-1/12 md:w-2/6 lg:w-1/6 hidden md:flex min-h-full bg-gray-600">
           <UserSidebar />
         </div>
-        <div className="w-11/12 md:w-4/6 lg:w-5/6">{children}</div>
+        <div className="w-11/12 md:w-4/6 lg:w-5/6 mt-20">{children}</div>
       </div>
     </div>
   );

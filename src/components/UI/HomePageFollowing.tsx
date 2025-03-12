@@ -45,7 +45,7 @@ const HomePageFollowing = () => {
     <p>Loading...</p>;
   }
   return (
-    <div className="bg-default-100 rounded p-6 sticky top-5">
+    <div className="bg-default-100 rounded p-6 sticky top-20">
       <h1 className="text-base  font-bold mb-6">Who's following</h1>
       {data?.data?.follower?.length < 1 && "No follower found"}
       {data?.data?.follower?.map(

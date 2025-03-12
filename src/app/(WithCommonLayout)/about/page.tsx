@@ -32,7 +32,7 @@ const AboutUs = () => {
           </h2>
         </div>
 
-        <Container>
+        <div className="my-6">
           <Card className="bg-white shadow-lg p-8">
             <h3 className="text-2xl font-semibold text-gray-800 mb-4">
               Our Mission
@@ -44,9 +44,9 @@ const AboutUs = () => {
               that passion with the world.
             </h2>
           </Card>
-        </Container>
+        </div>
 
-        <Container>
+        <div>
           <h3 className="text-2xl font-semibold text-gray-800 text-center mb-8">
             Meet Our Team
           </h3>
@@ -80,9 +80,9 @@ const AboutUs = () => {
               </Card>
             </div>
           </div>
-        </Container>
+        </div>
 
-        <Container>
+        <div className="my-6">
           <Card className="bg-white shadow-lg p-8">
             <h3 className="text-2xl font-semibold text-gray-800 mb-4">
               Our Journey
@@ -93,9 +93,9 @@ const AboutUs = () => {
               some incredible milestones along the way...
             </h3>
           </Card>
-        </Container>
+        </div>
 
-        <Container>
+        <div>
           <Card className="bg-white shadow-lg p-8">
             <h3 className="text-2xl font-semibold text-gray-800 mb-4">
               Get In Touch
@@ -106,7 +106,7 @@ const AboutUs = () => {
             <h3 className="text-gray-600">Phone: (123) 456-7890</h3>
             <h3 className="text-gray-600">Email: contact@platformname.com</h3>
           </Card>
-        </Container>
+        </div>
       </div>
     </div>
   );

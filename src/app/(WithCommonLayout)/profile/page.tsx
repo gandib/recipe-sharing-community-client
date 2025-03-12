@@ -176,7 +176,7 @@ export default function ProfilePage() {
       </div>
 
       {/* Content Section */}
-      <div className="  grid lg:grid-cols-3 gap-4 container mx-auto">
+      <div className="  grid lg:grid-cols-3 gap-4 container mx-auto max-w-screen-xl">
         <div className="lg:col-span-2">{renderContent()}</div>
 
         <div className="hidden lg:flex lg:col-span-1  p-4 rounded  sticky top-5">

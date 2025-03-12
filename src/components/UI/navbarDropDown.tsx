@@ -14,7 +14,7 @@ import { usePathname, useRouter } from "next/navigation";
 const NavbarDropDown = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { user, setIsLoading } = useUser();
+  const { user, setIsLoading, isLoading } = useUser();
 
   const handleNavigation = (pathname: string) => {
     router.push(pathname);
@@ -28,6 +28,10 @@ const NavbarDropDown = () => {
       router.push("/login");
     }
   };
+
+  if (isLoading) {
+    <p>Loading...</p>;
+  }
 
   return (
     <Dropdown>
@@ -47,12 +51,14 @@ const NavbarDropDown = () => {
         >
           Update Profile
         </DropdownItem>
-        <DropdownItem
-          onPress={() => handleNavigation("/profile/get-membership")}
-          key={"UpdateProfile"}
-        >
-          Get Membership
-        </DropdownItem>
+        {user?.role === "user" ? (
+          <DropdownItem
+            onPress={() => handleNavigation("/profile/get-membership")}
+            key="UpdateProfile"
+          >
+            Get Membership
+          </DropdownItem>
+        ) : null}
         <DropdownItem
           onPress={() => handleNavigation("/profile/change-password")}
           key={"UpdateProfile"}

@@ -6,7 +6,7 @@ import React from "react";
 
 const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="mx-auto w-full flex-grow min-h-screen">
+    <div className="mx-auto w-full flex-grow min-h-screen mt-20">
       {/* <div className="md:hidden">
         <SidebarMenu links={profileLinks} />
       </div> */}

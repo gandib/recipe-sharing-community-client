@@ -183,30 +183,28 @@ export const Navbar = () => {
               Recipe Feed
             </NextLink>
           </NavbarItem>
-          {user?.email && (
-            <>
+
+          <>
+            <NavbarItem>
+              <NextLink
+                className={`text-lg ${pathname === "/profile" ? "text-primary-500" : ""}`}
+                href="/profile"
+              >
+                Profile
+              </NextLink>
+            </NavbarItem>
+            {user?.role === "admin" ? (
               <NavbarItem>
                 <NextLink
-                  className={`text-lg ${pathname === "/profile" ? "text-primary-500" : ""}`}
-                  href="/profile"
-                >
-                  Profile
-                </NextLink>
-              </NavbarItem>
-              <NavbarItem>
-                <NextLink
-                  href={
-                    user?.role === "user"
-                      ? "/user-dashboard"
-                      : "/admin-dashboard"
-                  }
-                  className={`text-lg ${pathname === "/user-dashboard" ? "text-primary-500" : ""} ${pathname === "/admin-dashboard" ? "text-primary-500" : ""}`}
+                  href={"/admin-dashboard"}
+                  className={`text-lg  ${pathname === "/admin-dashboard" ? "text-primary-500" : ""}`}
                 >
                   Dashboard
                 </NextLink>
               </NavbarItem>
-            </>
-          )}
+            ) : null}
+          </>
+
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
