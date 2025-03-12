@@ -47,6 +47,18 @@ const NavbarDropDown = () => {
         >
           Update Profile
         </DropdownItem>
+        <DropdownItem
+          onPress={() => handleNavigation("/profile/get-membership")}
+          key={"UpdateProfile"}
+        >
+          Get Membership
+        </DropdownItem>
+        <DropdownItem
+          onPress={() => handleNavigation("/profile/change-password")}
+          key={"UpdateProfile"}
+        >
+          Change Password
+        </DropdownItem>
 
         <DropdownItem
           onPress={handleLogout}

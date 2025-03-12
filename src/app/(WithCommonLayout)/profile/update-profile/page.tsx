@@ -52,31 +52,42 @@ export default function UpdateProfile() {
   }
 
   return (
-    <div className="flex mt-6  w-full flex-col items-center justify-center ">
-      <h3 className="my-2 text-2xl font-bold">Update Profile</h3>
-      <div className="w-full md:w-[80%]">
-        <FXForm
-          onSubmit={onSubmit}
-          resolver={zodResolver(userValidationSchema)}
-        >
-          <div className="py-3">
-            <FXInput name="name" label="Name" size="sm" />
-          </div>
-          <div className="py-3">
-            <FXInput name="image" label="Image" size="sm" />
-          </div>
-          <div className="py-3">
-            <FXTextarea name="bio" label="Bio" size="sm" />
-          </div>
-
-          <Button
-            className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
-            size="lg"
-            type="submit"
+    <div className="flex  w-full flex-col items-center justify-center min-h-screen">
+      <div className="border w-[90%] md:w-[60%] lg:w-[50%] flex flex-col items-center p-4 rounded-md">
+        <h3 className="my-2 text-2xl font-bold">Update Profile</h3>
+        <div className="w-full md:w-[90%]">
+          <FXForm
+            onSubmit={onSubmit}
+            resolver={zodResolver(userValidationSchema)}
           >
-            Update
-          </Button>
-        </FXForm>
+            <div className="py-1">
+              <div className="py-2 text-base font-semibold">
+                <label htmlFor="Name">Name</label>
+              </div>
+              <FXInput name="name" label="Name" size="sm" />
+            </div>
+            <div className="py-1">
+              <div className="py-2 text-base font-semibold">
+                <label htmlFor="Image link">Image link</label>
+              </div>
+              <FXInput name="image" label="Image link" size="sm" />
+            </div>
+            <div className="py-1">
+              <div className="py-2 text-base font-semibold">
+                <label htmlFor="Bio">Bio</label>
+              </div>
+              <FXTextarea name="bio" label="Bio" size="sm" />
+            </div>
+
+            <Button
+              className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
+              size="lg"
+              type="submit"
+            >
+              Update
+            </Button>
+          </FXForm>
+        </div>
       </div>
     </div>
   );

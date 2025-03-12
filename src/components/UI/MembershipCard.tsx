@@ -1,6 +1,7 @@
+"use client";
 import { useUser } from "@/src/context/user.provider";
 import { useMembershipPayment } from "@/src/hooks/payment.hook";
-import { Button } from "@nextui-org/react";
+import { Button, CardBody } from "@nextui-org/react";
 import { Card as NextUiCard, CardHeader, CardFooter } from "@nextui-org/react";
 import { format } from "date-fns";
 import { CheckCircle } from "lucide-react";
@@ -13,7 +14,7 @@ const MembershipCard = () => {
   ];
 
   return (
-    <div className="grid md:grid-cols-2 gap-2">
+    <div className="grid md:grid-cols-2 gap-8 ">
       {prices?.map((data, index) => (
         <NextUiCard
           key={index}
@@ -32,6 +33,8 @@ const MembershipCard = () => {
                 {data.price} BDT
               </h4>
             </div>
+          </CardHeader>
+          <CardBody className="flex-col items-start">
             <div className="mt-2 rounded  p-1 lg:text-lg font-medium flex justify-center ">
               <CheckCircle className="text-green-500" />
               <p className="ml-2">
@@ -42,7 +45,7 @@ const MembershipCard = () => {
               <CheckCircle className="text-green-500" />
               <p className="ml-2">Unlimited Recipes you brows and post.</p>
             </div>
-          </CardHeader>
+          </CardBody>
           <CardFooter className="absolute bottom-0 z-10 justify-end border-t-1 border-zinc-100/50 bg-white/30">
             <PaymentButton price={data.price} />
           </CardFooter>

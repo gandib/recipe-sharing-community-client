@@ -11,7 +11,7 @@ const HomePageCard = ({
   recipe: { result: IRecipe[]; meta: any };
 }) => {
   return (
-    <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center">
+    <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center">
       <div className="hidden flex-col lg:flex lg:col-span-1">
         <HomePageRecentPost recipes={recipe} />
       </div>

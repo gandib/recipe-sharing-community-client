@@ -172,16 +172,16 @@ const HomePageCreatePostModal = ({
     <div className="w-full">
       {/* <Button onPress={onOpen}>Open Modal</Button> */}
       <Modal size="3xl" isOpen={isOpen} onOpenChange={setIsOpen}>
-        <ModalContent className="w-full">
+        <ModalContent className="w-full p-8 rounded-md h-[80%] overflow-y-auto">
           {(onClose) => (
             <>
               {/* <ModalHeader className="flex flex-col gap-1">
                 Modal Title
               </ModalHeader> */}
               <ModalBody>
-                <div className="flex mt-2 w-full flex-col items-center justify-center mb-2">
+                <div className="flex mt-2 w-full flex-col items-center justify-center mb-2 border py-6">
                   <h3 className="my-2 text-2xl font-bold">{title}</h3>
-                  <div className="w-full sm:w-[100%]">
+                  <div className="w-full sm:w-[90%]">
                     <FXForm
                       onSubmit={onSubmit}
                       resolver={zodResolver(
