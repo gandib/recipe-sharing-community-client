@@ -12,7 +12,7 @@ const Home = async () => {
   const { data: allTag } = await getAllTag();
 
   return (
-    <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen">
+    <div className="container mx-auto max-w-screen-2xl pt-4 px-6 flex-grow min-h-screen">
       <HomePageCard recipe={allRecipe} />
       {/* <RecipeFeedCard recipe={allRecipe} tags={allTag} /> */}
     </div>

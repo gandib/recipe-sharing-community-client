@@ -170,8 +170,8 @@ const HomePageCreatePostModal = ({
   }
   return (
     <div className="w-full">
-      <Button onPress={onOpen}>Open Modal</Button>
-      <Modal size="5xl" isOpen={isOpen} onOpenChange={onOpenChange}>
+      {/* <Button onPress={onOpen}>Open Modal</Button> */}
+      <Modal size="3xl" isOpen={isOpen} onOpenChange={setIsOpen}>
         <ModalContent className="w-full">
           {(onClose) => (
             <>
@@ -179,7 +179,7 @@ const HomePageCreatePostModal = ({
                 Modal Title
               </ModalHeader> */}
               <ModalBody>
-                <div className="flex mt-6 w-full flex-col items-center justify-center mb-12">
+                <div className="flex mt-2 w-full flex-col items-center justify-center mb-2">
                   <h3 className="my-2 text-2xl font-bold">{title}</h3>
                   <div className="w-full sm:w-[100%]">
                     <FXForm
@@ -190,17 +190,23 @@ const HomePageCreatePostModal = ({
                           : createRecipeValidationSchema
                       )}
                     >
-                      <div className="py-3">
+                      <div className="py-1">
+                        <div className="py-2 text-base font-semibold">
+                          <label htmlFor="Title">Title</label>
+                        </div>
                         <FXInput
                           name="title"
-                          label="Title"
+                          label="Enter title"
                           size="sm"
                           required={true}
                           value={recipeTitle}
                           onChange={(e) => setRecipeTitle(e.target.value)}
                         />
                       </div>
-                      <div className="py-3">
+                      <div className="py-1">
+                        <div className="py-2 text-base font-semibold">
+                          <label htmlFor="Tags">Tags</label>
+                        </div>
                         <FXInput
                           name="tags"
                           label="Tags"
@@ -210,7 +216,10 @@ const HomePageCreatePostModal = ({
                           onChange={(e) => setTags(e.target.value)}
                         />
                       </div>
-                      <div className="py-3">
+                      <div className="py-1">
+                        <div className="py-2 text-base font-semibold">
+                          <label htmlFor="Content Type">Content Type</label>
+                        </div>
                         <FXSelect
                           options={contentOptions}
                           name="contentType"
@@ -221,9 +230,15 @@ const HomePageCreatePostModal = ({
                       </div>
 
                       <div>
+                        <div className="py-2 text-base font-semibold">
+                          <label htmlFor="Content Type">
+                            Image and Instructions
+                          </label>
+                        </div>
                         <ReactQuill
                           modules={modules}
                           theme="snow"
+                          className="h-36"
                           value={value || instruction}
                           onChange={setValue}
                           placeholder="Please type instructions and give an image"
@@ -234,13 +249,15 @@ const HomePageCreatePostModal = ({
                           Please enter instructions!
                         </p>
                       )}
-                      <Button
-                        className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
-                        size="lg"
-                        type="submit"
-                      >
-                        Submit
-                      </Button>
+                      <div className="mt-10">
+                        <Button
+                          className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
+                          size="lg"
+                          type="submit"
+                        >
+                          Submit
+                        </Button>
+                      </div>
                     </FXForm>
                   </div>
                 </div>

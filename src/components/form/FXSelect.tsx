@@ -30,6 +30,7 @@ const FXSelect = ({
       variant={varient}
       isDisabled={disabled}
       required={required}
+      size="sm"
     >
       {options.map((option) => (
         <SelectItem key={option.key}>{option.label}</SelectItem>

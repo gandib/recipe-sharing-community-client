@@ -8,7 +8,7 @@ interface IProps extends IInput {}
 
 const FXInput = ({
   varient = "bordered",
-  size = "md",
+  size = "sm",
   required = false,
   type = "text",
   label,
