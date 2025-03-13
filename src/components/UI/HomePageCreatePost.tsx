@@ -23,11 +23,17 @@ const HomePageCreatePost = () => {
         />
       )}
       <div className="flex items-center gap-8">
-        <div className="flex items-center">
+        <div
+          className="flex items-center cursor-pointer"
+          onClick={() => setIsOpen(true)}
+        >
           <ImageIcon className="text-green-500 " />
           <p className="text-tiny font-semibold pl-2 ">Photo/Video</p>
         </div>
-        <div className="flex items-center">
+        <div
+          className="flex items-center cursor-pointer"
+          onClick={() => setIsOpen(true)}
+        >
           <Smile className="text-yellow-500 " />
           <p className="text-tiny font-semibold pl-2 ">Feeling/Activity</p>
         </div>

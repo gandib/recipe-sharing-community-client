@@ -162,125 +162,65 @@ export const NavbarLower = () => {
         </ul> */}
       </NavbarContent>
 
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        {/* <NavbarBrand as="li" className="gap-3 max-w-fit">
-          <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Logo />
-            <p className="font-bold text-inherit">Recipe</p>
-          </NextLink>
-        </NavbarBrand> */}
-        {/* <NavbarContent className="hidden lg:flex basis-1 pl-4" justify="start">
-          <NavbarItem>
-            <div
-              className={`relative text-base font-bold cursor-pointer `}
-              onClick={() => setShowMegaMenu(!showMegaMenu)}
-              //   onMouseLeave={() => setShowMegaMenu(false)}
-            >
-              <h1 className="text-base font-bold flex">
-                <Menu />
-              </h1> */}
-
-        {/* Mega Menu */}
-        {/* {showMegaMenu && (
-                <div className="absolute left-0 top-full mt-5 w-[200px] min-h-screen shadow-lg rounded-md p-4 ml-[-35px] z-50 bg-gray-100">
-                  <div className="grid gap-4"> */}
-        {/* Individual Links */}
-
-        {/* <NextLink href="/profile" legacyBehavior>
-                      <a
-                        className={`font-medium cursor-pointer  hover:text-primary-500`}
-                      >
-                        Profile
-                      </a>
-                    </NextLink>
-                    <NextLink
-                      href={
-                        user?.role === "user"
-                          ? "/user-dashboard"
-                          : "/admin-dashboard"
-                      }
-                      legacyBehavior
-                    >
-                      <a className="font-medium cursor-pointer hover:text-primary-500">
-                        Dashboard
-                      </a>
-                    </NextLink>
-                    <NextLink href="/about" legacyBehavior>
-                      <a className="font-medium cursor-pointer hover:text-primary-500">
-                        About
-                      </a>
-                    </NextLink>
-                    <NextLink href="/contact" legacyBehavior>
-                      <a className="font-medium cursor-pointer hover:text-primary-500">
-                        Contact
-                      </a>
-                    </NextLink>
-                  </div>
-                </div>
-              )}
+      <NavbarContent
+        justify="center"
+        className="hidden lg:flex gap-16 justify-center items-center"
+      >
+        <NavbarItem>
+          <NextLink
+            className={`text-lg ${pathname === "/" ? "text-secondary-500" : "text-primary-500"}`}
+            href="/"
+          >
+            <div className="relative flex items-center group">
+              <Zap
+                className={`text-gray-500 transition-all group-hover:opacity-0 group-hover:translate-y-4 ${pathname === "/" ? "text-secondary-500" : "text-primary-500"} `}
+              />
+              <p
+                className={`absolute left-1/2 -translate-x-1/2 translate-y-4 opacity-0 text-base  group-hover:translate-y-0 group-hover:opacity-100 transition-all ${pathname === "/" ? "hover:text-secondary-500" : "text-primary-500"}`}
+              >
+                Recipe Feed
+              </p>
             </div>
-          </NavbarItem>
-        </NavbarContent> */}
-
-        <NavbarContent
-          justify="center"
-          className="hidden lg:flex gap-16 justify-center items-center"
-        >
+          </NextLink>
+        </NavbarItem>
+        <>
           <NavbarItem>
             <NextLink
-              className={`text-lg ${pathname === "/" ? "text-secondary-500" : "text-primary-500"}`}
-              href="/"
+              className={`text-lg ${pathname === "/profile" ? "text-secondary-500" : "text-primary-500"}`}
+              href="/profile"
             >
               <div className="relative flex items-center group">
-                <Zap
-                  className={`text-gray-500 transition-all group-hover:opacity-0 group-hover:translate-y-4 ${pathname === "/" ? "text-secondary-500" : "text-primary-500"} `}
+                <UserRound
+                  className={`text-gray-500 transition-all group-hover:opacity-0 group-hover:translate-y-4 ${pathname === "/profile" ? "text-secondary-500" : "text-primary-500"} `}
                 />
                 <p
-                  className={`absolute left-1/2 -translate-x-1/2 translate-y-4 opacity-0 text-base  group-hover:translate-y-0 group-hover:opacity-100 transition-all ${pathname === "/" ? "hover:text-secondary-500" : "text-primary-500"}`}
+                  className={`absolute left-1/2 -translate-x-1/2 translate-y-4 opacity-0 text-base  group-hover:translate-y-0 group-hover:opacity-100 transition-all ${pathname === "/profile" ? "hover:text-secondary-500" : "text-primary-500"}`}
                 >
-                  Recipe Feed
+                  Profile
                 </p>
               </div>
             </NextLink>
           </NavbarItem>
-          <>
+          {user?.role === "admin" ? (
             <NavbarItem>
               <NextLink
-                className={`text-lg ${pathname === "/profile" ? "text-secondary-500" : "text-primary-500"}`}
-                href="/profile"
+                className={`text-lg ${pathname === "/user-dashboard" ? "text-secondary-500" : "text-primary-500"} ${pathname === "/admin-dashboard" ? "text-secondary-500" : "text-primary-500"}`}
+                href={"/admin-dashboard"}
               >
                 <div className="relative flex items-center group">
-                  <UserRound
-                    className={`text-gray-500 transition-all group-hover:opacity-0 group-hover:translate-y-4 ${pathname === "/profile" ? "text-secondary-500" : "text-primary-500"} `}
+                  <LayoutDashboard
+                    className={`text-gray-500 transition-all group-hover:opacity-0 group-hover:translate-y-4 ${pathname === "/user-dashboard" ? "text-secondary-500" : "text-primary-500"} ${pathname === "/admin-dashboard" ? "text-secondary-500" : "text-primary-500"} `}
                   />
                   <p
-                    className={`absolute left-1/2 -translate-x-1/2 translate-y-4 opacity-0 text-base  group-hover:translate-y-0 group-hover:opacity-100 transition-all ${pathname === "/profile" ? "hover:text-secondary-500" : "text-primary-500"}`}
+                    className={`absolute left-1/2 -translate-x-1/2 translate-y-4 opacity-0 text-base  group-hover:translate-y-0 group-hover:opacity-100 transition-all ${pathname === "/user-dashboard" ? "text-secondary-500" : "text-primary-500"} ${pathname === "/admin-dashboard" ? "text-secondary-500" : "text-primary-500"}`}
                   >
-                    Profile
+                    Dashboard
                   </p>
                 </div>
               </NextLink>
             </NavbarItem>
-            {user?.role === "admin" ? (
-              <NavbarItem>
-                <NextLink
-                  className={`text-lg ${pathname === "/user-dashboard" ? "text-secondary-500" : "text-primary-500"} ${pathname === "/admin-dashboard" ? "text-secondary-500" : "text-primary-500"}`}
-                  href={"/admin-dashboard"}
-                >
-                  <div className="relative flex items-center group">
-                    <LayoutDashboard
-                      className={`text-gray-500 transition-all group-hover:opacity-0 group-hover:translate-y-4 ${pathname === "/user-dashboard" ? "text-secondary-500" : "text-primary-500"} ${pathname === "/admin-dashboard" ? "text-secondary-500" : "text-primary-500"} `}
-                    />
-                    <p
-                      className={`absolute left-1/2 -translate-x-1/2 translate-y-4 opacity-0 text-base  group-hover:translate-y-0 group-hover:opacity-100 transition-all ${pathname === "/user-dashboard" ? "text-secondary-500" : "text-primary-500"} ${pathname === "/admin-dashboard" ? "text-secondary-500" : "text-primary-500"}`}
-                    >
-                      Dashboard
-                    </p>
-                  </div>
-                </NextLink>
-              </NavbarItem>
-            ) : null}
-            {/* <NavbarItem>
+          ) : null}
+          {/* <NavbarItem>
               <NextLink
                 className={`text-lg ${pathname === "/my-group" ? "text-secondary-500" : "text-primary-500"}`}
                 href={"/my-group"}
@@ -297,8 +237,8 @@ export const NavbarLower = () => {
                 </div>
               </NextLink>
             </NavbarItem> */}
-          </>
-          {/* {siteConfig.navMenuItems.map((item, index) => (
+        </>
+        {/* {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
                 color={pathname === item.href ? "primary" : "foreground"}
@@ -309,7 +249,6 @@ export const NavbarLower = () => {
               </Link>
             </NavbarMenuItem>
           ))} */}
-        </NavbarContent>
       </NavbarContent>
 
       <NavbarContent

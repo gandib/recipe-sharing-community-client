@@ -45,26 +45,26 @@ const NavbarDropDown = () => {
         >
           Profile
         </DropdownItem>
-        <DropdownItem
+        {/* <DropdownItem
           onPress={() => handleNavigation("/profile/update-profile")}
           key={"UpdateProfile"}
         >
           Update Profile
-        </DropdownItem>
-        {user?.role === "user" ? (
+        </DropdownItem> */}
+        {/* {user?.role === "user" ? (
           <DropdownItem
             onPress={() => handleNavigation("/profile/get-membership")}
             key="UpdateProfile"
           >
             Get Membership
           </DropdownItem>
-        ) : null}
-        <DropdownItem
+        ) : null} */}
+        {/* <DropdownItem
           onPress={() => handleNavigation("/profile/change-password")}
           key={"UpdateProfile"}
         >
           Change Password
-        </DropdownItem>
+        </DropdownItem> */}
 
         <DropdownItem
           onPress={handleLogout}

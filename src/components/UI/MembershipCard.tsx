@@ -14,12 +14,12 @@ const MembershipCard = () => {
   ];
 
   return (
-    <div className="grid md:grid-cols-2 gap-8 ">
+    <div className="grid lg:grid-cols-2 gap-4 ">
       {prices?.map((data, index) => (
         <NextUiCard
           key={index}
           isFooterBlurred
-          className="h-[300px] sm:h-[280px]  w-full"
+          className="h-[300px] sm:h-[280px] lg:h-[350px]  w-full"
         >
           <CardHeader className=" flex-col items-start">
             <p className=" rounded-full bg-black px-2 text-tiny uppercase text-white/90">

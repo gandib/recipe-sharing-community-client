@@ -4,6 +4,7 @@ import HomePageCreatePost from "./HomePageCreatePost";
 import HomePageMyGroups from "./HomePageMyGroups";
 import HomePageFollowing from "./HomePageFollowing";
 import { IRecipe } from "@/src/types";
+import HomeLeftSidebar from "./HomeLeftSidebar";
 
 const HomePageCard = ({
   recipe,
@@ -12,8 +13,9 @@ const HomePageCard = ({
 }) => {
   return (
     <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center">
-      <div className="hidden flex-col lg:flex lg:col-span-1">
-        <HomePageRecentPost recipes={recipe} />
+      <div className="hidden flex-col lg:flex lg:col-span-1 gap-4">
+        <HomeLeftSidebar />
+        <HomePageRecentPost title="Recent Posts" recipes={recipe} />
       </div>
 
       <div className="md:col-span-2 mt-4 lg:mt-0">

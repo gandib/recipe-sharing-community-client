@@ -8,6 +8,7 @@ import {
   useUpdateUnfollowing,
 } from "@/src/hooks/user.hook";
 import { Button, User } from "@nextui-org/react";
+import { UserRoundPlus, UserRoundX } from "lucide-react";
 import { toast } from "sonner";
 
 const HomePageFollowing = () => {
@@ -55,7 +56,10 @@ const HomePageFollowing = () => {
           membership: string;
           name: string;
         }) => (
-          <div key={follower._id} className="flex  justify-between pb-2">
+          <div
+            key={follower._id}
+            className="flex  justify-between pb-2 border-b-2 pt-2"
+          >
             <div className="flex">
               <User
                 avatarProps={{
@@ -79,13 +83,19 @@ const HomePageFollowing = () => {
               }
               size="sm"
               variant="light"
-              className="text-green-500 text-sm"
+              className="bg-primary-500 text-default-50 w-28 text-sm flex justify-start hover:text-white hover:bg-primary-100"
             >
               {data?.data?.following?.some(
                 (following: any) => following._id === follower._id
-              )
-                ? "following"
-                : "follow"}
+              ) ? (
+                <div className="flex items-center gap-1 justify-start">
+                  <UserRoundPlus /> Unfollow
+                </div>
+              ) : (
+                <div className="flex items-center gap-1 justify-start">
+                  <UserRoundX /> Follow
+                </div>
+              )}
             </Button>
           </div>
         )

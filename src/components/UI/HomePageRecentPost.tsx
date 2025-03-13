@@ -7,13 +7,15 @@ import { useRouter } from "next/navigation";
 
 const HomePageRecentPost = ({
   recipes,
+  title,
 }: {
   recipes: { result: IRecipe[]; meta: any };
+  title: string;
 }) => {
   const router = useRouter();
   return (
     <div className="w-full min-h-[180px] sticky top-20 bg-default-100 rounded p-4">
-      <h1 className=" font-bold">Recent Posts</h1>
+      <h1 className=" font-bold">{title}</h1>
       {recipes?.result?.length < 1 && (
         <p className="text-base w-full mt-6">No recent post found!</p>
       )}
@@ -36,7 +38,8 @@ const HomePageRecentPost = ({
                 onClick={() => router.push(`/profile/${recipe._id}`)}
                 className=" text-sm font-semibold cursor-pointer hover:text-primary-500"
               >
-                {recipe.title.slice(0, 25) + "..."}
+                {recipe.title.slice(0, 25) +
+                  `${recipe.title.length > 25 ? "..." : ""}`}
               </h2>
               <p className="text-tiny py-2 ">
                 {moment(recipe.createdAt).format("MMM DD, YYYY")}

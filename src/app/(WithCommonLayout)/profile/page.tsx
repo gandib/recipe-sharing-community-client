@@ -1,11 +1,16 @@
 "use client";
 
+import ChangePassword from "@/src/components/UI/ChangePassword";
 import HomePageCreatePost from "@/src/components/UI/HomePageCreatePost";
 import HomePageFeedCard from "@/src/components/UI/HomePageFeedCard";
+import HomePageFollowing from "@/src/components/UI/HomePageFollowing";
 import HomePageRecentPost from "@/src/components/UI/HomePageRecentPost";
+import MembershipCard from "@/src/components/UI/MembershipCard";
+import ProfileLeftSidebar from "@/src/components/UI/ProfileLeftSidebar";
+import UpdateProfile from "@/src/components/UI/UpdateProfile";
 import { useUser } from "@/src/context/user.provider";
 import { useGetUser, useUpdateUnfollowing } from "@/src/hooks/user.hook";
-import { getAllMyRecipes } from "@/src/services/Recipe";
+import { getAllMyRecipes, getAllRecipes } from "@/src/services/Recipe";
 import { IUser } from "@/src/types";
 import { Button, Card } from "@nextui-org/react";
 import Image from "next/image";
@@ -19,6 +24,7 @@ export default function ProfilePage() {
   const [isVisible, setIsVisible] = useState(false);
   const { mutate: unFollowing } = useUpdateUnfollowing(user?.email!);
   const [recipe, setRecipe] = useState();
+  const [allRecipe, setAllRecipe] = useState();
 
   useEffect(() => {
     try {
@@ -28,6 +34,10 @@ export default function ProfilePage() {
           { name: "contentType", value: "free" },
         ]);
         setRecipe(allRecipe);
+        const { data: recipes } = await getAllRecipes([
+          { name: "sort", value: "-createdAt" },
+        ]);
+        setAllRecipe(recipes);
       };
 
       fetchData();
@@ -120,9 +130,41 @@ export default function ProfilePage() {
       case "About":
         return (
           <div className="container mx-auto max-w-7xl pt-4 mt-4 px-6 flex-grow min-h-screen">
-            <div className="text-xl">{user?.data?.bio}</div>
+            {
+              <div className="text-xl">
+                {user?.data?.bio ? user?.data?.bio : "Bio not updated yet!"}
+              </div>
+            }
           </div>
         );
+
+      case "Update Profile":
+        return (
+          <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen">
+            <div className="text-xl">
+              <UpdateProfile />
+            </div>
+          </div>
+        );
+
+      case "Get Membership":
+        return (
+          <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen">
+            <div className="text-xl">
+              <MembershipCard />
+            </div>
+          </div>
+        );
+
+      case "Change Password":
+        return (
+          <div className="container mx-auto max-w-7xl pt-4  px-6 flex-grow min-h-screen">
+            <div className="text-xl">
+              <ChangePassword />
+            </div>
+          </div>
+        );
+
       default:
         return (
           <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen">
@@ -176,12 +218,18 @@ export default function ProfilePage() {
       </div>
 
       {/* Content Section */}
-      <div className="  grid lg:grid-cols-3 gap-4 container mx-auto max-w-screen-xl">
-        <div className="lg:col-span-2">{renderContent()}</div>
+      <div className="grid md:grid-cols-3 lg:grid-cols-4 container mx-auto max-w-screen-2xl">
+        <div className="hidden flex-col lg:flex lg:col-span-1 p-4 w-full gap-4">
+          <ProfileLeftSidebar setActiveTab={setActiveTab} />
+          <HomePageRecentPost title="Latest Recipes" recipes={allRecipe!} />
+        </div>
 
-        <div className="hidden lg:flex lg:col-span-1  p-4 rounded  sticky top-5">
-          <div className="hidden flex-col lg:flex lg:col-span-1">
-            <HomePageRecentPost recipes={recipe!} />
+        <div className="md:col-span-2">{renderContent()}</div>
+
+        <div className="hidden md:flex md:col-span-1  p-4 rounded  sticky top-5">
+          <div className="hidden flex-col md:flex md:col-span-1 w-full gap-4">
+            <HomePageRecentPost title="My Recent Posts" recipes={recipe!} />
+            <HomePageFollowing />
           </div>
         </div>
       </div>
