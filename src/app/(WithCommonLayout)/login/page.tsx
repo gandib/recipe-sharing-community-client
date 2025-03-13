@@ -21,7 +21,7 @@ const Login = () => {
   const searchParams = useSearchParams();
   const redirect = searchParams?.get("redirect");
   const router = useRouter();
-  const { setIsLoading } = useUser();
+  const { setIsLoading, user, isLoading } = useUser();
   const [error, setError] = useState("");
 
   const { mutate: handleUserLogin, isPending, isSuccess } = useUserlogin();
@@ -50,10 +50,17 @@ const Login = () => {
 
   useEffect(() => {
     if (!isPending && isSuccess) {
-      const target = redirect || "/";
-      router.push(target);
+      if (isSuccess) {
+        router.refresh();
+      }
+      if (user && user?.role === "admin") {
+        router.push("/admin-dashboard");
+      } else if (user && user?.role === "user") {
+        const target = redirect || "/";
+        router.push(target);
+      }
     }
-  }, [isPending, isSuccess, redirect, router]);
+  }, [isPending, isSuccess, redirect, router, user]);
 
   const recoverPassword = (email: string) => {
     const data = { email };
@@ -66,6 +73,10 @@ const Login = () => {
       handleForgetPassword(data);
     }
   };
+
+  if (isLoading) {
+    <p>Loading...</p>;
+  }
 
   return (
     <div className="min-h-screen flex justify-center items-center">

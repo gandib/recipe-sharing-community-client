@@ -21,12 +21,19 @@ const NavbarDropDown = () => {
   };
 
   const handleLogout = () => {
-    logout();
+    // logout();
     setIsLoading(true);
 
-    if (protectedRoutes.some((route) => pathname.match(route))) {
-      router.push("/login");
-    }
+    // if (protectedRoutes.some((route) => pathname.match(route))) {
+    //   router.push("/login");
+    // }
+    document.cookie =
+      "accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+
+    localStorage.clear();
+    sessionStorage.clear();
+
+    window.location.href = "/login";
   };
 
   if (isLoading) {

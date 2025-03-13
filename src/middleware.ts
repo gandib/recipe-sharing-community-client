@@ -3,42 +3,44 @@ import type { NextRequest } from "next/server";
 import { getCurrentUser } from "./services/AuthService";
 
 const AuthRoutes = ["/login", "/register"];
-
-type TRole = keyof typeof roleBaseRoutes;
-
 const roleBaseRoutes = {
-  user: [/^\/user-dashboard/, /^\/profile/],
-  admin: [/^\/admin-dashboard/, /^\/profile/],
+  user: [/^\/$/, /^\/user-dashboard/, /^\/profile$/],
+  admin: [/^\/$/, /^\/admin-dashboard/, /^\/profile$/],
 };
 
-// This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
   const user = await getCurrentUser();
 
+  // Ensure logout works properly
   if (!user) {
+    if (pathname === "/logout") {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
     if (AuthRoutes.includes(pathname)) {
       return NextResponse.next();
-    } else {
-      return NextResponse.redirect(
-        new URL(`/login?redirect=${pathname}`, request.url)
-      );
     }
+    return NextResponse.redirect(
+      new URL(`/login?redirect=${pathname}`, request.url)
+    );
   }
 
-  if (user?.role && roleBaseRoutes[user?.role as TRole]) {
-    const routes = roleBaseRoutes[user?.role as TRole];
-
-    if (routes.some((route) => pathname.match(route))) {
-      return NextResponse.next();
-    }
+  // Allow route access based on role
+  const allowedRoutes =
+    roleBaseRoutes[user.role as keyof typeof roleBaseRoutes] || [];
+  if (allowedRoutes.some((route) => route.test(pathname))) {
+    return NextResponse.next();
   }
 
-  // return NextResponse.redirect(new URL("/", request.url));
+  // Prevent redirect loop after logout
+  if (pathname !== "/logout") {
+    const redirectPath = user.role === "admin" ? "/admin-dashboard" : "/";
+    return NextResponse.redirect(new URL(redirectPath, request.url));
+  }
+
+  return NextResponse.next();
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
   matcher: [
     "/",
@@ -49,5 +51,6 @@ export const config = {
     "/login",
     "/register",
     "/profile",
+    "/logout",
   ],
 };
