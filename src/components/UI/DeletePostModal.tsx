@@ -10,15 +10,18 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@nextui-org/react";
+import { Dispatch, SetStateAction } from "react";
 
 const DeletePostModal = ({
   id,
   isOpen,
   setIsOpen,
+  setRevalidateProfile,
 }: {
   id: string;
   isOpen: boolean;
   setIsOpen: any;
+  setRevalidateProfile?: Dispatch<SetStateAction<boolean>>;
 }) => {
   const { user, isLoading } = useUser();
   const {
@@ -26,8 +29,15 @@ const DeletePostModal = ({
     isPending,
     isSuccess,
   } = useDeleteRecipe(user?.email!);
-  const handleDelete = () => {
-    deleteRecipe(id);
+
+  const handleDelete = async () => {
+    try {
+      await deleteRecipe(id);
+      setRevalidateProfile?.((prev) => !prev);
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
   };
   const { onOpen, onOpenChange } = useDisclosure();
 

@@ -46,7 +46,7 @@ const HomePageFollowing = () => {
     <p>Loading...</p>;
   }
   return (
-    <div className="bg-default-100 rounded p-6 sticky top-20">
+    <div className="bg-default-100 rounded p-4 sticky top-20">
       <h1 className="text-base  font-bold mb-6">Who's following</h1>
       {data?.data?.follower?.length < 1 && "No follower found"}
       {data?.data?.follower?.map(
@@ -58,9 +58,9 @@ const HomePageFollowing = () => {
         }) => (
           <div
             key={follower._id}
-            className="flex  justify-between pb-2 border-b-2 pt-2"
+            className="grid grid-cols-2 2xl:grid-cols-3 gap-2 pb-2 border-b-2 pt-2"
           >
-            <div className="flex">
+            <div className="flex 2xl:col-span-2">
               <User
                 avatarProps={{
                   src: `${follower.image}`,
@@ -70,33 +70,35 @@ const HomePageFollowing = () => {
               />
             </div>
 
-            <Button
-              onPress={() =>
-                handleFollowUnfollow(
-                  data?.data?.following?.some(
-                    (following: any) => following._id === follower._id
+            <div className="flex justify-end col-span-1 items-center">
+              <Button
+                onPress={() =>
+                  handleFollowUnfollow(
+                    data?.data?.following?.some(
+                      (following: any) => following._id === follower._id
+                    )
+                      ? "following"
+                      : "follow",
+                    follower._id
                   )
-                    ? "following"
-                    : "follow",
-                  follower._id
-                )
-              }
-              size="sm"
-              variant="light"
-              className="bg-primary-500 text-default-50 w-28 text-sm flex justify-start hover:text-white hover:bg-primary-100"
-            >
-              {data?.data?.following?.some(
-                (following: any) => following._id === follower._id
-              ) ? (
-                <div className="flex items-center gap-1 justify-start">
-                  <UserRoundPlus /> Unfollow
-                </div>
-              ) : (
-                <div className="flex items-center gap-1 justify-start">
-                  <UserRoundX /> Follow
-                </div>
-              )}
-            </Button>
+                }
+                size="sm"
+                variant="light"
+                className="bg-primary-500 text-default-50 w-24 p-2 m-0 text-sm flex justify-start hover:text-white hover:bg-primary-100"
+              >
+                {data?.data?.following?.some(
+                  (following: any) => following._id === follower._id
+                ) ? (
+                  <div className="flex items-center gap-1 justify-start">
+                    <UserRoundPlus size={16} /> Unfollow
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1 justify-start">
+                    <UserRoundX size={16} /> Follow
+                  </div>
+                )}
+              </Button>
+            </div>
           </div>
         )
       )}

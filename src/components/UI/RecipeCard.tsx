@@ -33,10 +33,12 @@ const RecipeCard = ({
   const { mutate: handleCreateRecipe, isPending } = useCreateRecipe(
     user?.email!
   );
-  const [recipeTitle, setRecipeTitle] = useState(singleRecipeData?.title!);
-  const [tags, setTags] = useState(singleRecipeData?.tags!);
+  const [recipeTitle, setRecipeTitle] = useState(
+    singleRecipeData?.title! || ""
+  );
+  const [tags, setTags] = useState(singleRecipeData?.tags! || "");
   const [instruction, setInstruction] = useState(
-    singleRecipeData?.instructions!
+    singleRecipeData?.instructions! || ""
   );
   const { mutate: handleUpdateRecipe } = useUpdateRecipe(user?.email!);
 
@@ -88,7 +90,9 @@ const RecipeCard = ({
   const onSubmit = (data: FieldValues) => {
     const imageSources = extractImages(value);
     const instructionsWithoutImages = removeImagesFromContent(value);
-    setInstructions(instructionsWithoutImages);
+    const finalInstructions =
+      value && value.trim() !== "" ? instructionsWithoutImages : instruction;
+    setInstructions(finalInstructions);
 
     const formData = new FormData();
     imageSources.forEach((src, index) => {
@@ -121,13 +125,10 @@ const RecipeCard = ({
           contentType: data.contentType
             ? data.contentType
             : singleRecipeData?.contentType,
-          instructions:
-            instructions.length > 0 ? instructionsWithoutImages : instruction,
+          instructions: finalInstructions,
         },
       };
-      setInstructions(
-        instructions.length > 0 ? instructionsWithoutImages : instruction
-      );
+      setInstructions(finalInstructions);
 
       handleUpdateRecipe(updatedData);
     }
@@ -154,6 +155,9 @@ const RecipeCard = ({
   if (isLoading) {
     <p>Loading...</p>;
   }
+
+  console.log(instruction);
+  console.log("object");
 
   return (
     <div className="flex mt-6 w-full flex-col items-center justify-center mb-12">

@@ -8,7 +8,13 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@nextui-org/react";
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, {
+  useState,
+  useEffect,
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import dynamic from "next/dynamic"; // Dynamically import Quill
 const ReactQuill = dynamic(() => import("react-quill"), {
   ssr: false,
@@ -31,12 +37,16 @@ const HomePageCreatePostModal = ({
   title,
   id,
   singleRecipeData,
+  setRevalidate,
+  setRevalidateProfile,
 }: {
   isOpen: boolean;
   setIsOpen: any;
   title: string;
   id?: string;
   singleRecipeData?: IRecipe;
+  setRevalidate?: Dispatch<SetStateAction<boolean>>;
+  setRevalidateProfile?: Dispatch<SetStateAction<boolean>>;
 }) => {
   const { onOpen, onOpenChange } = useDisclosure();
   const { user, isLoading } = useUser();
@@ -45,10 +55,12 @@ const HomePageCreatePostModal = ({
   const { mutate: handleCreateRecipe, isPending } = useCreateRecipe(
     user?.email!
   );
-  const [recipeTitle, setRecipeTitle] = useState(singleRecipeData?.title!);
-  const [tags, setTags] = useState(singleRecipeData?.tags!);
+  const [recipeTitle, setRecipeTitle] = useState(
+    singleRecipeData?.title! || ""
+  );
+  const [tags, setTags] = useState(singleRecipeData?.tags! || "");
   const [instruction, setInstruction] = useState(
-    singleRecipeData?.instructions!
+    singleRecipeData?.instructions! || ""
   );
   const { mutate: handleUpdateRecipe } = useUpdateRecipe(user?.email!);
 
@@ -100,7 +112,10 @@ const HomePageCreatePostModal = ({
   const onSubmit = (data: FieldValues) => {
     const imageSources = extractImages(value);
     const instructionsWithoutImages = removeImagesFromContent(value);
-    setInstructions(instructionsWithoutImages);
+    const finalInstructions =
+      value && value.trim() !== "" ? instructionsWithoutImages : instruction;
+
+    setInstructions(finalInstructions);
 
     const formData = new FormData();
     imageSources.forEach((src, index) => {
@@ -122,6 +137,12 @@ const HomePageCreatePostModal = ({
 
     if (!id) {
       handleCreateRecipe(formData);
+      if (setRevalidate) {
+        setRevalidate(true);
+      }
+      if (setRevalidateProfile) {
+        setRevalidateProfile(true);
+      }
     }
 
     if (id) {
@@ -133,15 +154,18 @@ const HomePageCreatePostModal = ({
           contentType: data.contentType
             ? data.contentType
             : singleRecipeData?.contentType,
-          instructions:
-            instructions.length > 0 ? instructionsWithoutImages : instruction,
+          instructions: finalInstructions,
         },
       };
-      setInstructions(
-        instructions.length > 0 ? instructionsWithoutImages : instruction
-      );
+      setInstructions(finalInstructions);
 
       handleUpdateRecipe(updatedData);
+      if (setRevalidate) {
+        setRevalidate(true);
+      }
+      if (setRevalidateProfile) {
+        setRevalidateProfile(true);
+      }
     }
 
     setIsOpen(false);
@@ -172,7 +196,7 @@ const HomePageCreatePostModal = ({
     <div className="w-full">
       {/* <Button onPress={onOpen}>Open Modal</Button> */}
       <Modal size="3xl" isOpen={isOpen} onOpenChange={setIsOpen}>
-        <ModalContent className="w-full p-8 rounded-md h-[80%] overflow-y-auto">
+        <ModalContent className="w-full p-0 pt-8 md:p-8 rounded-md max-h-[80%] mb-[10%]  overflow-y-auto">
           {(onClose) => (
             <>
               {/* <ModalHeader className="flex flex-col gap-1">
@@ -181,7 +205,7 @@ const HomePageCreatePostModal = ({
               <ModalBody>
                 <div className="flex mt-2 w-full flex-col items-center justify-center mb-2 border py-6">
                   <h3 className="my-2 text-2xl font-bold">{title}</h3>
-                  <div className="w-full sm:w-[90%]">
+                  <div className="w-full p-2 md:w-[90%]">
                     <FXForm
                       onSubmit={onSubmit}
                       resolver={zodResolver(

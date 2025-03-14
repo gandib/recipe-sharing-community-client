@@ -21,30 +21,35 @@ export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState("Timeline");
   const { user: userData, isLoading } = useUser();
   const { data: user, isPending } = useGetUser(userData?.email!);
-  const [isVisible, setIsVisible] = useState(false);
   const { mutate: unFollowing } = useUpdateUnfollowing(user?.email!);
   const [recipe, setRecipe] = useState();
   const [allRecipe, setAllRecipe] = useState();
-
+  const [revalidateProfile, setRevalidateProfile] = useState(false);
+  console.log("pr", revalidateProfile);
   useEffect(() => {
-    try {
-      const fetchData = async () => {
+    const fetchData = async () => {
+      try {
         const { data: allRecipe } = await getAllMyRecipes([
           { name: "sort", value: "-createdAt" },
           { name: "contentType", value: "free" },
         ]);
         setRecipe(allRecipe);
+
         const { data: recipes } = await getAllRecipes([
           { name: "sort", value: "-createdAt" },
         ]);
         setAllRecipe(recipes);
-      };
+      } catch (error) {
+        console.log("Recipe fetch failed", error);
+      }
+    };
 
-      fetchData();
-    } catch (error) {
-      console.log("Recipe fetch faild", error);
+    if (revalidateProfile) {
+      setRevalidateProfile(false);
     }
-  }, []);
+
+    fetchData();
+  }, [revalidateProfile]);
 
   const handleUnFollowing = (followingId: string) => {
     const unfollowingData = {
@@ -64,10 +69,16 @@ export default function ProfilePage() {
           <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen lg:col-span-2 mt-4 lg:mt-0 ">
             <div className="">
               {/* create new post section */}
-              <HomePageCreatePost />
-
+              <HomePageCreatePost
+                setRevalidateProfile={setRevalidateProfile}
+                revalidateProfile={revalidateProfile}
+              />
               <div className=" mb-8">
-                <HomePageFeedCard recipe={recipe!} />
+                <HomePageFeedCard
+                  recipe={recipe!}
+                  setRevalidateProfile={setRevalidateProfile}
+                  revalidateProfile={revalidateProfile}
+                />
               </div>
             </div>
           </div>

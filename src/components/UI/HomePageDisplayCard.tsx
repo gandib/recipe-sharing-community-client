@@ -18,7 +18,7 @@ import {
 import moment from "moment";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import DeletePostModal from "./DeletePostModal";
 import {
   useDeleteRecipeComment,
@@ -32,8 +32,17 @@ import FXTextarea from "../form/FXTextarea";
 import { FieldValues } from "react-hook-form";
 import FollowUnFollowCard from "./FollowUnFollowCard";
 import HomePageFollowUnFollowCard from "./HomePageFollowUnfollowCard";
+import HomePageCreatePostModal from "./HomePageCreatePostModal";
 
-const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
+const HomePageDisplayCard = ({
+  data,
+  setRevalidate,
+  setRevalidateProfile,
+}: {
+  data: IRecipe;
+  setRevalidate: Dispatch<SetStateAction<boolean>>;
+  setRevalidateProfile?: Dispatch<SetStateAction<boolean>>;
+}) => {
   const [seeMore, setSeeMore] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const { user, isLoading } = useUser();
@@ -47,10 +56,11 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
   const [commentError, setCommentError] = useState("");
   const { mutate: updateComment } = useUpdateRecipeComment(user?.email!);
   const { mutate: deleteComment } = useDeleteRecipeComment(user?.email!);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
   const handleDelete = () => {
-    setShowOptions(false);
     setIsOpen(true);
+    setShowOptions(false);
   };
 
   const handleUpvote = () => {
@@ -137,16 +147,18 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
                 {user?._id === data?.user?._id && (
                   <div
                     onClick={() => {
-                      router.push(
-                        `${user?.role === "user" ? `/user-dashboard/update-recipe/${data._id}` : `/admin-dashboard/update-recipe/${data._id}`}`
-                      );
+                      // router.push(
+                      //   `${user?.role === "user" ? `/user-dashboard/update-recipe/${data._id}` : `/admin-dashboard/update-recipe/${data._id}`}`
+                      // );
                       setShowOptions(false);
+                      setIsUpdateModalOpen(true);
                     }}
                     className=" cursor-pointer flex items-center hover:text-primary-500"
                   >
                     <Pen size={20} /> <span className="pl-2">Edit Post</span>
                   </div>
                 )}
+
                 {user?._id === data?.user?._id && (
                   <div
                     onClick={handleDelete}
@@ -171,8 +183,25 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
         </div>
       </div>
 
+      {isUpdateModalOpen && (
+        <HomePageCreatePostModal
+          title="Update Recipe"
+          isOpen={isUpdateModalOpen}
+          setIsOpen={setIsUpdateModalOpen}
+          singleRecipeData={data}
+          id={data._id}
+          setRevalidate={setRevalidate}
+          setRevalidateProfile={setRevalidateProfile}
+        />
+      )}
+
       {isOpen && (
-        <DeletePostModal id={data?._id} isOpen={isOpen} setIsOpen={setIsOpen} />
+        <DeletePostModal
+          id={data?._id}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          setRevalidateProfile={setRevalidateProfile}
+        />
       )}
 
       {/* Content */}
@@ -282,7 +311,7 @@ const HomePageDisplayCard = ({ data }: { data: IRecipe }) => {
               {data?.comment &&
                 data?.comment.length > 0 &&
                 data?.comment?.map((comment) => (
-                  <div className="my-2  flex">
+                  <div key={comment.user._id} className="my-2  flex">
                     <Avatar src={comment.user.image} />
                     <div className="bg-default-200 w-full rounded p-2 ml-2">
                       <p

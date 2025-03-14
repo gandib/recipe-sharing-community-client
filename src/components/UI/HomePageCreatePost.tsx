@@ -2,10 +2,19 @@
 
 import { ImageIcon, Smile } from "lucide-react";
 import HomePageCreatePostModal from "./HomePageCreatePostModal";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-const HomePageCreatePost = () => {
+const HomePageCreatePost = ({
+  setRevalidateProfile,
+  revalidateProfile,
+}: {
+  setRevalidateProfile?: Dispatch<SetStateAction<boolean>>;
+  revalidateProfile?: boolean;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [revalidate, setRevalidate] = useState(false);
+
+  useEffect(() => {}, [revalidate, revalidateProfile]);
 
   return (
     <div className="bg-default-100 rounded p-6 mb-6">
@@ -20,6 +29,8 @@ const HomePageCreatePost = () => {
           title="Create Recipe"
           isOpen={isOpen}
           setIsOpen={setIsOpen}
+          setRevalidate={setRevalidate}
+          setRevalidateProfile={setRevalidateProfile}
         />
       )}
       <div className="flex items-center gap-8">
