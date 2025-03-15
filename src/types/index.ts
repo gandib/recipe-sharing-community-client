@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FormEvent, SVGProps } from "react";
+import { ChangeEventHandler, ElementType, FormEvent, SVGProps } from "react";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
@@ -7,6 +7,12 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 export type queryParams = {
   name: string;
   value: boolean | React.Key;
+};
+
+export type TLinkItem = {
+  href: string;
+  label: string;
+  icon: ElementType;
 };
 
 export type TTags = { _id: string; tags: string };
