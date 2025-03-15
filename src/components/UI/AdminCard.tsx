@@ -82,102 +82,122 @@ export default function AdminCard({
     }
   };
 
-  //   if (isLoading || isPending) {
-  //     <Loading />;
-  //   }
+  if (isLoading || isPending) {
+    <Loading />;
+  }
 
   return (
-    <div className="flex mt-6 w-full flex-col items-center justify-center mb-12">
-      <h3 className="my-2 text-2xl font-bold">{title}</h3>
-      <div className="w-full sm:w-[80%]">
-        <FXForm
-          onSubmit={onSubmit}
-          resolver={zodResolver(
-            email ? updateAdminValidationSchema : registerValidationSchema
-          )}
-        >
-          <div className="py-3">
-            <FXInput
-              name="name"
-              label="Name"
-              size="sm"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          {!email && (
-            <div className="py-3">
-              <FXInput name="email" type="email" label="Email" size="sm" />
-            </div>
-          )}
-          <div className="py-3">
-            <FXInput
-              name="password"
-              type="password"
-              label="Password"
-              size="sm"
-            />
-          </div>
-          {email && (
-            <div className="py-3">
+    <div className="flex mt-6 w-full flex-col items-center justify-center mb-12 p-6">
+      <div className="flex  w-full flex-col items-center justify-center mb-2 border p-6  sm:w-[90%]  2xl:w-[60%]">
+        <h3 className="my-2 text-2xl font-bold">{title}</h3>
+        <div className="w-full">
+          <FXForm
+            onSubmit={onSubmit}
+            resolver={zodResolver(
+              email ? updateAdminValidationSchema : registerValidationSchema
+            )}
+          >
+            <div className="py-1">
+              <div className="py-2 text-base font-semibold">
+                <label htmlFor="Name">Name</label>
+              </div>
               <FXInput
-                name="image"
-                type="text"
-                label="Image"
+                name="name"
+                label="Name"
                 size="sm"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
-          )}
-
-          {email && (
-            <div className="py-3">
+            {!email && (
+              <div className="py-1">
+                <div className="py-2 text-base font-semibold">
+                  <label htmlFor="Email">Email</label>
+                </div>
+                <FXInput name="email" type="email" label="Email" size="sm" />
+              </div>
+            )}
+            <div className="py-1">
+              <div className="py-2 text-base font-semibold">
+                <label htmlFor="Password">Password</label>
+              </div>
               <FXInput
-                name="bio"
-                label="Bio"
+                name="password"
+                type="password"
+                label="Password"
                 size="sm"
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
               />
             </div>
-          )}
-          {!email && (
-            <div className="min-w-fit flex-1 h-12">
-              <label
-                className="bg-default-50/10 border-2 p-3 w-full h-full rounded-md flex items-center font-light"
-                htmlFor="image"
-              >
-                Upload image
-              </label>
-              <input
-                className="hidden"
-                type="file"
-                id="image"
-                onChange={(e) => handleImageChange(e)}
-              />
-            </div>
-          )}
-          {imagePreviews.length > 0 && (
-            <div className="flex flex-wrap gap-5 my-5">
-              <div className="relative size-48 rounded-xl border-2 border-dashed border-default-300 p-2">
-                <img
-                  src={imagePreviews[0] as string}
-                  //   alt="item"
-                  className="h-full w-full object-cover object-center rounded-md"
+            {email && (
+              <div className="py-1">
+                <div className="py-2 text-base font-semibold">
+                  <label htmlFor="Upload Image">Upload Image</label>
+                </div>
+                <FXInput
+                  name="image"
+                  type="text"
+                  label="Image"
+                  size="sm"
+                  value={image}
+                  onChange={(e) => setImage(e.target.value)}
                 />
               </div>
-            </div>
-          )}
+            )}
 
-          <Button
-            className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
-            size="lg"
-            type="submit"
-          >
-            Submit
-          </Button>
-        </FXForm>
+            {email && (
+              <div className="py-1">
+                <div className="py-2 text-base font-semibold">
+                  <label htmlFor="Bio">Bio</label>
+                </div>
+                <FXInput
+                  name="bio"
+                  label="Bio"
+                  size="sm"
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                />
+              </div>
+            )}
+            {!email && (
+              <div className="min-w-fit flex-1 h-18">
+                <div className="py-2 text-base font-semibold">
+                  <label htmlFor="Upload Image">Upload Image</label>
+                </div>
+                <label
+                  className="bg-default-50/10 border-2 p-3 w-full h-full rounded-md flex items-center font-light"
+                  htmlFor="image"
+                >
+                  Upload image
+                </label>
+                <input
+                  className="hidden"
+                  type="file"
+                  id="image"
+                  onChange={(e) => handleImageChange(e)}
+                />
+              </div>
+            )}
+            {imagePreviews.length > 0 && (
+              <div className="flex flex-wrap gap-5 my-5">
+                <div className="relative size-48 rounded-xl border-2 border-dashed border-default-300 p-2">
+                  <img
+                    src={imagePreviews[0] as string}
+                    //   alt="item"
+                    className="h-full w-full object-cover object-center rounded-md"
+                  />
+                </div>
+              </div>
+            )}
+
+            <Button
+              className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
+              size="lg"
+              type="submit"
+            >
+              Submit
+            </Button>
+          </FXForm>
+        </div>
       </div>
     </div>
   );

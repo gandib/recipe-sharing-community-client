@@ -13,7 +13,7 @@ const AdminSidebarOptions = ({ links }: { links: TLinkItem[] }) => {
         <Link
           key={link?.href}
           href={link?.href}
-          className={`block w-full rounded-md px-3 py-2 ${pathname === link.href ? "bg-primary-500" : "hover:bg-primary-500"}`}
+          className={`block w-full rounded-md px-3 py-2 ${pathname === link.href ? "text-secondary-500  hover:bg-primary-500 hover:text-white" : "hover:bg-primary-500 hover:text-white"}`}
         >
           {link?.label}
         </Link>

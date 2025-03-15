@@ -12,7 +12,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         <SidebarMenu links={adminLinks} />
       </div>
       <div className="flex w-full gap-3 justify-center">
-        <div className="w-1/12 md:w-2/6 lg:w-1/6 hidden md:flex min-h-full bg-gray-600">
+        <div className="w-1/12 md:w-2/6 lg:w-1/6 hidden md:flex min-h-full bg-default-50 border">
           <div className="hidden md:flex">
             <AdminSidebar />
           </div>

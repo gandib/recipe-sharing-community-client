@@ -33,38 +33,7 @@ const StatusChangeCard = ({ recipe }: { recipe: IRecipe[] }) => {
   }
   return (
     <div>
-      {/* <div className="">
-        <Card aria-label="Example static collection table">
-          <div className="grid grid-cols-2 m-6">
-            <h1 className="col-span-1">Title</h1>
-            <h1 className="col-span-1">Action</h1>
-          </div>
-          {recipe?.map((data: IRecipe) => (
-            <CardBody key={data._id}>
-              <div className="grid grid-cols-2 mx-6">
-                <h1 className="col-span-1">{data?.title}</h1>
-                <div className="col-span-1">
-                  <Button
-                    onClick={() =>
-                      handleStatus(
-                        data?._id,
-                        data?.status === "published"
-                          ? "unpublished"
-                          : "published"
-                      )
-                    }
-                    variant="flat"
-                  >
-                    {data?.status === "published" ? "unpublished" : "published"}
-                  </Button>
-                </div>
-              </div>
-            </CardBody>
-          ))}
-        </Card>
-      </div> */}
-
-      <Table aria-label="Example static collection table">
+      <Table isStriped aria-label="Example static collection table">
         <TableHeader>
           <TableColumn>Title</TableColumn>
           <TableColumn>ACTION</TableColumn>
@@ -74,9 +43,9 @@ const StatusChangeCard = ({ recipe }: { recipe: IRecipe[] }) => {
             recipe.map((data: IRecipe) => (
               <TableRow key={data._id}>
                 <TableCell>{data.title}</TableCell>
-                <TableCell className="flex justify-evenly gap-2">
+                <TableCell className="flex justify-between gap-2">
                   <Button
-                    onClick={() =>
+                    onPress={() =>
                       handleStatus(
                         data?._id,
                         data?.status === "published"
@@ -85,8 +54,9 @@ const StatusChangeCard = ({ recipe }: { recipe: IRecipe[] }) => {
                       )
                     }
                     variant="flat"
-                    className="bg-primary-500 text-white"
+                    className="w-24"
                     size="sm"
+                    color="primary"
                   >
                     {data?.status === "published" ? "unpublished" : "published"}
                   </Button>

@@ -51,7 +51,7 @@ const UserManagement = () => {
 
   return (
     <div>
-      <Table aria-label="Example static collection table">
+      <Table isStriped aria-label="Example static collection table">
         <TableHeader>
           <TableColumn>Name</TableColumn>
           <TableColumn>Email</TableColumn>
@@ -63,27 +63,31 @@ const UserManagement = () => {
             <TableRow key={userData._id}>
               <TableCell>{userData.name}</TableCell>
               <TableCell>{userData.email}</TableCell>
-              <TableCell className="flex justify-evenly gap-2">
-                <Button
-                  onClick={() =>
-                    handleStatus(
-                      userData?.email,
-                      userData?._id,
-                      userData?.status
-                    )
-                  }
-                  size="sm"
-                  className="bg-primary-500 text-white"
-                >
-                  {userData.status === "unblocked" ? "blocked" : "unblocked"}
-                </Button>
-                <Button
-                  onClick={() => handleDelete(userData?.email, userData?._id)}
-                  size="sm"
-                  className="bg-primary-500 text-white"
-                >
-                  DELETE
-                </Button>
+              <TableCell className="flex justify-between">
+                <div className="flex gap-4">
+                  <Button
+                    onPress={() =>
+                      handleStatus(
+                        userData?.email,
+                        userData?._id,
+                        userData?.status
+                      )
+                    }
+                    size="sm"
+                    // className="bg-primary-500 text-white"
+                    color="warning"
+                  >
+                    {userData.status === "unblocked" ? "blocked" : "unblocked"}
+                  </Button>
+                  <Button
+                    onPress={() => handleDelete(userData?.email, userData?._id)}
+                    size="sm"
+                    // className="bg-primary-500 text-white"
+                    color="danger"
+                  >
+                    DELETE
+                  </Button>
+                </div>
               </TableCell>
             </TableRow>
           ))}

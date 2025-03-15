@@ -160,66 +160,82 @@ const RecipeCard = ({
   console.log("object");
 
   return (
-    <div className="flex mt-6 w-full flex-col items-center justify-center mb-12">
-      <h3 className="my-2 text-2xl font-bold">{title}</h3>
-      <div className="w-full sm:w-[80%]">
-        <FXForm
-          onSubmit={onSubmit}
-          resolver={zodResolver(
-            id ? updateRecipeValidationSchema : createRecipeValidationSchema
-          )}
-        >
-          <div className="py-3">
-            <FXInput
-              name="title"
-              label="Title"
-              size="sm"
-              required={true}
-              value={recipeTitle}
-              onChange={(e) => setRecipeTitle(e.target.value)}
-            />
-          </div>
-          <div className="py-3">
-            <FXInput
-              name="tags"
-              label="Tags"
-              size="sm"
-              required={true}
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-            />
-          </div>
-          <div className="py-3">
-            <FXSelect
-              options={contentOptions}
-              name="contentType"
-              label="Content Type"
-              size="sm"
-              required={true}
-            />
-          </div>
-
-          <div>
-            <ReactQuill
-              modules={modules}
-              theme="snow"
-              value={value || instruction}
-              onChange={setValue}
-              placeholder="Please type instructions and give an image"
-              className=""
-            />
-          </div>
-          {!instructions && (
-            <p className="text-xs text-red-500">Please enter instructions!</p>
-          )}
-          <Button
-            className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
-            size="lg"
-            type="submit"
+    <div className="flex mt-6 w-full flex-col items-center justify-center mb-12 p-6">
+      <div className="flex  w-full flex-col items-center justify-center mb-2 border p-6 sm:w-[90%] 2xl:w-[60%]">
+        <h3 className="my-2 text-2xl font-bold">{title}</h3>
+        <div className="w-full p-2 ">
+          <FXForm
+            onSubmit={onSubmit}
+            resolver={zodResolver(
+              id ? updateRecipeValidationSchema : createRecipeValidationSchema
+            )}
           >
-            Submit
-          </Button>
-        </FXForm>
+            <div className="py-1">
+              <div className="py-2 text-base font-semibold">
+                <label htmlFor="Title">Title</label>
+              </div>
+              <FXInput
+                name="title"
+                label="Enter title"
+                size="sm"
+                required={true}
+                value={recipeTitle}
+                onChange={(e) => setRecipeTitle(e.target.value)}
+              />
+            </div>
+            <div className="py-1">
+              <div className="py-2 text-base font-semibold">
+                <label htmlFor="Tags">Tags</label>
+              </div>
+              <FXInput
+                name="tags"
+                label="Tags"
+                size="sm"
+                required={true}
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+              />
+            </div>
+            <div className="py-1">
+              <div className="py-2 text-base font-semibold">
+                <label htmlFor="Content Type">Content Type</label>
+              </div>
+              <FXSelect
+                options={contentOptions}
+                name="contentType"
+                label="Content Type"
+                size="sm"
+                required={true}
+              />
+            </div>
+
+            <div>
+              <div className="py-2 text-base font-semibold">
+                <label htmlFor="Content Type">Image and Instructions</label>
+              </div>
+              <ReactQuill
+                modules={modules}
+                theme="snow"
+                className="h-36"
+                value={value || instruction}
+                onChange={setValue}
+                placeholder="Please type instructions and give an image"
+              />
+            </div>
+            {!instructions && (
+              <p className="text-xs text-red-500">Please enter instructions!</p>
+            )}
+            <div className="mt-10">
+              <Button
+                className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
+                size="lg"
+                type="submit"
+              >
+                Submit
+              </Button>
+            </div>
+          </FXForm>
+        </div>
       </div>
     </div>
   );
