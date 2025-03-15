@@ -18,27 +18,12 @@ import { useUser } from "@/src/context/user.provider";
 import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/src/services/AuthService";
 import { protectedRoutes } from "@/src/utils/constant";
-import { Input } from "@nextui-org/react";
-import { LayoutDashboard, SearchIcon, UserRound, Zap } from "lucide-react";
-import { useEffect, useState } from "react";
-import { IRecipe, queryParams } from "@/src/types";
-import { FieldValues, useForm } from "react-hook-form";
-import useDebounce from "@/src/hooks/debounce.hook";
-import { getAllMyRecipes } from "@/src/services/Recipe";
-
-type TRecipeMeta = {
-  meta: { page: number; limit: number; total: number; totalPage: number };
-  result: IRecipe[];
-};
+import { LayoutDashboard, UserRound, Zap } from "lucide-react";
 
 export const NavbarLower = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { user, setIsLoading, isLoading } = useUser();
-  const [recipeData, setRecipeData] = useState<TRecipeMeta>();
-  const { register, handleSubmit, watch, setValue } = useForm();
-  const searchText = useDebounce(watch("search"));
-  const [loading, setLoading] = useState(true);
 
   const handleLogout = () => {
     logout();
@@ -48,27 +33,6 @@ export const NavbarLower = () => {
       router.push("/");
     }
   };
-
-  useEffect(() => {
-    const query: queryParams[] = [];
-    query.push({ name: "limit", value: 10 });
-    query.push({ name: "searchTerm", value: searchText });
-
-    const fetchData = async () => {
-      const { data: allRecipes } = await getAllMyRecipes(query);
-      setRecipeData(allRecipes);
-      setLoading(false);
-    };
-
-    if (searchText) {
-      setLoading(true);
-      fetchData();
-    } else {
-      setRecipeData(undefined); // Clear the product data when search text is cleared
-    }
-  }, [searchText]);
-
-  const onSubmit = (data: FieldValues) => {};
 
   if (isLoading) {
     <p>Loading...</p>;
@@ -86,22 +50,6 @@ export const NavbarLower = () => {
             <p className="font-bold text-inherit text-gray-700">Recipe</p>
           </NextLink>
         </NavbarBrand>
-
-        <div className="flex justify-center items-center my-2 w-40 sm:w-60 lg:w-48">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Input
-              {...register("search")}
-              aria-label="Search"
-              placeholder="Search..."
-              size="md"
-              startContent={
-                <SearchIcon className="pointer-events-none flex-shrink-0 text-base text-default-400" />
-              }
-              color="primary"
-              type="text"
-            />
-          </form>
-        </div>
 
         {/* <ul className="hidden lg:flex gap-4 justify-start ml-2">
           <NavbarItem>
