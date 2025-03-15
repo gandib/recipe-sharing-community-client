@@ -7,15 +7,10 @@ import useDebounce from "@/src/hooks/debounce.hook";
 import { Input } from "@nextui-org/react";
 import { RotateCw, SearchIcon } from "lucide-react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
-import { IRecipe } from "@/src/types";
+import { IRecipe, queryParams } from "@/src/types";
 import { Button } from "@nextui-org/react";
 import RecipeHomeDisplayCard from "./RecipeHomeDisplayCard";
 import { getAllRecipes } from "@/src/services/Recipe";
-
-export type queryParams = {
-  name: string;
-  value: boolean | React.Key;
-};
 
 type TTags = { _id: string; tags: string };
 

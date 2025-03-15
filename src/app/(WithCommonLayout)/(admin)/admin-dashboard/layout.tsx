@@ -17,7 +17,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             <AdminSidebar />
           </div>
         </div>
-        <div className="w-11/12 md:w-4/6 lg:w-5/6 mt-20">{children}</div>
+        <div className="w-11/12 md:w-4/6 lg:w-5/6 mt-20 mx-6">{children}</div>
       </div>
     </div>
   );

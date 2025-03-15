@@ -9,33 +9,21 @@ import {
   NavbarMenuItem,
 } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
-import { link as linkStyles } from "@nextui-org/react";
 import NextLink from "next/link";
-import clsx from "clsx";
 import { siteConfig } from "@/src/config/site";
 import { Logo } from "@/src/components/icons";
 import NavbarDropDown from "./navbarDropDown";
 import { ThemeSwitch } from "./theme-switch";
 import { useUser } from "@/src/context/user.provider";
-import { Button } from "@nextui-org/react";
 import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/src/services/AuthService";
 import { protectedRoutes } from "@/src/utils/constant";
 import { Input } from "@nextui-org/react";
-import {
-  LayoutDashboard,
-  Menu,
-  SearchIcon,
-  UserRound,
-  UsersRound,
-  Zap,
-} from "lucide-react";
+import { LayoutDashboard, SearchIcon, UserRound, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useGetUser } from "@/src/hooks/user.hook";
-import { IRecipe } from "@/src/types";
+import { IRecipe, queryParams } from "@/src/types";
 import { FieldValues, useForm } from "react-hook-form";
 import useDebounce from "@/src/hooks/debounce.hook";
-import { queryParams } from "./AdminDashboardCard";
 import { getAllMyRecipes } from "@/src/services/Recipe";
 
 type TRecipeMeta = {

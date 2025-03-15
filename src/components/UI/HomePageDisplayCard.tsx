@@ -218,7 +218,7 @@ const HomePageDisplayCard = ({
                 dangerouslySetInnerHTML={{
                   __html:
                     data?.instructions.slice(0, 200) +
-                    `${data.instructions.length > 200 ? "..." : ""}`, // Adjust slicing logic based on HTML content
+                    `${data.instructions.length > 200 ? "..." : ""}`,
                 }}
               ></div>
               {data?.instructions.length > 200 && (

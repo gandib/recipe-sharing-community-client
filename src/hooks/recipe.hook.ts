@@ -16,7 +16,7 @@ import {
   updateUpvote,
 } from "../services/Recipe";
 import { toast } from "sonner";
-import { queryParams } from "../components/UI/AdminDashboardCard";
+import { queryParams } from "../types";
 
 export const useCreateRecipe = (email: string) => {
   const queryClient = useQueryClient();

@@ -26,9 +26,8 @@ import { SearchIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import useDebounce from "@/src/hooks/debounce.hook";
-import { queryParams } from "./AdminDashboardCard";
 import { getAllMyRecipes } from "@/src/services/Recipe";
-import { IRecipe } from "@/src/types";
+import { IRecipe, queryParams } from "@/src/types";
 
 type TRecipeMeta = {
   meta: { page: number; limit: number; total: number; totalPage: number };

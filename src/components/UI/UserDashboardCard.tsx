@@ -8,14 +8,9 @@ import useDebounce from "@/src/hooks/debounce.hook";
 import { Input } from "@nextui-org/react";
 import { RotateCw, SearchIcon } from "lucide-react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
-import { IRecipe } from "@/src/types";
+import { IRecipe, queryParams } from "@/src/types";
 import { Button } from "@nextui-org/react";
 import { getAllMyRecipes } from "@/src/services/Recipe";
-
-export type queryParams = {
-  name: string;
-  value: boolean | React.Key;
-};
 
 type TRecipeMeta = {
   meta: { page: number; limit: number; total: number; totalPage: number };

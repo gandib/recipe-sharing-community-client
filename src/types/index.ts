@@ -4,6 +4,18 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
 };
 
+export type queryParams = {
+  name: string;
+  value: boolean | React.Key;
+};
+
+export type TTags = { _id: string; tags: string };
+
+export type TRecipeMeta = {
+  meta: { page: number; limit: number; total: number; totalPage: number };
+  result: IRecipe[];
+};
+
 export interface IUser {
   _id: string;
   name: string;
