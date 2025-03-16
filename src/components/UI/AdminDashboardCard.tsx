@@ -40,7 +40,6 @@ const AdminDashboardCard = ({
   const [totalPage, setTotalPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const { data } = useGetAllUser("");
-  console.log({ data });
 
   const searchText = useDebounce(watch("search"));
 

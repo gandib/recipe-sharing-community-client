@@ -1,49 +1,49 @@
-import { Gem, KeyRound, UserPen } from "lucide-react";
+import { Gem, Group, KeyRound, PencilRuler, Plus, UserPen } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 
-const ProfileLeftSidebar = ({
+const GroupLeftSidebar = ({
   setActiveTab,
 }: {
   setActiveTab: Dispatch<SetStateAction<string>>;
 }) => {
   return (
     <div className="w-full min-h-[200px] bg-default-100 rounded p-4">
-      <h1 className=" font-bold pb-4">Profile Links</h1>
+      <h1 className=" font-bold pb-4">Group Links</h1>
       <div className="flex flex-col gap-4">
         <div>
           <button
             className="flex justify-center items-center gap-2 font-semibold"
-            onClick={() => setActiveTab("Update Profile")}
+            onClick={() => setActiveTab("Create Group")}
           >
-            <UserPen
+            <Plus
               size={20}
               className="border-2 w-8 h-8 p-1 bg-default-300 rounded-full "
             />
-            Update Profile
+            Create Group
           </button>
         </div>
         <div>
           <button
             className="flex justify-center items-center gap-2 font-semibold"
-            onClick={() => setActiveTab("Get Membership")}
+            onClick={() => setActiveTab("Update Group")}
           >
-            <Gem
+            <PencilRuler
               size={20}
               className="border-2 w-8 h-8 p-1 bg-default-300 rounded-full "
             />
-            Get Membership
+            Update Group
           </button>
         </div>
         <div>
           <button
             className="flex justify-center items-center gap-2 font-semibold"
-            onClick={() => setActiveTab("Change Password")}
+            onClick={() => setActiveTab("Groups")}
           >
-            <KeyRound
+            <Group
               size={20}
               className="border-2 w-8 h-8 p-1 bg-default-300 rounded-full "
             />{" "}
-            Change Password
+            Groups
           </button>
         </div>
       </div>
@@ -51,4 +51,4 @@ const ProfileLeftSidebar = ({
   );
 };
 
-export default ProfileLeftSidebar;
+export default GroupLeftSidebar;

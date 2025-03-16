@@ -25,7 +25,7 @@ export default function ProfilePage() {
   const [recipe, setRecipe] = useState();
   const [allRecipe, setAllRecipe] = useState();
   const [revalidateProfile, setRevalidateProfile] = useState(false);
-  console.log("pr", revalidateProfile);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -66,7 +66,7 @@ export default function ProfilePage() {
     switch (activeTab) {
       case "Timeline":
         return (
-          <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen lg:col-span-2 mt-4 lg:mt-0 ">
+          <div className="container mx-auto max-w-7xl pt-4 flex-grow min-h-screen lg:col-span-2 mt-4 lg:mt-0 ">
             <div className="">
               {/* create new post section */}
               <HomePageCreatePost
@@ -85,20 +85,20 @@ export default function ProfilePage() {
         );
       case "Following":
         return (
-          <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen mt-4">
+          <div className="container mx-auto max-w-7xl pt-4 flex-grow min-h-screen mt-4">
             <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-4">
               {user?.data?.following?.map((following: IUser, index: number) => (
                 <Card
                   className="shadow-lg w-full h-48 flex flex-col justify-center items-center"
                   key={index}
                 >
-                  <div className="h-[100px] w-[100px] border-2 border-primary-500 rounded-lg ">
+                  <div className="h-[100px] w-[100px]  ">
                     <Image
                       src={following.image}
                       width={100}
                       height={100}
                       alt="User"
-                      className="h-full w-full pt-1"
+                      className="h-full w-full border-2 border-primary-500 rounded-lg"
                     />
                   </div>
                   <p className="my-2 font-semibold">{following.name}</p>
@@ -116,20 +116,20 @@ export default function ProfilePage() {
         );
       case "Followers":
         return (
-          <div className="container mx-auto max-w-7xl pt-4 mt-4 px-6 flex-grow min-h-screen">
+          <div className="container mx-auto max-w-7xl pt-4 mt-4 flex-grow min-h-screen">
             <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-4">
               {user?.data?.follower?.map((follower: IUser, index: number) => (
                 <Card
                   className="shadow-lg w-full h-48 flex flex-col justify-center items-center"
                   key={index}
                 >
-                  <div className="h-[100px] w-[100px] border-2 border-primary-500 rounded-lg ">
+                  <div className="h-[100px] w-[100px]  ">
                     <Image
                       src={follower.image}
                       width={100}
                       height={100}
                       alt="User"
-                      className="h-full w-full pt-1"
+                      className="h-full w-full border-2 border-primary-500 rounded-lg"
                     />
                   </div>
                   <p className="my-2 font-semibold">{follower.name}</p>
@@ -140,7 +140,7 @@ export default function ProfilePage() {
         );
       case "About":
         return (
-          <div className="container mx-auto max-w-7xl pt-4 mt-4 px-6 flex-grow min-h-screen">
+          <div className="container mx-auto max-w-7xl pt-4 mt-4 flex-grow min-h-screen">
             {
               <div className="text-xl">
                 {user?.data?.bio ? user?.data?.bio : "Bio not updated yet!"}
@@ -151,7 +151,7 @@ export default function ProfilePage() {
 
       case "Update Profile":
         return (
-          <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen">
+          <div className="container mx-auto max-w-7xl pt-4 flex-grow min-h-screen">
             <div className="text-xl">
               <UpdateProfile />
             </div>
@@ -160,7 +160,7 @@ export default function ProfilePage() {
 
       case "Get Membership":
         return (
-          <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen">
+          <div className="container mx-auto max-w-7xl pt-4 flex-grow min-h-screen">
             <div className="text-xl">
               <MembershipCard />
             </div>
@@ -169,7 +169,7 @@ export default function ProfilePage() {
 
       case "Change Password":
         return (
-          <div className="container mx-auto max-w-7xl pt-4  px-6 flex-grow min-h-screen">
+          <div className="container mx-auto max-w-7xl pt-4 flex-grow min-h-screen">
             <div className="text-xl">
               <ChangePassword />
             </div>
@@ -178,7 +178,7 @@ export default function ProfilePage() {
 
       default:
         return (
-          <div className="container mx-auto max-w-7xl pt-4 px-6 flex-grow min-h-screen">
+          <div className="container mx-auto max-w-7xl pt-4 flex-grow min-h-screen">
             Select a tab to see content.
           </div>
         );
@@ -192,50 +192,55 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen  lg:mt-0">
       {/* Header Section */}
-      <div className="relative">
-        <div className="h-56 bg-blue-600"></div>
-        <div className="absolute top-6 left-1/2 transform -translate-x-1/2 flex items-center flex-col">
-          <div className="w-20 h-20 rounded-full border-4 border-white overflow-hidden">
-            <img
-              src={user?.data?.image as string}
-              alt="Profile"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <h2 className="text-xl font-semibold mt-2 text-white">
-            {user?.data?.name}
-          </h2>
-          <p className="text-sm text-gray-200">{user?.data?.email}</p>
-        </div>
-
-        {/* Navigation Tabs */}
-        <div className="absolute bottom-0 left-0 w-full">
-          <div className="flex justify-center  px-6 border-b border-gray-200">
-            {["Timeline", "Followers", "Following", "About"].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2  font-semibold text-base ${
-                  activeTab === tab
-                    ? "text-blue-600 font-bold bg-white rounded-se-3xl"
-                    : "text-white"
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
 
       {/* Content Section */}
       <div className="grid md:grid-cols-3 lg:grid-cols-4 container mx-auto max-w-screen-2xl">
         <div className="hidden flex-col lg:flex lg:col-span-1 p-4 w-full gap-4">
           <ProfileLeftSidebar setActiveTab={setActiveTab} />
-          <HomePageRecentPost title="Latest Recipes" recipes={allRecipe!} />
+          <div className="sticky top-20">
+            <HomePageRecentPost title="Latest Recipes" recipes={allRecipe!} />
+          </div>
         </div>
 
-        <div className="md:col-span-2">{renderContent()}</div>
+        <div className="md:col-span-2 p-4 gap-4">
+          <div className="relative  ">
+            <div className="h-56 bg-blue-600 rounded-sm"></div>
+            <div className="absolute top-6 left-1/2 transform -translate-x-1/2 flex items-center flex-col">
+              <div className="w-20 h-20 rounded-full border-4 border-white overflow-hidden">
+                <img
+                  src={user?.data?.image as string}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h2 className="text-xl font-semibold mt-2 text-white">
+                {user?.data?.name}
+              </h2>
+              <p className="text-sm text-gray-200">{user?.data?.email}</p>
+            </div>
+
+            {/* Navigation Tabs */}
+            <div className="absolute bottom-0 left-0 w-full">
+              <div className="flex justify-center  px-6 border-b border-gray-200">
+                {["Timeline", "Followers", "Following", "About"].map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveTab(tab)}
+                    className={`px-4 py-2  font-semibold text-base ${
+                      activeTab === tab
+                        ? "text-blue-600 font-bold bg-white rounded-se-3xl"
+                        : "text-white"
+                    }`}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="">{renderContent()}</div>
+        </div>
 
         <div className="hidden md:flex md:col-span-1  p-4 rounded  sticky top-5">
           <div className="hidden flex-col md:flex md:col-span-1 w-full gap-4">

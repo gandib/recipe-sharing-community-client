@@ -52,14 +52,14 @@ const HomePageCard = ({
     }
   }, [searchText, recipe]);
 
-  console.log({ recipeData });
-
   const onSubmit = (data: FieldValues) => {};
   return (
     <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center">
       <div className="hidden flex-col lg:flex lg:col-span-1 gap-4">
         <HomeLeftSidebar />
-        <HomePageRecentPost title="Recent Posts" recipes={recipe} />
+        <div className="sticky top-20">
+          <HomePageRecentPost title="Recent Posts" recipes={recipe} />
+        </div>
       </div>
 
       <div className="md:col-span-2 mt-4 lg:mt-0">
@@ -89,14 +89,12 @@ const HomePageCard = ({
         </div>
       </div>
 
-      <div className="hidden md:flex md:col-span-1 mt-4 lg:mt-0">
-        <div className="w-full">
-          {/* my groups */}
-          <HomePageMyGroups />
+      <div className="hidden md:flex md:col-span-1 mt-4 lg:mt-0 flex-col gap-4">
+        {/* my groups */}
+        <HomePageMyGroups />
 
-          {/* following */}
-          <HomePageFollowing />
-        </div>
+        {/* following */}
+        <HomePageFollowing />
       </div>
     </div>
   );

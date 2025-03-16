@@ -14,11 +14,8 @@ const HomePageFeedCard = ({
   revalidateProfile?: boolean;
 }) => {
   const [revalidate, setRevalidate] = useState(false);
-  console.log("page card", revalidateProfile);
 
-  useEffect(() => {
-    console.log("object pagecard");
-  }, [revalidate, revalidateProfile]);
+  useEffect(() => {}, [revalidate, revalidateProfile]);
   return (
     <div className="grid gap-4">
       {recipe &&

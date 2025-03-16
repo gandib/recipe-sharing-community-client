@@ -18,7 +18,7 @@ import { useUser } from "@/src/context/user.provider";
 import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/src/services/AuthService";
 import { protectedRoutes } from "@/src/utils/constant";
-import { LayoutDashboard, UserRound, Zap } from "lucide-react";
+import { Group, LayoutDashboard, UserRound, Zap } from "lucide-react";
 
 export const NavbarLower = () => {
   const router = useRouter();
@@ -137,6 +137,23 @@ export const NavbarLower = () => {
               </div>
             </NextLink>
           </NavbarItem>
+          <NavbarItem>
+            <NextLink
+              className={`text-lg ${pathname === "/groups" ? "text-secondary-500" : "text-primary-500"}`}
+              href="/groups"
+            >
+              <div className="relative flex items-center group">
+                <Group
+                  className={`text-gray-500 transition-all group-hover:opacity-0 group-hover:translate-y-4 ${pathname === "/groups" ? "text-secondary-500" : "text-primary-500"} `}
+                />
+                <p
+                  className={`absolute left-1/2 -translate-x-1/2 translate-y-4 opacity-0 text-base  group-hover:translate-y-0 group-hover:opacity-100 transition-all ${pathname === "/groups" ? "hover:text-secondary-500" : "text-primary-500"}`}
+                >
+                  Groups
+                </p>
+              </div>
+            </NextLink>
+          </NavbarItem>
           {user?.role === "admin" ? (
             <NavbarItem>
               <NextLink
@@ -245,6 +262,14 @@ export const NavbarLower = () => {
                 href="/profile"
               >
                 Profile
+              </NextLink>
+            </NavbarItem>
+            <NavbarItem>
+              <NextLink
+                className={`text-lg ${pathname === "/groups" ? "text-primary-500" : ""}`}
+                href="/groups"
+              >
+                Groups
               </NextLink>
             </NavbarItem>
             {user?.role === "admin" ? (

@@ -4,13 +4,10 @@ import { IRecipe, TRecipeMeta } from "@/src/types";
 import { Cell, Pie, PieChart, Tooltip } from "recharts";
 
 const PieCharts = ({ data }: { data: TRecipeMeta }) => {
-  console.log(data);
   const datas = data?.result?.map((recipe: IRecipe) => ({
     name: recipe.title,
     value: recipe.upvote.length,
   }));
-
-  console.log({ datas });
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 

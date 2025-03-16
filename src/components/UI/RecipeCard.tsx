@@ -156,9 +156,6 @@ const RecipeCard = ({
     <p>Loading...</p>;
   }
 
-  console.log(instruction);
-  console.log("object");
-
   return (
     <div className="flex mt-6 w-full flex-col items-center justify-center mb-12 p-6">
       <div className="flex  w-full flex-col items-center justify-center mb-2 border p-6 sm:w-[90%] 2xl:w-[60%]">

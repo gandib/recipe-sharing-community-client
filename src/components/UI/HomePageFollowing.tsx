@@ -29,7 +29,7 @@ const HomePageFollowing = () => {
           follower: user?._id,
         },
       };
-      console.log(followData);
+
       updateFollower(followData);
     } else {
       const unFollowData = {

@@ -22,6 +22,11 @@ export type TRecipeMeta = {
   result: IRecipe[];
 };
 
+export type TGroupMeta = {
+  meta: { page: number; limit: number; total: number; totalPage: number };
+  result: IGroup[];
+};
+
 export interface IUser {
   _id: string;
   name: string;
@@ -63,6 +68,18 @@ export interface IRecipe {
   rating: any[];
   comment: any[];
   instructions: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IGroup {
+  _id: string;
+  user: IUser;
+  name: string;
+  image: string[];
+  members: IUser[];
+  status: "published" | "unpublished";
+  posts: IRecipe[];
   createdAt: string;
   updatedAt: string;
 }

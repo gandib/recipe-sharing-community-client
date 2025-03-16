@@ -14,7 +14,7 @@ const HomePageRecentPost = ({
 }) => {
   const router = useRouter();
   return (
-    <div className="w-full min-h-[180px] sticky top-20 bg-default-100 rounded p-4">
+    <div className="w-full min-h-[180px] bg-default-100 rounded p-4">
       <h1 className=" font-bold">{title}</h1>
       {recipes?.result?.length < 1 && (
         <p className="text-base w-full mt-6">No recent post found!</p>
