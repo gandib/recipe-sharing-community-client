@@ -8,10 +8,12 @@ const HomePageFeedCard = ({
   recipe,
   setRevalidateProfile,
   revalidateProfile,
+  groupId,
 }: {
-  recipe: { result: IRecipe[]; meta: any };
+  recipe: IRecipe[];
   setRevalidateProfile?: Dispatch<SetStateAction<boolean>>;
   revalidateProfile?: boolean;
+  groupId?: string;
 }) => {
   const [revalidate, setRevalidate] = useState(false);
 
@@ -19,11 +21,12 @@ const HomePageFeedCard = ({
   return (
     <div className="grid gap-4">
       {recipe &&
-        recipe?.result?.length > 0 &&
-        recipe?.result?.map((data: IRecipe) => (
+        recipe?.length > 0 &&
+        recipe?.map((data: IRecipe) => (
           <HomePageDisplayCard
             key={data?._id}
             data={data}
+            groupId={groupId}
             setRevalidate={setRevalidate}
             setRevalidateProfile={setRevalidateProfile}
           />

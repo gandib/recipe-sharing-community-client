@@ -7,9 +7,11 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 const HomePageCreatePost = ({
   setRevalidateProfile,
   revalidateProfile,
+  groupId,
 }: {
   setRevalidateProfile?: Dispatch<SetStateAction<boolean>>;
   revalidateProfile?: boolean;
+  groupId?: string;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [revalidate, setRevalidate] = useState(false);
@@ -31,6 +33,7 @@ const HomePageCreatePost = ({
           setIsOpen={setIsOpen}
           setRevalidate={setRevalidate}
           setRevalidateProfile={setRevalidateProfile}
+          groupId={groupId}
         />
       )}
       <div className="flex items-center gap-8">

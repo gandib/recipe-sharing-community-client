@@ -14,12 +14,8 @@ import { getAllRecipes } from "@/src/services/Recipe";
 import { useEffect, useState } from "react";
 import { SearchIcon } from "lucide-react";
 
-const HomePageCard = ({
-  recipe,
-}: {
-  recipe: { result: IRecipe[]; meta: any };
-}) => {
-  const [recipeData, setRecipeData] = useState<TRecipeMeta>(recipe);
+const HomePageCard = ({ recipe }: { recipe: IRecipe[] }) => {
+  const [recipeData, setRecipeData] = useState<IRecipe[]>(recipe);
   const { register, handleSubmit, watch, setValue } = useForm();
   const searchText = useDebounce(watch("search"));
   const [loading, setLoading] = useState(false);

@@ -9,9 +9,9 @@ import MembershipCard from "@/src/components/UI/MembershipCard";
 import UpdateProfile from "@/src/components/UI/UpdateProfile";
 import { useUser } from "@/src/context/user.provider";
 import { useGetUser, useUpdateUnfollowing } from "@/src/hooks/user.hook";
-import { getAllMyGroups } from "@/src/services/GroupService";
+import { getAllGroups, getAllMyGroups } from "@/src/services/GroupService";
 import { getAllMyRecipes, getAllRecipes } from "@/src/services/Recipe";
-import { IGroup, IUser, TGroupMeta } from "@/src/types";
+import { IGroup, IRecipe, IUser, TGroupMeta } from "@/src/types";
 import {
   Avatar,
   Button,
@@ -29,11 +29,10 @@ export default function GroupsPageFeed({ groupId }: { groupId?: string }) {
   const { user: userData, isLoading } = useUser();
   const { data: user, isPending } = useGetUser(userData?.email!);
   const { mutate: unFollowing } = useUpdateUnfollowing(user?.email!);
-  const [recipe, setRecipe] = useState();
-  const [allRecipe, setAllRecipe] = useState();
   const [revalidateProfile, setRevalidateProfile] = useState(false);
   const [allMyGroups, setAllMyGroups] = useState<TGroupMeta>();
-  const [myGroupimg, setMyGroupImg] = useState<string>(
+  const [allGroups, setAllGroups] = useState<TGroupMeta>();
+  const [myGroupImg, setMyGroupImg] = useState<string>(
     allMyGroups?.result[0]?.image[0] || ""
   );
   const [myGroupName, setMyGroupName] = useState<string>(
@@ -42,48 +41,60 @@ export default function GroupsPageFeed({ groupId }: { groupId?: string }) {
   const [myCurrentGroup, setMyCurrentGroup] = useState<IGroup>(
     allMyGroups?.result[0]!
   );
-
-  console.log(myCurrentGroup);
+  const [recipe, setRecipe] = useState<IRecipe[]>(allGroups?.result[0]?.posts!);
+  const [allRecipe, setAllRecipe] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: allRecipe } = await getAllMyRecipes([
-          { name: "sort", value: "-createdAt" },
-          { name: "contentType", value: "free" },
-        ]);
-        setRecipe(allRecipe);
-
         const { data: recipes } = await getAllRecipes([
           { name: "sort", value: "-createdAt" },
         ]);
-        setAllRecipe(recipes);
+        setAllRecipe(recipes?.result || []);
 
-        const { data: allGroups } = await getAllMyGroups([
+        const { data: groups } = await getAllGroups([
           { name: "sort", value: "-createdAt" },
         ]);
-        setAllMyGroups(allGroups);
-        if (allGroups) {
-          setMyGroupName(allGroups?.result[0]?.name);
-          setMyGroupImg(allGroups?.result[0]?.image[0]);
-          setMyCurrentGroup(allGroups?.result[0]);
+        if (groups) {
+          setAllGroups(groups);
+        } else {
+          console.error("getAllGroups API returned undefined:", groups);
+        }
 
-          if (groupId) {
-            setMyGroupName(
-              allGroups?.result?.find((group: IGroup) => group?._id === groupId)
-                ?.name
-            );
-            setMyGroupImg(
-              allGroups?.result?.find((group: IGroup) => group?._id === groupId)
-                ?.image[0]
-            );
-            setMyCurrentGroup(
-              allGroups?.result?.find((group: IGroup) => group?._id === groupId)
-            );
+        const { data: myGroups } = await getAllMyGroups([
+          { name: "sort", value: "-createdAt" },
+        ]);
+        if (myGroups?.result && myGroups?.result?.length > 0) {
+          setAllMyGroups(myGroups);
+          setMyGroupName(myGroups.result[0]?.name || "");
+          setMyGroupImg(myGroups.result[0]?.image?.[0] || "");
+          setMyCurrentGroup(myGroups.result[0]);
+          setRecipe(myGroups.result[0]?.posts || []);
+        } else {
+          console.warn("User is not part of any groups:", myGroups);
+          setAllMyGroups({
+            meta: { page: 0, limit: 0, total: 0, totalPage: 0 },
+            result: [],
+          });
+          setRecipe([]);
+        }
+
+        if (groupId) {
+          const selectedGroup = myGroups?.result?.find(
+            (group: IGroup) => group?._id === groupId
+          );
+
+          if (selectedGroup) {
+            setMyGroupName(selectedGroup.name || "");
+            setMyGroupImg(selectedGroup.image?.[0] || "");
+            setMyCurrentGroup(selectedGroup);
+            setRecipe(selectedGroup.posts || []);
+          } else {
+            console.warn("Group not found for ID:", groupId);
           }
         }
       } catch (error) {
-        console.log("Recipe fetch failed", error);
+        console.error("Recipe fetch failed:", error);
       }
     };
 
@@ -105,6 +116,26 @@ export default function GroupsPageFeed({ groupId }: { groupId?: string }) {
     unFollowing(unfollowingData);
   };
 
+  if (isLoading) {
+    <p>Loading...</p>;
+  }
+
+  const sortedRecipe =
+    Array.isArray(recipe) && recipe.length > 0
+      ? [...recipe].sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        )
+      : [];
+
+  if (sortedRecipe.length > 1) {
+    const first = sortedRecipe[0];
+    const last = sortedRecipe[sortedRecipe.length - 1];
+
+    sortedRecipe[0] = last;
+    sortedRecipe[sortedRecipe.length - 1] = first;
+  }
+
   const renderContent = () => {
     switch (activeTab) {
       case "Timeline":
@@ -115,10 +146,15 @@ export default function GroupsPageFeed({ groupId }: { groupId?: string }) {
               <HomePageCreatePost
                 setRevalidateProfile={setRevalidateProfile}
                 revalidateProfile={revalidateProfile}
+                groupId={myCurrentGroup?._id}
               />
               <div className=" mb-8">
+                {!recipe?.length && (
+                  <p>No posts found related to this group!</p>
+                )}
                 <HomePageFeedCard
-                  recipe={recipe!}
+                  recipe={sortedRecipe}
+                  groupId={myCurrentGroup?._id!}
                   setRevalidateProfile={setRevalidateProfile}
                   revalidateProfile={revalidateProfile}
                 />
@@ -133,7 +169,7 @@ export default function GroupsPageFeed({ groupId }: { groupId?: string }) {
               {myCurrentGroup?.members?.map(
                 (following: IUser, index: number) => (
                   <Card
-                    className="shadow-lg w-full h-48 flex flex-col justify-center items-center"
+                    className="shadow md:shadow-md w-full h-48 flex flex-col justify-center items-center"
                     key={index}
                   >
                     <div className="h-[100px] w-[100px] ">
@@ -194,9 +230,34 @@ export default function GroupsPageFeed({ groupId }: { groupId?: string }) {
 
       case "Groups":
         return (
-          <div className="container mx-auto max-w-7xl pt-4 flex-grow min-h-screen">
-            <div className="text-xl">
-              <ChangePassword />
+          <div className="container mx-auto max-w-7xl pt-4 flex-grow min-h-screen mt-4">
+            <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-4">
+              {allGroups?.result?.map((group: IGroup, index: number) => (
+                <Card
+                  className="shadow md:shadow-md rounded-sm border w-full h-52 flex flex-col justify-center items-center"
+                  key={index}
+                >
+                  <div className="h-[120px] w-full ">
+                    <Image
+                      src={group.image[0]}
+                      width={100}
+                      height={100}
+                      alt="User"
+                      className="h-full w-full border-primary-500 "
+                    />
+                  </div>
+                  <p className="my-2 font-semibold">{group.name}</p>
+                  <Button
+                    size="sm"
+                    className=" py-3 my-2 font-semibold"
+                    onPress={() => handleUnFollowing(group._id)}
+                    color="primary"
+                    variant="flat"
+                  >
+                    Join Group
+                  </Button>
+                </Card>
+              ))}
             </div>
           </div>
         );
@@ -209,10 +270,6 @@ export default function GroupsPageFeed({ groupId }: { groupId?: string }) {
         );
     }
   };
-
-  if (isLoading) {
-    <p>Loading...</p>;
-  }
 
   return (
     <div className="min-h-screen  lg:mt-0">
@@ -228,14 +285,14 @@ export default function GroupsPageFeed({ groupId }: { groupId?: string }) {
         </div>
 
         <div className="md:col-span-2 p-4 gap-4">
-          <Card className="bg-default-100 h-56 rounded-sm">
+          <Card className="bg-default-100 h-64 rounded-sm">
             <CardHeader className="p-4 flex justify-between">
               <div>
                 <div className="flex gap-8">
                   <Image
                     width={100}
                     height={100}
-                    src={myGroupimg}
+                    src={myGroupImg}
                     alt="group"
                     className="w-20 h-20 object-cover rounded-full"
                   />
@@ -263,7 +320,7 @@ export default function GroupsPageFeed({ groupId }: { groupId?: string }) {
                       />
                     ))}
                   {myCurrentGroup?.members?.length > 3 && (
-                    <div className="relative flex items-center justify-center ml-[-10px]">
+                    <div className="relative flex items-center justify-center ml-[-10px] mb-1.5">
                       <Avatar
                         className="bg-primary-500 text-primary-500"
                         src={""} // Ensure a valid src or use a fallback
@@ -332,7 +389,10 @@ export default function GroupsPageFeed({ groupId }: { groupId?: string }) {
         <div className="hidden flex-col md:flex md:col-span-1 p-4 w-full gap-4">
           <HomePageMyGroups />
           <div className="sticky top-20">
-            <HomePageRecentPost title="My Recent Posts" recipes={recipe!} />
+            <HomePageRecentPost
+              title="My Recent Posts"
+              recipes={sortedRecipe}
+            />
           </div>
         </div>
       </div>

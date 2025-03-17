@@ -33,12 +33,12 @@ export default function ProfilePage() {
           { name: "sort", value: "-createdAt" },
           { name: "contentType", value: "free" },
         ]);
-        setRecipe(allRecipe);
+        setRecipe(allRecipe?.result);
 
         const { data: recipes } = await getAllRecipes([
           { name: "sort", value: "-createdAt" },
         ]);
-        setAllRecipe(recipes);
+        setAllRecipe(recipes?.result);
       } catch (error) {
         console.log("Recipe fetch failed", error);
       }

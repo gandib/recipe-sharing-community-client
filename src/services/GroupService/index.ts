@@ -29,7 +29,7 @@ export const createGroup = async (recipeData: FieldValues) => {
 export const createGroupRecipe = async (recipeData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post(
-      `/group/create-group-post/${recipeData.id}`,
+      `/group/create-group-post/${recipeData.groupId}`,
       recipeData.data
     );
     revalidateTag("GROUP_RECIPE");
@@ -66,14 +66,14 @@ export const getAllGroupRecipe = async (query: queryParams[]) => {
   }
 };
 
-export const getAllGroupRecipes = async (query: queryParams[]) => {
+export const getAllMyGroupRecipes = async (query: queryParams[]) => {
   const params = new URLSearchParams();
   if (query) {
     query.forEach((item) => {
       params.append(item.name, item.value as string);
     });
   }
-  const url = `${envConfig.baseApi}/group?${params.toString()}`;
+  const url = `${envConfig.baseApi}/group/my-group-post?${params.toString()}`;
   const token = cookies().get("accessToken")?.value;
 
   try {
@@ -207,40 +207,6 @@ export const getAllMyGroupRecipe = async (query: queryParams[]) => {
   }
 };
 
-export const getAllMyGroupRecipes = async (query: queryParams[]) => {
-  const params = new URLSearchParams();
-  if (query) {
-    query.forEach((item) => {
-      params.append(item.name, item.value as string);
-    });
-  }
-
-  const url = `${envConfig.baseApi}/group/my-recipe?${params.toString()}`;
-  const token = cookies().get("accessToken")?.value;
-
-  try {
-    const res = await fetch(url, {
-      method: "GET",
-      cache: "no-store",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    const data = await res.json();
-
-    // Ensure data structure is correct
-    if (!data || !data.data.result) {
-      throw new Error("Invalid data format");
-    }
-
-    return data;
-  } catch (error) {
-    console.error("Error fetching my recipes:", error);
-    throw error;
-  }
-};
-
 export const getAllMyGroupTags = async (id: string) => {
   try {
     const { data } = await axiosInstance.get(`/group/my-tags`);
@@ -299,10 +265,12 @@ export const getAllGroupTag = async () => {
   }
 };
 
-export const deleteGroupRecipe = async (recipeData: string) => {
+export const deleteGroupRecipe = async (recipeData: FieldValues) => {
   try {
-    const { data } = await axiosInstance.delete(`/group/${recipeData}`);
-    revalidateTag("RECIPE");
+    const { data } = await axiosInstance.delete(
+      `/group/recipe/${recipeData.groupId}/${recipeData.recipeId}`
+    );
+    revalidateTag("GROUP_RECIPE");
 
     return data;
   } catch (error: any) {
@@ -335,7 +303,7 @@ export const updateGroup = async (groupData: FieldValues) => {
 export const updateGroupRecipe = async (recipeData: FieldValues) => {
   try {
     const { data } = await axiosInstance.patch(
-      `/group/${recipeData.id}`,
+      `/group/recipe/${recipeData.groupId}/${recipeData.recipeId}`,
       recipeData.data
     );
     revalidateTag("GROUP_RECIPE");
@@ -385,10 +353,45 @@ export const getSingleGroupRecipe = async (recipeId: string) => {
   return res.json();
 };
 
+export const updateGroupRecipeComment = async (commentData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.patch(
+      `/group/recipe/comment/${commentData.groupId}/${commentData.recipeId}`,
+      commentData.data
+    );
+    revalidateTag("GROUP_RECIPE");
+
+    return data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error?.response?.data?.message);
+    } else {
+      throw new Error(error);
+    }
+  }
+};
+
+export const deleteGroupRecipeComment = async (commentData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.delete(
+      `/group/recipe/comment/${commentData.groupId}/${commentData.recipeId}?commentId=${commentData.commentId}`
+    );
+    revalidateTag("GROUP_RECIPE");
+
+    return data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error?.response?.data?.message);
+    } else {
+      throw new Error(error);
+    }
+  }
+};
+
 export const updateGroupUpvote = async (upvoteData: FieldValues) => {
   try {
     const { data } = await axiosInstance.patch(
-      `/group/upvote/${upvoteData.id}`,
+      `/group/recipe/upvote/${upvoteData.groupId}/${upvoteData.recipeId}`,
       upvoteData.data
     );
     revalidateTag("GROUP_RECIPE");
@@ -406,7 +409,7 @@ export const updateGroupUpvote = async (upvoteData: FieldValues) => {
 export const updateGroupDownvote = async (downvoteData: FieldValues) => {
   try {
     const { data } = await axiosInstance.patch(
-      `/group/downvote/${downvoteData.id}`,
+      `/group/recipe/downvote/${downvoteData.groupId}/${downvoteData.recipeId}`,
       downvoteData.data
     );
     revalidateTag("GROUP_RECIPE");
@@ -426,41 +429,6 @@ export const updateGroupRating = async (ratingData: FieldValues) => {
     const { data } = await axiosInstance.patch(
       `/group/rating/${ratingData.id}`,
       ratingData.data
-    );
-    revalidateTag("GROUP_RECIPE");
-
-    return data;
-  } catch (error: any) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error?.response?.data?.message);
-    } else {
-      throw new Error(error);
-    }
-  }
-};
-
-export const updateGroupRecipeComment = async (commentData: FieldValues) => {
-  try {
-    const { data } = await axiosInstance.patch(
-      `/group/comment/${commentData.id}`,
-      commentData.data
-    );
-    revalidateTag("GROUP_RECIPE");
-
-    return data;
-  } catch (error: any) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error?.response?.data?.message);
-    } else {
-      throw new Error(error);
-    }
-  }
-};
-
-export const deleteGroupRecipeComment = async (commentData: FieldValues) => {
-  try {
-    const { data } = await axiosInstance.delete(
-      `/group/comment/${commentData.id}?commentId=${commentData.commentId}`
     );
     revalidateTag("GROUP_RECIPE");
 

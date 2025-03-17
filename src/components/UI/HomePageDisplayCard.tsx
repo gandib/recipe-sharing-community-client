@@ -33,15 +33,23 @@ import { FieldValues } from "react-hook-form";
 import FollowUnFollowCard from "./FollowUnFollowCard";
 import HomePageFollowUnFollowCard from "./HomePageFollowUnfollowCard";
 import HomePageCreatePostModal from "./HomePageCreatePostModal";
+import {
+  useDeleteGroupRecipeComment,
+  useUpdateGroupDownvote,
+  useUpdateGroupRecipeComment,
+  useUpdateGroupUpvote,
+} from "@/src/hooks/group.hook";
 
 const HomePageDisplayCard = ({
   data,
   setRevalidate,
   setRevalidateProfile,
+  groupId,
 }: {
   data: IRecipe;
   setRevalidate: Dispatch<SetStateAction<boolean>>;
   setRevalidateProfile?: Dispatch<SetStateAction<boolean>>;
+  groupId?: string;
 }) => {
   const [seeMore, setSeeMore] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
@@ -57,6 +65,14 @@ const HomePageDisplayCard = ({
   const { mutate: updateComment } = useUpdateRecipeComment(user?.email!);
   const { mutate: deleteComment } = useDeleteRecipeComment(user?.email!);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const { mutate: updateGroupComment } = useUpdateGroupRecipeComment(
+    user?.email!
+  );
+  const { mutate: deleteGroupComment } = useDeleteGroupRecipeComment(
+    user?.email!
+  );
+  const { mutate: upvoteGroup } = useUpdateGroupUpvote(user?.email!);
+  const { mutate: downvoteGroup } = useUpdateGroupDownvote(user?.email!);
 
   const handleDelete = () => {
     setIsOpen(true);
@@ -70,7 +86,19 @@ const HomePageDisplayCard = ({
         upvote: user?._id,
       },
     };
-    upvote(upvoteData);
+    if (!groupId) {
+      upvote(upvoteData);
+    }
+    if (groupId) {
+      const upvoteData = {
+        groupId,
+        recipeId: data._id,
+        data: {
+          upvote: user?._id,
+        },
+      };
+      upvoteGroup(upvoteData);
+    }
   };
 
   const handleDownvote = () => {
@@ -80,7 +108,19 @@ const HomePageDisplayCard = ({
         downvote: user?._id,
       },
     };
-    downvote(downvoteData);
+    if (!groupId) {
+      downvote(downvoteData);
+    }
+    if (groupId) {
+      const downvoteData = {
+        groupId,
+        recipeId: data?._id,
+        data: {
+          downvote: user?._id,
+        },
+      };
+      downvoteGroup(downvoteData);
+    }
   };
 
   const onSubmit = (formData: FieldValues) => {
@@ -94,7 +134,21 @@ const HomePageDisplayCard = ({
         comment: formData.comment,
       },
     };
-    updateComment(commentData);
+    if (!groupId) {
+      updateComment(commentData);
+    }
+
+    if (groupId) {
+      const commentData = {
+        groupId,
+        recipeId: data?._id,
+        data: {
+          user: user?._id,
+          comment: formData.comment,
+        },
+      };
+      updateGroupComment(commentData);
+    }
   };
 
   const handleDeleteComment = (id: string) => {
@@ -102,7 +156,18 @@ const HomePageDisplayCard = ({
       id: data?._id,
       commentId: id,
     };
-    deleteComment(commentData);
+    if (!groupId) {
+      deleteComment(commentData);
+    }
+
+    if (groupId) {
+      const commentData = {
+        groupId,
+        recipeId: data?._id,
+        commentId: id,
+      };
+      deleteGroupComment(commentData);
+    }
   };
 
   if (isLoading) {
@@ -192,6 +257,7 @@ const HomePageDisplayCard = ({
           id={data._id}
           setRevalidate={setRevalidate}
           setRevalidateProfile={setRevalidateProfile}
+          groupId={groupId}
         />
       )}
 
@@ -201,6 +267,7 @@ const HomePageDisplayCard = ({
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           setRevalidateProfile={setRevalidateProfile}
+          groupId={groupId}
         />
       )}
 

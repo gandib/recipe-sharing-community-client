@@ -9,19 +9,19 @@ const HomePageRecentPost = ({
   recipes,
   title,
 }: {
-  recipes: { result: IRecipe[]; meta: any };
+  recipes: IRecipe[];
   title: string;
 }) => {
   const router = useRouter();
   return (
     <div className="w-full min-h-[180px] bg-default-100 rounded p-4">
       <h1 className=" font-bold">{title}</h1>
-      {recipes?.result?.length < 1 && (
+      {recipes?.length < 1 && (
         <p className="text-base w-full mt-6">No recent post found!</p>
       )}
       {recipes &&
-        recipes.result.length > 0 &&
-        recipes.result.slice(0, 5).map((recipe: IRecipe) => (
+        recipes.length > 0 &&
+        recipes.slice(0, 5).map((recipe: IRecipe) => (
           <div
             key={recipe._id}
             className="flex mt-4 bg-default-150 border-1 rounded h-[75px]"

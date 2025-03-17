@@ -30,6 +30,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import createRecipeValidationSchema from "@/src/schemas/create-recipe.schema";
 import updateRecipeValidationSchema from "@/src/schemas/update-recipe.schema";
 import { IRecipe } from "@/src/types";
+import {
+  useCreateGroupRecipe,
+  useUpdateGroupRecipe,
+} from "@/src/hooks/group.hook";
 
 const HomePageCreatePostModal = ({
   isOpen,
@@ -39,6 +43,7 @@ const HomePageCreatePostModal = ({
   singleRecipeData,
   setRevalidate,
   setRevalidateProfile,
+  groupId,
 }: {
   isOpen: boolean;
   setIsOpen: any;
@@ -47,6 +52,7 @@ const HomePageCreatePostModal = ({
   singleRecipeData?: IRecipe;
   setRevalidate?: Dispatch<SetStateAction<boolean>>;
   setRevalidateProfile?: Dispatch<SetStateAction<boolean>>;
+  groupId?: string;
 }) => {
   const { onOpen, onOpenChange } = useDisclosure();
   const { user, isLoading } = useUser();
@@ -63,6 +69,11 @@ const HomePageCreatePostModal = ({
     singleRecipeData?.instructions! || ""
   );
   const { mutate: handleUpdateRecipe } = useUpdateRecipe(user?.email!);
+  const { mutate: handleUpdateGroupRecipe } = useUpdateGroupRecipe(
+    user?.email!
+  );
+  const { mutate: handleCreateGroupRecipe, isPending: isGroupPending } =
+    useCreateGroupRecipe(user?.email!);
 
   useEffect(() => {
     if (singleRecipeData) {
@@ -133,10 +144,29 @@ const HomePageCreatePostModal = ({
       contentType: user?.membership === "basic" ? "free" : data.contentType,
     };
 
-    formData.append("data", JSON.stringify(recipeData));
-
     if (!id) {
-      handleCreateRecipe(formData);
+      if (!id && !groupId) {
+        formData.append("data", JSON.stringify(recipeData));
+        handleCreateRecipe(formData);
+      }
+
+      if (!id && groupId) {
+        const recipeData = {
+          ...data,
+          image: " ",
+          instructions: instructionsWithoutImages,
+          user: user?._id,
+          contentType: user?.membership === "basic" ? "free" : data.contentType,
+        };
+        formData.append("data", JSON.stringify(recipeData));
+
+        const groupPost = {
+          groupId,
+          data: formData,
+        };
+        handleCreateGroupRecipe(groupPost);
+      }
+
       if (setRevalidate) {
         setRevalidate(true);
       }
@@ -145,7 +175,7 @@ const HomePageCreatePostModal = ({
       }
     }
 
-    if (id) {
+    if (id && !groupId) {
       const updatedData = {
         id,
         data: {
@@ -160,6 +190,30 @@ const HomePageCreatePostModal = ({
       setInstructions(finalInstructions);
 
       handleUpdateRecipe(updatedData);
+
+      if (setRevalidate) {
+        setRevalidate(true);
+      }
+      if (setRevalidateProfile) {
+        setRevalidateProfile(true);
+      }
+    }
+
+    if (id && groupId) {
+      const updatedData = {
+        groupId,
+        recipeId: id,
+        data: {
+          title: recipeTitle,
+          tags: tags,
+          contentType: data.contentType
+            ? data.contentType
+            : singleRecipeData?.contentType,
+          instructions: finalInstructions,
+        },
+      };
+      handleUpdateGroupRecipe(updatedData);
+
       if (setRevalidate) {
         setRevalidate(true);
       }

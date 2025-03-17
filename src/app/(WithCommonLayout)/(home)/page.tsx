@@ -9,7 +9,7 @@ const Home = async () => {
 
   return (
     <div className="container mx-auto max-w-screen-2xl pt-4 px-6 flex-grow min-h-screen mt-12 lg:mt-16">
-      <HomePageCard recipe={allRecipe} />
+      <HomePageCard recipe={allRecipe?.result} />
       {/* <RecipeFeedCard recipe={allRecipe} tags={allTag} /> */}
     </div>
   );

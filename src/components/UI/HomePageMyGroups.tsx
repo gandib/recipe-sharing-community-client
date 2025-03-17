@@ -66,7 +66,7 @@ const HomePageMyGroups = () => {
               </p>
               <button
                 onClick={() => router.push(`/groups?groupId=${group._id}`)}
-                className="text-primary-500 underline text-tiny cursor-pointer"
+                className="text-primary-500 hover:text-primary-400 underline text-tiny cursor-pointer"
               >
                 view feed
               </button>

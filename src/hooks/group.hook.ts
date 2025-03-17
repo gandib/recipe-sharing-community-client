@@ -101,7 +101,7 @@ export const useGetAllMyGroupRecipe = (email: string) => {
 export const useDeleteGroupRecipe = (email: string) => {
   const queryClient = useQueryClient();
 
-  return useMutation<any, Error, string>({
+  return useMutation<any, Error, FieldValues>({
     mutationFn: async (recipeData) => await deleteGroupRecipe(recipeData),
 
     onSuccess(data, recipeId, context) {

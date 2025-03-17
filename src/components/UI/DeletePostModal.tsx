@@ -1,6 +1,7 @@
 "use client";
 
 import { useUser } from "@/src/context/user.provider";
+import { useDeleteGroupRecipe } from "@/src/hooks/group.hook";
 import { useDeleteRecipe } from "@/src/hooks/recipe.hook";
 import {
   Button,
@@ -17,11 +18,13 @@ const DeletePostModal = ({
   isOpen,
   setIsOpen,
   setRevalidateProfile,
+  groupId,
 }: {
   id: string;
   isOpen: boolean;
   setIsOpen: any;
   setRevalidateProfile?: Dispatch<SetStateAction<boolean>>;
+  groupId?: string;
 }) => {
   const { user, isLoading } = useUser();
   const {
@@ -29,10 +32,21 @@ const DeletePostModal = ({
     isPending,
     isSuccess,
   } = useDeleteRecipe(user?.email!);
+  const { mutate: deleteGroupRecipe, isPending: isGroupRecipePending } =
+    useDeleteGroupRecipe(user?.email!);
 
   const handleDelete = async () => {
     try {
-      await deleteRecipe(id);
+      if (!groupId) {
+        await deleteRecipe(id);
+      }
+      if (groupId) {
+        const deletedData = {
+          groupId,
+          recipeId: id,
+        };
+        await deleteGroupRecipe(deletedData);
+      }
       setRevalidateProfile?.((prev) => !prev);
       setIsOpen(false);
     } catch (error) {
@@ -41,13 +55,13 @@ const DeletePostModal = ({
   };
   const { onOpen, onOpenChange } = useDisclosure();
 
-  if (isLoading || isPending) {
+  if (isLoading || isPending || isGroupRecipePending) {
     <p>Loading...</p>;
   }
   return (
     <div>
-      <Button onPress={onOpen}>Open Modal</Button>
-      <Modal size="xs" isOpen={isOpen} onOpenChange={onOpenChange}>
+      {/* <Button onPress={onOpen}>Open Modal</Button> */}
+      <Modal size="xs" isOpen={isOpen} onOpenChange={setIsOpen}>
         <ModalContent className="w-full">
           {(onClose) => (
             <>

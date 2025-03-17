@@ -25,7 +25,7 @@ const ShareModal = ({
   return (
     <div>
       {/* <Button onPress={onOpen}>Open Modal</Button> */}
-      <Modal size="xs" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal size="xs" isOpen={isOpen} onOpenChange={setIsOpen}>
         <ModalContent className="w-full">
           {(onClose) => (
             <>
