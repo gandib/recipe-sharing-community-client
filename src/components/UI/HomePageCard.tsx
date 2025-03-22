@@ -4,7 +4,7 @@ import HomePageRecentPost from "./HomePageRecentPost";
 import HomePageCreatePost from "./HomePageCreatePost";
 import HomePageMyGroups from "./HomePageMyGroups";
 import HomePageFollowing from "./HomePageFollowing";
-import { IRecipe } from "@/src/types";
+import { IRecipe, TGroupMeta } from "@/src/types";
 import HomeLeftSidebar from "./HomeLeftSidebar";
 import { Input, Spinner } from "@nextui-org/react";
 import { FieldValues, useForm } from "react-hook-form";
@@ -14,7 +14,13 @@ import { getAllRecipes } from "@/src/services/Recipe";
 import { useEffect, useState } from "react";
 import { SearchIcon } from "lucide-react";
 
-const HomePageCard = ({ recipe }: { recipe: IRecipe[] }) => {
+const HomePageCard = ({
+  recipe,
+  allGroups,
+}: {
+  recipe: IRecipe[];
+  allGroups: TGroupMeta;
+}) => {
   const [recipeData, setRecipeData] = useState<IRecipe[]>(recipe);
   const { register, handleSubmit, watch, setValue } = useForm();
   const searchText = useDebounce(watch("search"));
@@ -87,7 +93,7 @@ const HomePageCard = ({ recipe }: { recipe: IRecipe[] }) => {
 
       <div className="hidden md:flex md:col-span-1 mt-4 lg:mt-0 flex-col gap-4">
         {/* my groups */}
-        <HomePageMyGroups />
+        <HomePageMyGroups allGroups={allGroups} />
 
         {/* following */}
         <HomePageFollowing />

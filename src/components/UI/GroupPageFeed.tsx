@@ -11,7 +11,7 @@ import { useUser } from "@/src/context/user.provider";
 import { useGetUser, useUpdateUnfollowing } from "@/src/hooks/user.hook";
 import { getAllGroups, getAllMyGroups } from "@/src/services/GroupService";
 import { getAllMyRecipes, getAllRecipes } from "@/src/services/Recipe";
-import { IGroup, IRecipe, IUser, TGroupMeta } from "@/src/types";
+import { IGroup, IRecipe, IUser, TGroupMeta, TRecipeMeta } from "@/src/types";
 import {
   Avatar,
   Button,
@@ -24,14 +24,24 @@ import { useEffect, useState } from "react";
 import GroupLeftSidebar from "./GroupLeftSidebar";
 import GroupManagementCard from "./GroupManagementCard";
 
-export default function GroupsPageFeed({ groupId }: { groupId?: string }) {
+export default function GroupsPageFeed({
+  groupId,
+  myGroups,
+  recipes,
+  groups,
+}: {
+  groupId?: string;
+  myGroups: TGroupMeta;
+  recipes: TRecipeMeta;
+  groups: TGroupMeta;
+}) {
   const [activeTab, setActiveTab] = useState("Timeline");
   const { user: userData, isLoading } = useUser();
   const { data: user, isPending } = useGetUser(userData?.email!);
   const { mutate: unFollowing } = useUpdateUnfollowing(user?.email!);
   const [revalidateProfile, setRevalidateProfile] = useState(false);
   const [allMyGroups, setAllMyGroups] = useState<TGroupMeta>();
-  const [allGroups, setAllGroups] = useState<TGroupMeta>();
+  const [allGroups, setAllGroups] = useState<TGroupMeta>(groups);
   const [myGroupImg, setMyGroupImg] = useState<string>(
     allMyGroups?.result[0]?.image[0] || ""
   );
@@ -42,7 +52,7 @@ export default function GroupsPageFeed({ groupId }: { groupId?: string }) {
     allMyGroups?.result[0]!
   );
   const [recipe, setRecipe] = useState<IRecipe[]>(allGroups?.result[0]?.posts!);
-  const [allRecipe, setAllRecipe] = useState();
+  const [allRecipe, setAllRecipe] = useState(recipes?.result);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,6 +74,7 @@ export default function GroupsPageFeed({ groupId }: { groupId?: string }) {
         const { data: myGroups } = await getAllMyGroups([
           { name: "sort", value: "-createdAt" },
         ]);
+
         if (myGroups?.result && myGroups?.result?.length > 0) {
           setAllMyGroups(myGroups);
           setMyGroupName(myGroups.result[0]?.name || "");
@@ -103,7 +114,39 @@ export default function GroupsPageFeed({ groupId }: { groupId?: string }) {
     }
 
     fetchData();
-  }, [revalidateProfile, groupId]);
+  }, [revalidateProfile]);
+
+  useEffect(() => {
+    if (myGroups?.result && myGroups?.result?.length > 0) {
+      setAllMyGroups(myGroups);
+      setMyGroupName(myGroups.result[0]?.name || "");
+      setMyGroupImg(myGroups.result[0]?.image?.[0] || "");
+      setMyCurrentGroup(myGroups.result[0]);
+      setRecipe(myGroups.result[0]?.posts || []);
+    } else {
+      console.warn("User is not part of any groups:", myGroups);
+      setAllMyGroups({
+        meta: { page: 0, limit: 0, total: 0, totalPage: 0 },
+        result: [],
+      });
+      setRecipe([]);
+    }
+
+    if (groupId) {
+      const selectedGroup = myGroups?.result?.find(
+        (group: IGroup) => group?._id === groupId
+      );
+
+      if (selectedGroup) {
+        setMyGroupName(selectedGroup.name || "");
+        setMyGroupImg(selectedGroup.image?.[0] || "");
+        setMyCurrentGroup(selectedGroup);
+        setRecipe(selectedGroup.posts || []);
+      } else {
+        console.warn("Group not found for ID:", groupId);
+      }
+    }
+  }, [groupId]);
 
   const handleUnFollowing = (followingId: string) => {
     const unfollowingData = {
@@ -387,7 +430,7 @@ export default function GroupsPageFeed({ groupId }: { groupId?: string }) {
         </div>
 
         <div className="hidden flex-col md:flex md:col-span-1 p-4 w-full gap-4">
-          <HomePageMyGroups />
+          <HomePageMyGroups allGroups={myGroups} />
           <div className="sticky top-20">
             <HomePageRecentPost
               title="My Recent Posts"

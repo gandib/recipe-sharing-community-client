@@ -1,43 +1,13 @@
 "use client";
 
-import { getAllMyGroups } from "@/src/services/GroupService";
 import { IGroup, TGroupMeta } from "@/src/types";
 import { Avatar } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const HomePageMyGroups = () => {
+const HomePageMyGroups = ({ allGroups }: { allGroups: TGroupMeta }) => {
   const router = useRouter();
-  const [allMyGroups, setAllMyGroups] = useState<TGroupMeta>();
-  const [myGroupimg, setMyGroupImg] = useState<string>(
-    allMyGroups?.result[0]?.image[0] || ""
-  );
-  const [myGroupName, setMyGroupName] = useState<string>(
-    allMyGroups?.result[0]?.name || ""
-  );
-  const [myCurrentGroup, setMyCurrentGroup] = useState<IGroup>(
-    allMyGroups?.result[0]!
-  );
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data: allGroups } = await getAllMyGroups([
-          { name: "sort", value: "-createdAt" },
-        ]);
-        setAllMyGroups(allGroups);
-        if (allGroups) {
-          setMyGroupName(allGroups?.result[0]?.name);
-          setMyGroupImg(allGroups?.result[0]?.image[0]);
-          setMyCurrentGroup(allGroups?.result[0]);
-        }
-      } catch (error) {
-        console.log("Recipe fetch failed", error);
-      }
-    };
-
-    fetchData();
-  }, [myGroupName, myGroupimg]);
+  const [allMyGroups, setAllMyGroups] = useState<TGroupMeta>(allGroups);
 
   return (
     <div className="bg-default-100 rounded p-6 ">
