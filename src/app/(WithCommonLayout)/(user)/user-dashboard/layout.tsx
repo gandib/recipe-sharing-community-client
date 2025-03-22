@@ -1,10 +1,7 @@
-import AdminSidebar from "@/src/components/UI/AdminSidebar";
-import Container from "@/src/components/UI/Container";
-import ProfileSidebar from "@/src/components/UI/ProfileSidebar";
+import React from "react";
 import SidebarMenu from "@/src/components/UI/SidebarMenu";
 import UserSidebar from "@/src/components/UI/UserSidebar";
 import { userLinks } from "@/src/components/UI/UserSidebar/constant";
-import React from "react";
 
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
   return (

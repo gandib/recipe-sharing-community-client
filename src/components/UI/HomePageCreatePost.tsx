@@ -1,8 +1,8 @@
 "use client";
 
 import { ImageIcon, Smile } from "lucide-react";
-import HomePageCreatePostModal from "./HomePageCreatePostModal";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import HomePageCreatePostModal from "./HomePageCreatePostModal";
 
 const HomePageCreatePost = ({
   setRevalidateProfile,
@@ -28,12 +28,12 @@ const HomePageCreatePost = ({
       />
       {isOpen && (
         <HomePageCreatePostModal
-          title="Create Recipe"
+          groupId={groupId}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           setRevalidate={setRevalidate}
           setRevalidateProfile={setRevalidateProfile}
-          groupId={groupId}
+          title="Create Recipe"
         />
       )}
       <div className="flex items-center gap-8">

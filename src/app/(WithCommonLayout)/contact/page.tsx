@@ -57,59 +57,59 @@ const ContactUs = () => {
                 <div className="mb-6">
                   <Input
                     fullWidth
+                    required
+                    className="w-full"
                     label="Name"
-                    placeholder="Enter your name"
                     name="name"
+                    placeholder="Enter your name"
                     value={formData.name}
                     onChange={handleChange}
-                    required
-                    className="w-full"
                   />
                 </div>
 
                 <div className="mb-6">
                   <Input
                     fullWidth
-                    type="email"
+                    required
+                    className="w-full"
                     label="Email"
-                    placeholder="Enter your email"
                     name="email"
+                    placeholder="Enter your email"
+                    type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    required
-                    className="w-full"
                   />
                 </div>
 
                 <div className="mb-6">
                   <Input
                     fullWidth
-                    label="Subject"
-                    placeholder="Enter the subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
                     required
                     className="w-full"
+                    label="Subject"
+                    name="subject"
+                    placeholder="Enter the subject"
+                    value={formData.subject}
+                    onChange={handleChange}
                   />
                 </div>
 
                 <div className="mb-6">
                   <Textarea
                     fullWidth
-                    label="Message"
-                    placeholder="Enter your message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
                     required
                     className="w-full"
+                    label="Message"
+                    name="message"
+                    placeholder="Enter your message"
+                    value={formData.message}
+                    onChange={handleChange}
                   />
                 </div>
 
                 <Button
-                  type="submit"
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                  type="submit"
                 >
                   Send Message
                 </Button>

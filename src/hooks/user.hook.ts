@@ -1,9 +1,4 @@
-import {
-  useMutation,
-  useQueries,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import {
@@ -17,7 +12,6 @@ import {
   updateUser,
   updateUserStatus,
 } from "../services/UserService";
-import next from "next";
 
 export const useUpdateUser = (email: string) => {
   const queryClient = useQueryClient();

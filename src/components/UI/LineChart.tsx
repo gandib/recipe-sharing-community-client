@@ -1,7 +1,5 @@
 "use client";
 
-import { IUser } from "@/src/types";
-import moment from "moment";
 import {
   CartesianGrid,
   Line,
@@ -10,6 +8,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { IUser } from "@/src/types";
 
 const LineChartComponent = ({ data }: { data: { data: IUser[] } }) => {
   const datas = data?.data?.map((user: IUser) => ({
@@ -20,16 +19,16 @@ const LineChartComponent = ({ data }: { data: { data: IUser[] } }) => {
   return (
     <div>
       <LineChart
-        width={400}
-        height={350}
         data={datas}
+        height={350}
         margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+        width={400}
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="date" />
         <YAxis />
         <Tooltip />
-        <Line type="monotone" dataKey="amount" stroke="#8884d8" />
+        <Line dataKey="amount" stroke="#8884d8" type="monotone" />
       </LineChart>
     </div>
   );

@@ -1,4 +1,3 @@
-import { IRecipe } from "@/src/types";
 import {
   Card as NextUiCard,
   CardHeader,
@@ -6,13 +5,14 @@ import {
   CardBody,
 } from "@nextui-org/react";
 import Image from "next/image";
+import { Dispatch, SetStateAction } from "react";
 import RecipeDeleteButton from "./RecipeDeleteButton";
 import RecipeUpdateButton from "./RecipeUpdateButton";
 import UpvoteButton from "./UpvoteButton";
 import DownvoteButton from "./DownvoteButton";
 import FollowUnFollowCard from "./FollowUnFollowCard";
 import SeeDetailButton from "./SeeDetailButton";
-import { Dispatch, SetStateAction } from "react";
+import { IRecipe } from "@/src/types";
 
 const RecipeDisplayCard = ({
   recipe,
@@ -34,10 +34,10 @@ const RecipeDisplayCard = ({
             <CardHeader className=" h-[470px] sm:h-[500px] md:h-[600px] lg:h-[550px] flex-col items-start">
               {data?.image && data?.image?.length > 0 && (
                 <Image
-                  width={500}
+                  alt="Recipe image"
                   height={200}
                   src={data?.image[0]}
-                  alt="Recipe image"
+                  width={500}
                 />
               )}
               <div className=" w-full">
@@ -54,7 +54,7 @@ const RecipeDisplayCard = ({
                       (
                         data.rating.reduce(
                           (pre, next) => pre + next.rating,
-                          0
+                          0,
                         ) / data.rating.length
                       ).toFixed(1)}
                   </h4>
@@ -66,12 +66,12 @@ const RecipeDisplayCard = ({
               </div>
               <div className="my-2 rounded  p-1 lg:text-lg font-medium flex justify-center ">
                 <div
-                  className="instructions"
                   dangerouslySetInnerHTML={{
                     __html:
                       data.instructions.slice(0, 200) +
                       `${data.instructions.length > 200 ? "..." : ""}`,
                   }}
+                  className="instructions"
                 />
               </div>
             </CardHeader>

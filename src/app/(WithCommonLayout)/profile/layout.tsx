@@ -1,7 +1,3 @@
-import Container from "@/src/components/UI/Container";
-import ProfileSidebar from "@/src/components/UI/ProfileSidebar";
-import { profileLinks } from "@/src/components/UI/ProfileSidebar/constant";
-import SidebarMenu from "@/src/components/UI/SidebarMenu";
 import React from "react";
 
 const ProfileLayout = ({ children }: { children: React.ReactNode }) => {

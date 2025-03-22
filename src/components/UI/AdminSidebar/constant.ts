@@ -1,5 +1,4 @@
 "use client";
-import { TLinkItem } from "@/src/types";
 import {
   CircleCheckBig,
   LayoutDashboard,
@@ -8,6 +7,7 @@ import {
   UserRoundPen,
   UserRoundPlus,
 } from "lucide-react";
+import { TLinkItem } from "@/src/types";
 
 export const adminLinks: TLinkItem[] = [
   { href: "/admin-dashboard", label: "Dashboard", icon: LayoutDashboard },

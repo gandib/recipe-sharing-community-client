@@ -1,8 +1,8 @@
 "use client";
 
-import { IRecipe } from "@/src/types";
-import HomePageDisplayCard from "./HomePageDisplayCard";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import HomePageDisplayCard from "./HomePageDisplayCard";
+import { IRecipe } from "@/src/types";
 
 const HomePageFeedCard = ({
   recipe,
@@ -18,6 +18,7 @@ const HomePageFeedCard = ({
   const [revalidate, setRevalidate] = useState(false);
 
   useEffect(() => {}, [revalidate, revalidateProfile]);
+
   return (
     <div className="grid gap-4">
       {recipe &&

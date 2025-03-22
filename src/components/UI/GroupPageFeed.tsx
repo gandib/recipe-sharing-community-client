@@ -1,17 +1,5 @@
 "use client";
 
-import ChangePassword from "@/src/components/UI/ChangePassword";
-import HomePageCreatePost from "@/src/components/UI/HomePageCreatePost";
-import HomePageFeedCard from "@/src/components/UI/HomePageFeedCard";
-import HomePageMyGroups from "@/src/components/UI/HomePageMyGroups";
-import HomePageRecentPost from "@/src/components/UI/HomePageRecentPost";
-import MembershipCard from "@/src/components/UI/MembershipCard";
-import UpdateProfile from "@/src/components/UI/UpdateProfile";
-import { useUser } from "@/src/context/user.provider";
-import { useGetUser, useUpdateUnfollowing } from "@/src/hooks/user.hook";
-import { getAllGroups, getAllMyGroups } from "@/src/services/GroupService";
-import { getAllMyRecipes, getAllRecipes } from "@/src/services/Recipe";
-import { IGroup, IRecipe, IUser, TGroupMeta, TRecipeMeta } from "@/src/types";
 import {
   Avatar,
   Button,
@@ -23,6 +11,15 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import GroupLeftSidebar from "./GroupLeftSidebar";
 import GroupManagementCard from "./GroupManagementCard";
+import HomePageCreatePost from "@/src/components/UI/HomePageCreatePost";
+import HomePageFeedCard from "@/src/components/UI/HomePageFeedCard";
+import HomePageMyGroups from "@/src/components/UI/HomePageMyGroups";
+import HomePageRecentPost from "@/src/components/UI/HomePageRecentPost";
+import { useUser } from "@/src/context/user.provider";
+import { useGetUser, useUpdateUnfollowing } from "@/src/hooks/user.hook";
+import { getAllGroups, getAllMyGroups } from "@/src/services/GroupService";
+import { getAllRecipes } from "@/src/services/Recipe";
+import { IGroup, IRecipe, IUser, TGroupMeta, TRecipeMeta } from "@/src/types";
 
 export default function GroupsPageFeed({
   groupId,
@@ -43,13 +40,13 @@ export default function GroupsPageFeed({
   const [allMyGroups, setAllMyGroups] = useState<TGroupMeta>();
   const [allGroups, setAllGroups] = useState<TGroupMeta>(groups);
   const [myGroupImg, setMyGroupImg] = useState<string>(
-    allMyGroups?.result[0]?.image[0] || ""
+    allMyGroups?.result[0]?.image[0] || "",
   );
   const [myGroupName, setMyGroupName] = useState<string>(
-    allMyGroups?.result[0]?.name || ""
+    allMyGroups?.result[0]?.name || "",
   );
   const [myCurrentGroup, setMyCurrentGroup] = useState<IGroup>(
-    allMyGroups?.result[0]!
+    allMyGroups?.result[0]!,
   );
   const [recipe, setRecipe] = useState<IRecipe[]>(allGroups?.result[0]?.posts!);
   const [allRecipe, setAllRecipe] = useState(recipes?.result);
@@ -60,11 +57,13 @@ export default function GroupsPageFeed({
         const { data: recipes } = await getAllRecipes([
           { name: "sort", value: "-createdAt" },
         ]);
+
         setAllRecipe(recipes?.result || []);
 
         const { data: groups } = await getAllGroups([
           { name: "sort", value: "-createdAt" },
         ]);
+
         if (groups) {
           setAllGroups(groups);
         } else {
@@ -92,7 +91,7 @@ export default function GroupsPageFeed({
 
         if (groupId) {
           const selectedGroup = myGroups?.result?.find(
-            (group: IGroup) => group?._id === groupId
+            (group: IGroup) => group?._id === groupId,
           );
 
           if (selectedGroup) {
@@ -134,7 +133,7 @@ export default function GroupsPageFeed({
 
     if (groupId) {
       const selectedGroup = myGroups?.result?.find(
-        (group: IGroup) => group?._id === groupId
+        (group: IGroup) => group?._id === groupId,
       );
 
       if (selectedGroup) {
@@ -167,7 +166,7 @@ export default function GroupsPageFeed({
     Array.isArray(recipe) && recipe.length > 0
       ? [...recipe].sort(
           (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         )
       : [];
 
@@ -187,19 +186,19 @@ export default function GroupsPageFeed({
             <div className="">
               {/* create new post section */}
               <HomePageCreatePost
-                setRevalidateProfile={setRevalidateProfile}
-                revalidateProfile={revalidateProfile}
                 groupId={myCurrentGroup?._id}
+                revalidateProfile={revalidateProfile}
+                setRevalidateProfile={setRevalidateProfile}
               />
               <div className=" mb-8">
                 {!recipe?.length && (
                   <p>No posts found related to this group!</p>
                 )}
                 <HomePageFeedCard
-                  recipe={sortedRecipe}
                   groupId={myCurrentGroup?._id!}
-                  setRevalidateProfile={setRevalidateProfile}
+                  recipe={sortedRecipe}
                   revalidateProfile={revalidateProfile}
+                  setRevalidateProfile={setRevalidateProfile}
                 />
               </div>
             </div>
@@ -212,28 +211,28 @@ export default function GroupsPageFeed({
               {myCurrentGroup?.members?.map(
                 (following: IUser, index: number) => (
                   <Card
-                    className="shadow md:shadow-md w-full h-48 flex flex-col justify-center items-center"
                     key={index}
+                    className="shadow md:shadow-md w-full h-48 flex flex-col justify-center items-center"
                   >
                     <div className="h-[100px] w-[100px] ">
                       <Image
-                        src={following.image}
-                        width={100}
-                        height={100}
                         alt="User"
                         className="h-full w-full border-2 border-primary-500 rounded-lg"
+                        height={100}
+                        src={following.image}
+                        width={100}
                       />
                     </div>
                     <p className="my-2 font-semibold">{following.name}</p>
                     <Button
-                      size="sm"
                       className="text-white bg-primary-500 py-3 my-2 font-semibold"
+                      size="sm"
                       onPress={() => handleUnFollowing(following._id)}
                     >
                       Unfollow
                     </Button>
                   </Card>
-                )
+                ),
               )}
             </div>
           </div>
@@ -266,7 +265,7 @@ export default function GroupsPageFeed({
         return (
           <div className="container mx-auto max-w-7xl pt-4 flex-grow min-h-screen">
             <div className="text-xl">
-              <GroupManagementCard title="Update" group={myCurrentGroup} />
+              <GroupManagementCard group={myCurrentGroup} title="Update" />
             </div>
           </div>
         );
@@ -277,25 +276,25 @@ export default function GroupsPageFeed({
             <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-4">
               {allGroups?.result?.map((group: IGroup, index: number) => (
                 <Card
-                  className="shadow md:shadow-md rounded-sm border w-full h-52 flex flex-col justify-center items-center"
                   key={index}
+                  className="shadow md:shadow-md rounded-sm border w-full h-52 flex flex-col justify-center items-center"
                 >
                   <div className="h-[120px] w-full ">
                     <Image
-                      src={group.image[0]}
-                      width={100}
-                      height={100}
                       alt="User"
                       className="h-full w-full border-primary-500 "
+                      height={100}
+                      src={group.image[0]}
+                      width={100}
                     />
                   </div>
                   <p className="my-2 font-semibold">{group.name}</p>
                   <Button
-                    size="sm"
                     className=" py-3 my-2 font-semibold"
-                    onPress={() => handleUnFollowing(group._id)}
                     color="primary"
+                    size="sm"
                     variant="flat"
+                    onPress={() => handleUnFollowing(group._id)}
                   >
                     Join Group
                   </Button>
@@ -323,7 +322,7 @@ export default function GroupsPageFeed({
         <div className="hidden flex-col lg:flex lg:col-span-1 p-4 w-full gap-4">
           <GroupLeftSidebar setActiveTab={setActiveTab} />
           <div className="sticky top-20">
-            <HomePageRecentPost title="Latest Recipes" recipes={allRecipe!} />
+            <HomePageRecentPost recipes={allRecipe!} title="Latest Recipes" />
           </div>
         </div>
 
@@ -333,11 +332,11 @@ export default function GroupsPageFeed({
               <div>
                 <div className="flex gap-8">
                   <Image
-                    width={100}
-                    height={100}
-                    src={myGroupImg}
                     alt="group"
                     className="w-20 h-20 object-cover rounded-full"
+                    height={100}
+                    src={myGroupImg}
+                    width={100}
                   />
                   <div>
                     <h2 className="text-xl font-bold mt-2">{myGroupName}</h2>
@@ -356,18 +355,18 @@ export default function GroupsPageFeed({
                     ?.slice(0, 3)
                     ?.map((member: IUser) => (
                       <Avatar
-                        className="ml-[-10px] "
                         key={member?._id}
-                        src={member?.image}
                         isBordered
+                        className="ml-[-10px] "
+                        src={member?.image}
                       />
                     ))}
                   {myCurrentGroup?.members?.length > 3 && (
                     <div className="relative flex items-center justify-center ml-[-10px] mb-1.5">
                       <Avatar
+                        isBordered
                         className="bg-primary-500 text-primary-500"
                         src={""} // Ensure a valid src or use a fallback
-                        isBordered
                       />
                       <p className="absolute   text-white text-xs font-semibold px-2 py-1 rounded-full">
                         +{myCurrentGroup && myCurrentGroup?.members?.length - 3}
@@ -411,12 +410,12 @@ export default function GroupsPageFeed({
                   {["Timeline", "Members", "Events", "About"].map((tab) => (
                     <button
                       key={tab}
-                      onClick={() => setActiveTab(tab)}
                       className={`px-4 py-2  font-semibold text-base ${
                         activeTab === tab
                           ? "text-secondary-600 font-bold bg-white rounded-se-3xl"
                           : "text-primary-500"
                       }`}
+                      onClick={() => setActiveTab(tab)}
                     >
                       {tab}
                     </button>
@@ -433,8 +432,8 @@ export default function GroupsPageFeed({
           <HomePageMyGroups allGroups={myGroups} />
           <div className="sticky top-20">
             <HomePageRecentPost
-              title="My Recent Posts"
               recipes={sortedRecipe}
+              title="My Recent Posts"
             />
           </div>
         </div>

@@ -8,9 +8,9 @@ const SeeDetailButton = ({ id }: { id: string }) => {
 
   return (
     <Button
+      className=""
       size="sm"
       onClick={() => router.push(`/profile/${id}`)}
-      className=""
     >
       See Detail
     </Button>

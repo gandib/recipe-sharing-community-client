@@ -1,10 +1,9 @@
 "use client";
 
-import { useUser } from "@/src/context/user.provider";
-import { useMembershipPayment } from "@/src/hooks/payment.hook";
 import { Button } from "@nextui-org/react";
-import { format } from "date-fns";
 import moment from "moment";
+import { useMembershipPayment } from "@/src/hooks/payment.hook";
+import { useUser } from "@/src/context/user.provider";
 
 const PaymentButton = ({ price }: { price: number }) => {
   const { user, isLoading } = useUser();
@@ -16,6 +15,7 @@ const PaymentButton = ({ price }: { price: number }) => {
 
   const handlePayment = () => {
     let validity;
+
     if (price === 199) {
       validity = moment(new Date(Date.now() + 86400000 * 30)).format();
     }
@@ -28,6 +28,7 @@ const PaymentButton = ({ price }: { price: number }) => {
       validity: validity,
       transactionId: `TXN-${Date.now()}`,
     };
+
     handleMembershipPayment(paymentData);
   };
 

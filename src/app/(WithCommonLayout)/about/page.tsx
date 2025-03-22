@@ -1,5 +1,4 @@
 "use client";
-import Container from "@/src/components/UI/Container";
 import { Card } from "@nextui-org/card";
 import { Avatar } from "@nextui-org/avatar";
 import "../../../../src/styles/animation.css";
@@ -15,6 +14,7 @@ const AboutUs = () => {
       setIsVisible(false);
     };
   }, []);
+
   return (
     <div
       className={`transition-opacity duration-500 ${isVisible ? "fade-enter-active" : "fade-enter"}`}
@@ -54,9 +54,9 @@ const AboutUs = () => {
             <div>
               <Card className="bg-white shadow-lg p-4 text-center">
                 <Avatar
-                  src="/team-member-1.jpg"
-                  size="lg"
                   className="mx-auto mb-4"
+                  size="lg"
+                  src="/team-member-1.jpg"
                 />
                 <h4 className="font-semibold text-gray-800">John Doe</h4>
                 <h4 className="text-gray-600">Founder & CEO</h4>
@@ -68,9 +68,9 @@ const AboutUs = () => {
             <div>
               <Card className="bg-white shadow-lg p-4 text-center">
                 <Avatar
-                  src="/team-member-1.jpg"
-                  size="lg"
                   className="mx-auto mb-4"
+                  size="lg"
+                  src="/team-member-1.jpg"
                 />
                 <h4 className="font-semibold text-gray-800">Robert Brost</h4>
                 <h4 className="text-gray-600">Manager</h4>

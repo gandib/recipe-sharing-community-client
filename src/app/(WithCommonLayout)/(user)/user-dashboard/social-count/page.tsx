@@ -1,7 +1,4 @@
 "use client";
-import { useUser } from "@/src/context/user.provider";
-import { useGetUser, useUpdateUnfollowing } from "@/src/hooks/user.hook";
-import { IUser } from "@/src/types";
 import {
   Table,
   TableBody,
@@ -10,6 +7,9 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
+import { useUser } from "@/src/context/user.provider";
+import { useGetUser, useUpdateUnfollowing } from "@/src/hooks/user.hook";
+import { IUser } from "@/src/types";
 
 const SocialConnectivity = () => {
   const { user, isLoading } = useUser();

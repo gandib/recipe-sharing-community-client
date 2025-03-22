@@ -1,12 +1,12 @@
 "use server";
 
-import envConfig from "@/src/config/envConfig";
-import axiosInstance from "@/src/lib/AxiosInstance";
-import { queryParams } from "@/src/types";
 import axios from "axios";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
+import { queryParams } from "@/src/types";
+import axiosInstance from "@/src/lib/AxiosInstance";
+import envConfig from "@/src/config/envConfig";
 
 export const createRecipe = async (recipeData: FieldValues) => {
   try {
@@ -14,6 +14,7 @@ export const createRecipe = async (recipeData: FieldValues) => {
       `/recipe/create-recipe`,
       recipeData
     );
+
     revalidateTag("RECIPE");
 
     return data;
@@ -29,6 +30,7 @@ export const createRecipe = async (recipeData: FieldValues) => {
 export const getAllRecipe = async (query: queryParams[]) => {
   try {
     const params = new URLSearchParams();
+
     if (query) {
       query.forEach((item) => {
         params.append(item.name, item.value as string);
@@ -50,6 +52,7 @@ export const getAllRecipe = async (query: queryParams[]) => {
 
 export const getAllRecipes = async (query: queryParams[]) => {
   const params = new URLSearchParams();
+
   if (query) {
     query.forEach((item) => {
       params.append(item.name, item.value as string);
@@ -104,6 +107,7 @@ export const getAllRecipeForStatusChange = async () => {
 export const getAllMyRecipe = async (query: queryParams[]) => {
   try {
     const params = new URLSearchParams();
+
     if (query) {
       query.forEach((item) => {
         params.append(item.name, item.value as string);
@@ -125,6 +129,7 @@ export const getAllMyRecipe = async (query: queryParams[]) => {
 
 export const getAllMyRecipes = async (query: queryParams[]) => {
   const params = new URLSearchParams();
+
   if (query) {
     query.forEach((item) => {
       params.append(item.name, item.value as string);
@@ -218,6 +223,7 @@ export const getAllTag = async () => {
 export const deleteRecipe = async (recipeData: string) => {
   try {
     const { data } = await axiosInstance.delete(`/recipe/${recipeData}`);
+
     revalidateTag("RECIPE");
 
     return data;
@@ -236,6 +242,7 @@ export const updateRecipe = async (recipeData: FieldValues) => {
       `/recipe/${recipeData.id}`,
       recipeData.data
     );
+
     revalidateTag("RECIPE");
 
     return data;
@@ -280,6 +287,7 @@ export const getSingleRecipe = async (recipeId: string) => {
   if (!res.ok) {
     throw new Error("Failed to fetch data!");
   }
+
   return res.json();
 };
 
@@ -289,6 +297,7 @@ export const updateUpvote = async (upvoteData: FieldValues) => {
       `/recipe/upvote/${upvoteData.id}`,
       upvoteData.data
     );
+
     revalidateTag("RECIPE");
 
     return data;
@@ -307,6 +316,7 @@ export const updateDownvote = async (downvoteData: FieldValues) => {
       `/recipe/downvote/${downvoteData.id}`,
       downvoteData.data
     );
+
     revalidateTag("RECIPE");
 
     return data;
@@ -325,6 +335,7 @@ export const updateRating = async (ratingData: FieldValues) => {
       `/recipe/rating/${ratingData.id}`,
       ratingData.data
     );
+
     revalidateTag("RECIPE");
 
     return data;
@@ -343,6 +354,7 @@ export const updateRecipeComment = async (commentData: FieldValues) => {
       `/recipe/comment/${commentData.id}`,
       commentData.data
     );
+
     revalidateTag("RECIPE");
 
     return data;
@@ -360,6 +372,7 @@ export const deleteRecipeComment = async (commentData: FieldValues) => {
     const { data } = await axiosInstance.delete(
       `/recipe/comment/${commentData.id}?commentId=${commentData.commentId}`
     );
+
     revalidateTag("RECIPE");
 
     return data;
@@ -378,6 +391,7 @@ export const updateRecipeStatus = async (recipeData: FieldValues) => {
       `/recipe/status/${recipeData.id}`,
       recipeData.data
     );
+
     revalidateTag("RECIPE");
 
     return data;

@@ -1,16 +1,17 @@
 "use server";
 
-import axiosInstance from "@/src/lib/AxiosInstance";
 import axios from "axios";
 import { revalidateTag } from "next/cache";
 import { FieldValues } from "react-hook-form";
+import axiosInstance from "@/src/lib/AxiosInstance";
 
 export const updateUser = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.patch(
       `/auth/update-user?id=${userData.id}`,
-      userData.data
+      userData.data,
     );
+
     revalidateTag("USER");
 
     return data;
@@ -27,8 +28,9 @@ export const updateUnfollowing = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.patch(
       `/auth/update-unfollowing?id=${userData.id}`,
-      userData.data
+      userData.data,
     );
+
     revalidateTag("USER");
 
     return data;
@@ -45,8 +47,9 @@ export const updateUserStatus = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.patch(
       `/auth/update-user-status?id=${userData.id}`,
-      userData.data
+      userData.data,
     );
+
     revalidateTag("USER");
 
     return data;
@@ -62,8 +65,9 @@ export const updateUserStatus = async (userData: FieldValues) => {
 export const deleteUser = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.delete(
-      `/auth/delete-user?id=${userData.id}`
+      `/auth/delete-user?id=${userData.id}`,
     );
+
     revalidateTag("USER");
 
     return data;
@@ -80,8 +84,9 @@ export const updateFollowing = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.patch(
       `/auth/update-following?id=${userData.id}`,
-      userData.data
+      userData.data,
     );
+
     revalidateTag("USER");
 
     return data;

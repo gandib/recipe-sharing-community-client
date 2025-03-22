@@ -1,4 +1,3 @@
-import { IRecipe } from "@/src/types";
 import {
   Card as NextUiCard,
   CardHeader,
@@ -6,16 +5,17 @@ import {
   CardBody,
 } from "@nextui-org/react";
 import Image from "next/image";
+import { Button } from "@nextui-org/react";
+import { Dispatch, SetStateAction } from "react";
+import { TwitterIcon } from "../icons";
 import RecipeDeleteButton from "./RecipeDeleteButton";
 import RecipeUpdateButton from "./RecipeUpdateButton";
 import UpvoteButton from "./UpvoteButton";
 import DownvoteButton from "./DownvoteButton";
 import FollowUnFollowCard from "./FollowUnFollowCard";
 import SeeDetailButton from "./SeeDetailButton";
-import { Button } from "@nextui-org/react";
-import { TwitterIcon } from "../icons";
 import { FacebookIcon } from "@/src/assets/icons";
-import { Dispatch, SetStateAction } from "react";
+import { IRecipe } from "@/src/types";
 const RecipeHomeDisplayCard = ({
   recipe,
   user,
@@ -42,10 +42,10 @@ const RecipeHomeDisplayCard = ({
             <CardHeader className="h-[550px] sm:h-[600px] md:h-[550px] lg:h-[550px] flex-col items-start">
               {data?.image && data?.image?.length > 0 && (
                 <Image
-                  width={500}
+                  alt="Recipe image"
                   height={200}
                   src={data?.image[0]}
-                  alt="Recipe image"
+                  width={500}
                 />
               )}
               <div className=" w-full">
@@ -62,7 +62,7 @@ const RecipeHomeDisplayCard = ({
                       (
                         data.rating.reduce(
                           (pre, next) => pre + next.rating,
-                          0
+                          0,
                         ) / data.rating.length
                       ).toFixed(1)}
                   </h4>
@@ -74,12 +74,12 @@ const RecipeHomeDisplayCard = ({
               </div>
               <div className="my-2 rounded  p-1 lg:text-lg font-medium flex justify-center ">
                 <div
-                  className="instructions"
                   dangerouslySetInnerHTML={{
                     __html:
                       data.instructions.slice(0, 200) +
                       `${data.instructions.length > 200 ? "..." : ""}`,
                   }}
+                  className="instructions"
                 />
               </div>
             </CardHeader>
@@ -98,24 +98,24 @@ const RecipeHomeDisplayCard = ({
                   <div className="flex items-center justify-end mx-2">
                     <Button
                       as="a"
-                      href={`https://www.x.com/sharer/sharer.php?u=${encodeURIComponent(`${window.location}/profile/${data?._id}`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className="text-blue-600  flex
                  items-center w-6"
+                      href={`https://www.x.com/sharer/sharer.php?u=${encodeURIComponent(`${window.location}/profile/${data?._id}`)}`}
+                      rel="noopener noreferrer"
                       size="sm"
+                      target="_blank"
                       variant="light"
                     >
                       <TwitterIcon />
                     </Button>
                     <Button
                       as="a"
-                      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${window.location}/profile/${data?._id}`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className="  flex
                  items-center w-6"
+                      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${window.location}/profile/${data?._id}`)}`}
+                      rel="noopener noreferrer"
                       size="sm"
+                      target="_blank"
                       variant="light"
                     >
                       <FacebookIcon />

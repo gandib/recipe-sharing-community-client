@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import { queryParams } from "../types";
@@ -113,7 +113,7 @@ export const useDeleteGroupRecipe = (email: string) => {
 
         // Filter out the deleted recipe by ID
         const updatedRecipes = oldData.result.filter(
-          (recipe: any) => recipe._id !== recipeId
+          (recipe: any) => recipe._id !== recipeId,
         );
 
         // Return updated data

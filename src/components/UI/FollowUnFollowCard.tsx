@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@nextui-org/react";
+import { toast } from "sonner";
 import { useUser } from "@/src/context/user.provider";
 import {
   useGetUser,
@@ -7,8 +9,6 @@ import {
   useUpdateFollowing,
   useUpdateUnfollowing,
 } from "@/src/hooks/user.hook";
-import { Button } from "@nextui-org/react";
-import { toast } from "sonner";
 
 const FollowUnFollowCard = ({ userId }: { userId: string }) => {
   const { user, isLoading } = useUser();
@@ -28,6 +28,7 @@ const FollowUnFollowCard = ({ userId }: { userId: string }) => {
           follower: user?._id,
         },
       };
+
       updateFollower(followData);
     } else {
       const unFollowData = {
@@ -36,6 +37,7 @@ const FollowUnFollowCard = ({ userId }: { userId: string }) => {
           following: userId,
         },
       };
+
       updateUnFollowing(unFollowData);
     }
   };
@@ -54,21 +56,21 @@ const FollowUnFollowCard = ({ userId }: { userId: string }) => {
         {data?.data?._id !== userDataById?.data?._id &&
           userDataById?.data?.name && (
             <Button
+              className="text-green-500 text-sm"
+              size="sm"
+              variant="light"
               onPress={() =>
                 handleFollowUnfollow(
                   data?.data?.following?.some(
-                    (following: any) => following._id === userId
+                    (following: any) => following._id === userId,
                   )
                     ? "following"
-                    : "follow"
+                    : "follow",
                 )
               }
-              size="sm"
-              variant="light"
-              className="text-green-500 text-sm"
             >
               {data?.data?.following?.some(
-                (following: any) => following._id === userId
+                (following: any) => following._id === userId,
               )
                 ? "following"
                 : "follow"}

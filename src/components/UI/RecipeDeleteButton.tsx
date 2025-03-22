@@ -1,9 +1,9 @@
 "use client";
 
-import { useUser } from "@/src/context/user.provider";
-import { useDeleteRecipe } from "@/src/hooks/recipe.hook";
 import { Button } from "@nextui-org/react";
 import { Dispatch, SetStateAction } from "react";
+import { useUser } from "@/src/context/user.provider";
+import { useDeleteRecipe } from "@/src/hooks/recipe.hook";
 
 const RecipeDeleteButton = ({
   id,
@@ -22,6 +22,7 @@ const RecipeDeleteButton = ({
     deleteRecipe(id);
     setLoading(true);
   };
+
   if (isSuccess) {
     setLoading(false);
   }
@@ -31,7 +32,7 @@ const RecipeDeleteButton = ({
   }
 
   return (
-    <Button size="sm" onClick={() => handleDelete()} className="bg-danger-500">
+    <Button className="bg-danger-500" size="sm" onClick={() => handleDelete()}>
       Delete
     </Button>
   );

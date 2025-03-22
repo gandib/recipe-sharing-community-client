@@ -1,19 +1,18 @@
 "use client";
 
 import FXForm from "@/src/components/form/FXForm";
-import FXInput from "@/src/components/form/FXInput";
-import { useUserRegistration } from "@/src/hooks/auth.hook";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { FieldValues } from "react-hook-form";
 import { ChangeEvent, useEffect, useState } from "react";
-import registerValidationSchema from "@/src/schemas/register.schemas";
 import "../../../../src/styles/animation.css";
-import loginPic from "@/src/assets/login2.jpg";
 import Image from "next/image";
-import Loading from "@/src/components/UI/Loading";
 import { useRouter } from "next/navigation";
+import loginPic from "@/src/assets/login2.jpg";
+import registerValidationSchema from "@/src/schemas/register.schemas";
+import { useUserRegistration } from "@/src/hooks/auth.hook";
+import FXInput from "@/src/components/form/FXInput";
 
 export default function Register() {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
@@ -78,7 +77,7 @@ export default function Register() {
   return (
     <div className="flex min-h-screen justify-center items-center">
       <div className="hidden lg:flex">
-        <Image src={loginPic} width={1000} height={1000} alt="login" />
+        <Image alt="login" height={1000} src={loginPic} width={1000} />
       </div>
       <div className="flex mt-6 w-full flex-col items-center justify-center mb-12">
         {/* {isPending && <Loading />} */}
@@ -87,21 +86,21 @@ export default function Register() {
         </h3>
         <div className="md:w-[50%] lg:w-[35%] w-[80%]">
           <FXForm
-            onSubmit={onSubmit}
             resolver={zodResolver(registerValidationSchema)}
+            onSubmit={onSubmit}
           >
             <div className="py-3">
-              <FXInput name="name" label="Name" size="sm" />
+              <FXInput label="Name" name="name" size="sm" />
             </div>
             <div className="py-3">
-              <FXInput name="email" type="email" label="Email" size="sm" />
+              <FXInput label="Email" name="email" size="sm" type="email" />
             </div>
             <div className="py-3">
               <FXInput
-                name="password"
-                type="password"
                 label="Password"
+                name="password"
                 size="sm"
+                type="password"
               />
             </div>
             <div className="min-w-fit flex-1 h-12">
@@ -113,8 +112,8 @@ export default function Register() {
               </label>
               <input
                 className="hidden"
-                type="file"
                 id="image"
+                type="file"
                 onChange={(e) => handleImageChange(e)}
               />
             </div>

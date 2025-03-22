@@ -1,7 +1,7 @@
 "use client";
 
-import { IRecipe, TRecipeMeta } from "@/src/types";
 import { Cell, Pie, PieChart, Tooltip } from "recharts";
+import { IRecipe, TRecipeMeta } from "@/src/types";
 
 const PieCharts = ({ data }: { data: TRecipeMeta }) => {
   const datas = data?.result?.map((recipe: IRecipe) => ({
@@ -13,16 +13,16 @@ const PieCharts = ({ data }: { data: TRecipeMeta }) => {
 
   return (
     <div>
-      <PieChart width={350} height={350}>
+      <PieChart height={350} width={350}>
         <Pie
-          data={datas}
-          dataKey="value"
-          nameKey="name"
+          label
           cx="50%"
           cy="50%"
-          outerRadius={100}
+          data={datas}
+          dataKey="value"
           fill="#8884d8"
-          label
+          nameKey="name"
+          outerRadius={100}
         >
           {data?.result?.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

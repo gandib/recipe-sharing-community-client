@@ -1,6 +1,6 @@
-import { IInput } from "@/src/types";
 import { Textarea } from "@nextui-org/react";
 import { useFormContext, useWatch } from "react-hook-form";
+import { IInput } from "@/src/types";
 
 interface IProps extends IInput {}
 
@@ -20,11 +20,11 @@ const FXTextarea = ({
   return (
     <Textarea
       {...register(name)}
+      disabled={disabled}
       label={label}
       minRows={6}
-      variant={varient}
       value={currentValue || ""}
-      disabled={disabled}
+      variant={varient}
     />
   );
 };

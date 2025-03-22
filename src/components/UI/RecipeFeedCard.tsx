@@ -1,15 +1,15 @@
 "use client";
 
-import { useUser } from "@/src/context/user.provider";
 import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import useDebounce from "@/src/hooks/debounce.hook";
 import { Input } from "@nextui-org/react";
 import { RotateCw, SearchIcon } from "lucide-react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
-import { IRecipe, queryParams } from "@/src/types";
 import { Button } from "@nextui-org/react";
 import RecipeHomeDisplayCard from "./RecipeHomeDisplayCard";
+import { IRecipe, queryParams } from "@/src/types";
+import useDebounce from "@/src/hooks/debounce.hook";
+import { useUser } from "@/src/context/user.provider";
 import { getAllRecipes } from "@/src/services/Recipe";
 
 type TTags = { _id: string; tags: string };
@@ -41,6 +41,7 @@ const RecipeFeedCard = ({
     // setRecipeData(data?.result);
 
     const query: queryParams[] = [];
+
     if (limit) {
       query.push({ name: "limit", value: limit });
     }
@@ -60,6 +61,7 @@ const RecipeFeedCard = ({
 
     const fetchData = async () => {
       const { data: allRecipe } = await getAllRecipes(query);
+
       setRecipeData(allRecipe?.result);
     };
 
@@ -105,10 +107,10 @@ const RecipeFeedCard = ({
       <div className="flex gap-2">
         {tags && tags.length > 0 && (
           <Autocomplete
-            onInputChange={(value) => setTag(value)}
-            label="Filter"
             className="w-20"
+            label="Filter"
             size="sm"
+            onInputChange={(value) => setTag(value)}
           >
             {tags.map((tag: TTags) => (
               <AutocompleteItem key={tag._id} value={tag.tags}>
@@ -120,19 +122,19 @@ const RecipeFeedCard = ({
 
         {recipe && recipe.result.length > 0 && (
           <Autocomplete
+            className="w-20"
+            label="Sort"
+            size="sm"
             onInputChange={(value) =>
               setSort(value === "Most Upvoted" ? "-upvote" : "upvote")
             }
-            label="Sort"
-            className="w-20"
-            size="sm"
           >
             {sortBy.map(
               (upvote: { name: string; value: string }, index: number) => (
                 <AutocompleteItem key={index} value={upvote.value}>
                   {upvote.name}
                 </AutocompleteItem>
-              )
+              ),
             )}
           </Autocomplete>
         )}
@@ -146,8 +148,8 @@ const RecipeFeedCard = ({
       <RecipeHomeDisplayCard
         recipe={recipeData || recipe?.result}
         role={user?.role!}
-        user={user?._id}
         setLoading={setLoading}
+        user={user?._id}
       />
 
       {/* <div className="mt-5 flex justify-center items-center">

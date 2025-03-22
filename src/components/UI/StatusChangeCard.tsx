@@ -1,10 +1,6 @@
 "use client";
 
-import { useUser } from "@/src/context/user.provider";
-import { useUpdateRecipeStatus } from "@/src/hooks/recipe.hook";
-import { IRecipe } from "@/src/types";
 import { Button } from "@nextui-org/react";
-import { Card, CardBody } from "@nextui-org/react";
 import {
   Table,
   TableBody,
@@ -13,6 +9,9 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/table";
+import { useUser } from "@/src/context/user.provider";
+import { useUpdateRecipeStatus } from "@/src/hooks/recipe.hook";
+import { IRecipe } from "@/src/types";
 
 const StatusChangeCard = ({ recipe }: { recipe: IRecipe[] }) => {
   const { user, isLoading } = useUser();
@@ -25,12 +24,14 @@ const StatusChangeCard = ({ recipe }: { recipe: IRecipe[] }) => {
         status: status,
       },
     };
+
     statusChange(statusData);
   };
 
   if (isLoading) {
     <p>Loading...</p>;
   }
+
   return (
     <div>
       <Table isStriped aria-label="Example static collection table">
@@ -45,18 +46,18 @@ const StatusChangeCard = ({ recipe }: { recipe: IRecipe[] }) => {
                 <TableCell>{data.title}</TableCell>
                 <TableCell className="flex justify-between gap-2">
                   <Button
+                    className="w-24"
+                    color="primary"
+                    size="sm"
+                    variant="flat"
                     onPress={() =>
                       handleStatus(
                         data?._id,
                         data?.status === "published"
                           ? "unpublished"
-                          : "published"
+                          : "published",
                       )
                     }
-                    variant="flat"
-                    className="w-24"
-                    size="sm"
-                    color="primary"
                   >
                     {data?.status === "published" ? "unpublished" : "published"}
                   </Button>

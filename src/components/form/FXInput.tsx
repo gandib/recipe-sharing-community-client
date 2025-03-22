@@ -1,8 +1,8 @@
 "use client";
 
-import { IInput } from "@/src/types";
 import { Input } from "@nextui-org/react";
 import { useFormContext } from "react-hook-form";
+import { IInput } from "@/src/types";
 
 interface IProps extends IInput {}
 
@@ -28,13 +28,13 @@ const FXInput = ({
         errors[name]?.message ? (errors[name]?.message as string) : ""
       }
       isInvalid={!!errors[name]}
-      variant={varient}
-      size={size}
-      required={required}
-      type={type}
       label={label}
-      onChange={onChange!}
+      required={required}
+      size={size}
+      type={type}
       value={value}
+      variant={varient}
+      onChange={onChange!}
     />
   );
 };

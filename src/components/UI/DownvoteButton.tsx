@@ -1,9 +1,9 @@
 "use clinet";
 
+import { ThumbsDown } from "lucide-react";
 import { useUser } from "@/src/context/user.provider";
 import { useUpdateDownvote } from "@/src/hooks/recipe.hook";
 import { IRecipe } from "@/src/types";
-import { ThumbsDown } from "lucide-react";
 
 const DownvoteButton = ({ data }: { data: IRecipe }) => {
   const { user, isLoading } = useUser();
@@ -15,12 +15,14 @@ const DownvoteButton = ({ data }: { data: IRecipe }) => {
         downvote: user?._id,
       },
     };
+
     downvote(downvoteData);
   };
 
   if (isLoading) {
     <p>Loading...</p>;
   }
+
   return (
     <div>
       <ThumbsDown

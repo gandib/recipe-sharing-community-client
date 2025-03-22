@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { getCurrentUser } from "./services/AuthService";
 
 const AuthRoutes = ["/login", "/register"];
@@ -20,14 +20,16 @@ export async function middleware(request: NextRequest) {
     if (AuthRoutes.includes(pathname)) {
       return NextResponse.next();
     }
+
     return NextResponse.redirect(
-      new URL(`/login?redirect=${pathname}`, request.url)
+      new URL(`/login?redirect=${pathname}`, request.url),
     );
   }
 
   // Allow route access based on role
   const allowedRoutes =
     roleBaseRoutes[user.role as keyof typeof roleBaseRoutes] || [];
+
   if (allowedRoutes.some((route) => route.test(pathname))) {
     return NextResponse.next();
   }
@@ -35,6 +37,7 @@ export async function middleware(request: NextRequest) {
   // Prevent redirect loop after logout
   if (pathname !== "/logout") {
     const redirectPath = user.role === "admin" ? "/admin-dashboard" : "/";
+
     return NextResponse.redirect(new URL(redirectPath, request.url));
   }
 

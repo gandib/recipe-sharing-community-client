@@ -1,12 +1,12 @@
 "use client";
 
-import FXForm from "@/src/components/form/FXForm";
-import FXInput from "@/src/components/form/FXInput";
 import { Button } from "@nextui-org/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues } from "react-hook-form";
-import { useRecoverPassword } from "@/src/hooks/auth.hook";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useRecoverPassword } from "@/src/hooks/auth.hook";
+import FXInput from "@/src/components/form/FXInput";
+import FXForm from "@/src/components/form/FXForm";
 import Loading from "@/src/components/UI/Loading";
 import { useUser } from "@/src/context/user.provider";
 import recoverPasswordValidationSchema from "@/src/schemas/recover-password.schemas";
@@ -51,11 +51,11 @@ const RecoverPassword = () => {
         <h3 className="my-2 text-2xl font-bold">Recover Password</h3>
         <div className="w-[35%]">
           <FXForm
-            onSubmit={onSubmit}
             resolver={zodResolver(recoverPasswordValidationSchema)}
+            onSubmit={onSubmit}
           >
             <div className="py-3">
-              <FXInput name="newPassword" type="password" label="Password" />
+              <FXInput label="Password" name="newPassword" type="password" />
             </div>
 
             <Button

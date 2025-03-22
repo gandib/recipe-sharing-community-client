@@ -1,5 +1,4 @@
 "use client";
-import { IRecipe } from "@/src/types";
 import {
   Card as NextUiCard,
   CardHeader,
@@ -7,7 +6,12 @@ import {
   CardBody,
 } from "@nextui-org/react";
 import Image from "next/image";
-import RecipeDeleteButton from "./RecipeDeleteButton";
+import { useState } from "react";
+import { DeleteIcon, Minus, Plus, Star } from "lucide-react";
+import { Button } from "@nextui-org/react";
+import { FieldValues } from "react-hook-form";
+import FXForm from "../form/FXForm";
+import FXTextarea from "../form/FXTextarea";
 import RecipeUpdateButton from "./RecipeUpdateButton";
 import UpvoteButton from "./UpvoteButton";
 import DownvoteButton from "./DownvoteButton";
@@ -19,12 +23,7 @@ import {
   useUpdateRating,
   useUpdateRecipeComment,
 } from "@/src/hooks/recipe.hook";
-import { useState } from "react";
-import { Cross, Delete, DeleteIcon, Minus, Plus, Star } from "lucide-react";
-import { Button } from "@nextui-org/react";
-import FXForm from "../form/FXForm";
-import FXTextarea from "../form/FXTextarea";
-import { FieldValues } from "react-hook-form";
+import { IRecipe } from "@/src/types";
 
 const RecipeDetailCard = ({ recipe }: { recipe: IRecipe }) => {
   const { user, isLoading } = useUser();
@@ -43,6 +42,7 @@ const RecipeDetailCard = ({ recipe }: { recipe: IRecipe }) => {
         rating: rate,
       },
     };
+
     postRating(ratingData);
   };
 
@@ -57,6 +57,7 @@ const RecipeDetailCard = ({ recipe }: { recipe: IRecipe }) => {
         comment: data.comment,
       },
     };
+
     updateComment(commentData);
   };
 
@@ -65,6 +66,7 @@ const RecipeDetailCard = ({ recipe }: { recipe: IRecipe }) => {
       id: recipe?._id,
       commentId: id,
     };
+
     deleteComment(commentData);
   };
 
@@ -87,10 +89,10 @@ const RecipeDetailCard = ({ recipe }: { recipe: IRecipe }) => {
           <CardHeader className="w-full flex-col items-start">
             {recipe && (
               <Image
-                width={1000}
+                alt="Recipe image"
                 height={300}
                 src={recipe?.image[0]}
-                alt="Recipe image"
+                width={1000}
               />
             )}
             <div className=" w-full">
@@ -106,10 +108,10 @@ const RecipeDetailCard = ({ recipe }: { recipe: IRecipe }) => {
             </div>
             <div className="my-2 rounded  p-1 lg:text-lg font-medium flex justify-center ">
               <div
-                className="instructions"
                 dangerouslySetInnerHTML={{
                   __html: recipe.instructions,
                 }}
+                className="instructions"
               />
             </div>
 
@@ -136,25 +138,25 @@ const RecipeDetailCard = ({ recipe }: { recipe: IRecipe }) => {
           <CardBody>
             <div className="my-6 flex items-center">
               <Minus
+                className="mr-2"
                 onClick={() => {
                   if (rate !== 1) {
                     setRate(rate - 1);
                   }
                 }}
-                className="mr-2"
               />
               <p className="text-purple-500 font-bold flex justify-center items-center gap-1">
                 {rate} <Star size={"18"} />
               </p>
               <Plus
+                className="mx-2"
                 onClick={() => {
                   if (rate !== 5) {
                     setRate(rate + 1);
                   }
                 }}
-                className="mx-2"
               />
-              <Button onClick={handleRating} size="sm" variant="flat">
+              <Button size="sm" variant="flat" onClick={handleRating}>
                 Rate Now
               </Button>
             </div>

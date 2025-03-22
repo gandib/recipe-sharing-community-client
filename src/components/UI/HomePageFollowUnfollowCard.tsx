@@ -1,19 +1,18 @@
 "use client";
 
-import { useUser } from "@/src/context/user.provider";
+import { Button } from "@nextui-org/react";
+import { toast } from "sonner";
 import {
   useGetUser,
-  useGetUserById,
   useUpdateFollowing,
   useUpdateUnfollowing,
 } from "@/src/hooks/user.hook";
-import { Button } from "@nextui-org/react";
-import { toast } from "sonner";
+import { IUser } from "@/src/types";
+import { useUser } from "@/src/context/user.provider";
 
-const HomePageFollowUnFollowCard = ({ userId }: { userId: string }) => {
+const HomePageFollowUnFollowCard = ({ userData }: { userData: IUser }) => {
   const { user, isLoading } = useUser();
   const { data } = useGetUser(user?.email!);
-  const { data: userDataById } = useGetUserById(userId);
   const { mutate: updateFollower } = useUpdateFollowing(user?.email!);
   const { mutate: updateUnFollowing } = useUpdateUnfollowing(user?.email!);
 
@@ -23,19 +22,21 @@ const HomePageFollowUnFollowCard = ({ userId }: { userId: string }) => {
     }
     if (followUnfollow === "follow") {
       const followData = {
-        id: userId,
+        id: userData?._id,
         data: {
           follower: user?._id,
         },
       };
+
       updateFollower(followData);
     } else {
       const unFollowData = {
         id: user?._id,
         data: {
-          following: userId,
+          following: userData?._id,
         },
       };
+
       updateUnFollowing(unFollowData);
     }
   };
@@ -47,29 +48,28 @@ const HomePageFollowUnFollowCard = ({ userId }: { userId: string }) => {
   return (
     <div>
       <h1>
-        {data?.data?._id !== userDataById?.data?._id &&
-          userDataById?.data?.name && (
-            <Button
-              onPress={() =>
-                handleFollowUnfollow(
-                  data?.data?.following?.some(
-                    (following: any) => following._id === userId
-                  )
-                    ? "following"
-                    : "follow"
+        {data?.data?._id !== userData?._id && userData?.name && (
+          <Button
+            className="text-green-500 text-sm"
+            size="sm"
+            variant="light"
+            onPress={() =>
+              handleFollowUnfollow(
+                data?.data?.following?.some(
+                  (following: any) => following._id === userData?._id
                 )
-              }
-              size="sm"
-              variant="light"
-              className="text-green-500 text-sm"
-            >
-              {data?.data?.following?.some(
-                (following: any) => following._id === userId
+                  ? "following"
+                  : "follow"
               )
-                ? "following"
-                : "follow"}
-            </Button>
-          )}
+            }
+          >
+            {data?.data?.following?.some(
+              (following: any) => following._id === userData?._id
+            )
+              ? "following"
+              : "follow"}
+          </Button>
+        )}
       </h1>
     </div>
   );

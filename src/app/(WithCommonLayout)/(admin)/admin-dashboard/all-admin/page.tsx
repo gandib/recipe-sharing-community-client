@@ -1,13 +1,4 @@
 "use client";
-import { useUser } from "@/src/context/user.provider";
-import {
-  useDeleteUser,
-  useGetAllAdmin,
-  useGetAllUser,
-  useGetUser,
-  useUpdateUserStatus,
-} from "@/src/hooks/user.hook";
-import { IUser } from "@/src/types";
 import { Button } from "@nextui-org/react";
 import {
   Table,
@@ -19,6 +10,13 @@ import {
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { IUser } from "@/src/types";
+import {
+  useDeleteUser,
+  useGetAllAdmin,
+  useUpdateUserStatus,
+} from "@/src/hooks/user.hook";
+import { useUser } from "@/src/context/user.provider";
 
 const AllAdmin = () => {
   const [email, setEmail] = useState("");
@@ -37,6 +35,7 @@ const AllAdmin = () => {
         status: status === "blocked" ? "unblocked" : "blocked",
       },
     };
+
     statusUpdate(userStatusData);
   };
 
@@ -74,33 +73,33 @@ const AllAdmin = () => {
                 <TableCell className="flex justify-between">
                   <div className="flex gap-4">
                     <Button
+                      color="warning"
+                      size="sm"
                       onPress={() =>
                         handleStatus(
                           userData?.email,
                           userData?._id,
-                          userData?.status
+                          userData?.status,
                         )
                       }
-                      size="sm"
-                      color="warning"
                     >
                       {userData.status === "unblocked"
                         ? "blocked"
                         : "unblocked"}
                     </Button>
                     <Button
-                      onPress={() => handleUpdate(userData?.email)}
-                      size="sm"
                       color="primary"
+                      size="sm"
+                      onPress={() => handleUpdate(userData?.email)}
                     >
                       UPDATE
                     </Button>
                     <Button
+                      color="danger"
+                      size="sm"
                       onPress={() =>
                         handleDelete(userData?.email, userData?._id)
                       }
-                      size="sm"
-                      color="danger"
                     >
                       DELETE
                     </Button>

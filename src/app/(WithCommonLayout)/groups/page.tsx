@@ -25,9 +25,9 @@ export default async function GroupsPage(searchParams: {
     <div className="min-h-screen  lg:mt-0">
       <GroupsPageFeed
         groupId={groupId}
+        groups={groups}
         myGroups={myGroups}
         recipes={recipes}
-        groups={groups}
       />
     </div>
   );

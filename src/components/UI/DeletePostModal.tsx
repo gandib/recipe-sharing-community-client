@@ -1,8 +1,5 @@
 "use client";
 
-import { useUser } from "@/src/context/user.provider";
-import { useDeleteGroupRecipe } from "@/src/hooks/group.hook";
-import { useDeleteRecipe } from "@/src/hooks/recipe.hook";
 import {
   Button,
   Modal,
@@ -12,6 +9,9 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { Dispatch, SetStateAction } from "react";
+import { useUser } from "@/src/context/user.provider";
+import { useDeleteGroupRecipe } from "@/src/hooks/group.hook";
+import { useDeleteRecipe } from "@/src/hooks/recipe.hook";
 
 const DeletePostModal = ({
   id,
@@ -45,6 +45,7 @@ const DeletePostModal = ({
           groupId,
           recipeId: id,
         };
+
         await deleteGroupRecipe(deletedData);
       }
       setRevalidateProfile?.((prev) => !prev);
@@ -58,10 +59,11 @@ const DeletePostModal = ({
   if (isLoading || isPending || isGroupRecipePending) {
     <p>Loading...</p>;
   }
+
   return (
     <div>
       {/* <Button onPress={onOpen}>Open Modal</Button> */}
-      <Modal size="xs" isOpen={isOpen} onOpenChange={setIsOpen}>
+      <Modal isOpen={isOpen} size="xs" onOpenChange={setIsOpen}>
         <ModalContent className="w-full">
           {(onClose) => (
             <>

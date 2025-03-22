@@ -16,8 +16,8 @@ const ProfileLeftSidebar = ({
             onClick={() => setActiveTab("Update Profile")}
           >
             <UserPen
-              size={20}
               className="border-2 w-8 h-8 p-1 bg-default-300 rounded-full "
+              size={20}
             />
             Update Profile
           </button>
@@ -28,8 +28,8 @@ const ProfileLeftSidebar = ({
             onClick={() => setActiveTab("Get Membership")}
           >
             <Gem
-              size={20}
               className="border-2 w-8 h-8 p-1 bg-default-300 rounded-full "
+              size={20}
             />
             Get Membership
           </button>
@@ -40,8 +40,8 @@ const ProfileLeftSidebar = ({
             onClick={() => setActiveTab("Change Password")}
           >
             <KeyRound
-              size={20}
               className="border-2 w-8 h-8 p-1 bg-default-300 rounded-full "
+              size={20}
             />{" "}
             Change Password
           </button>

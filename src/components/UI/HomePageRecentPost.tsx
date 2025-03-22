@@ -1,9 +1,9 @@
 "use client";
 
-import { IRecipe } from "@/src/types";
 import moment from "moment";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { IRecipe } from "@/src/types";
 
 const HomePageRecentPost = ({
   recipes,
@@ -13,6 +13,7 @@ const HomePageRecentPost = ({
   title: string;
 }) => {
   const router = useRouter();
+
   return (
     <div className="w-full min-h-[180px] bg-default-100 rounded p-4">
       <h1 className=" font-bold">{title}</h1>
@@ -27,16 +28,16 @@ const HomePageRecentPost = ({
             className="flex mt-4 bg-default-150 border-1 rounded h-[75px]"
           >
             <Image
-              src={recipe.image[0]}
-              width={70}
-              height={50}
               alt="Time with nature"
               className="h-full rounded"
+              height={50}
+              src={recipe.image[0]}
+              width={70}
             />
             <div className="px-2 w-full flex flex-col h-[50px] ">
               <h2
-                onClick={() => router.push(`/profile/${recipe._id}`)}
                 className=" text-sm font-semibold cursor-pointer hover:text-primary-500"
+                onClick={() => router.push(`/profile/${recipe._id}`)}
               >
                 {recipe.title.slice(0, 25) +
                   `${recipe.title.length > 25 ? "..." : ""}`}

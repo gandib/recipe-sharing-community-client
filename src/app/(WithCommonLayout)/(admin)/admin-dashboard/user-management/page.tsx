@@ -1,11 +1,4 @@
 "use client";
-import { useUser } from "@/src/context/user.provider";
-import {
-  useDeleteUser,
-  useGetAllUser,
-  useUpdateUserStatus,
-} from "@/src/hooks/user.hook";
-import { IUser } from "@/src/types";
 import { Button } from "@nextui-org/react";
 import {
   Table,
@@ -16,6 +9,13 @@ import {
   TableRow,
 } from "@nextui-org/react";
 import { useState } from "react";
+import { useUser } from "@/src/context/user.provider";
+import {
+  useDeleteUser,
+  useGetAllUser,
+  useUpdateUserStatus,
+} from "@/src/hooks/user.hook";
+import { IUser } from "@/src/types";
 
 const UserManagement = () => {
   const [email, setEmail] = useState("");
@@ -33,6 +33,7 @@ const UserManagement = () => {
         status: status === "blocked" ? "unblocked" : "blocked",
       },
     };
+
     statusUpdate(userStatusData);
   };
 

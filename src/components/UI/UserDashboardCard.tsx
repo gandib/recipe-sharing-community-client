@@ -1,15 +1,15 @@
 "use client";
-import RecipeDisplayCard from "@/src/components/UI/RecipeDisplayCard";
-import { useUser } from "@/src/context/user.provider";
 import { useEffect, useState } from "react";
 import { Pagination } from "@nextui-org/react";
 import { FieldValues, useForm } from "react-hook-form";
-import useDebounce from "@/src/hooks/debounce.hook";
 import { Input } from "@nextui-org/react";
 import { RotateCw, SearchIcon } from "lucide-react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
-import { IRecipe, queryParams } from "@/src/types";
 import { Button } from "@nextui-org/react";
+import { IRecipe, queryParams } from "@/src/types";
+import useDebounce from "@/src/hooks/debounce.hook";
+import { useUser } from "@/src/context/user.provider";
+import RecipeDisplayCard from "@/src/components/UI/RecipeDisplayCard";
 import { getAllMyRecipes } from "@/src/services/Recipe";
 
 type TRecipeMeta = {
@@ -43,6 +43,7 @@ const UserDashboardCard = ({
     }
 
     const query: queryParams[] = [];
+
     if (limit) {
       query.push({ name: "limit", value: limit });
     }
@@ -61,6 +62,7 @@ const UserDashboardCard = ({
 
     const fetchData = async () => {
       const { data: allRecipe } = await getAllMyRecipes(query);
+
       setRecipeData(allRecipe?.result);
       setTotalPage(allRecipe?.meta?.totalPage);
     };
@@ -107,13 +109,13 @@ const UserDashboardCard = ({
       <div className="flex gap-2">
         {tags && tags.length > 0 && (
           <Autocomplete
+            className="w-20"
+            label="Filter"
+            size="sm"
             onInputChange={(value) => {
               setTag(value);
               setCurrentPage(1);
             }}
-            label="Filter"
-            className="w-20"
-            size="sm"
           >
             {tags.map((tag: string) => (
               <AutocompleteItem key={tag} value={tag}>
@@ -125,19 +127,19 @@ const UserDashboardCard = ({
 
         {recipe && recipe?.result.length > 0 && (
           <Autocomplete
+            className="w-20"
+            label="Sort"
+            size="sm"
             onInputChange={(value) =>
               setSort(value === "Most Upvoted" ? "-upvote" : "upvote")
             }
-            label="Sort"
-            className="w-20"
-            size="sm"
           >
             {sortBy.map(
               (upvote: { name: string; value: string }, index: number) => (
                 <AutocompleteItem key={index} value={upvote.value}>
                   {upvote.name}
                 </AutocompleteItem>
-              )
+              ),
             )}
           </Autocomplete>
         )}
@@ -156,8 +158,8 @@ const UserDashboardCard = ({
       <div className="mt-5 flex justify-center items-center">
         {recipe?.result?.length > 0 && (
           <Pagination
-            total={totalPage}
             page={currentPage}
+            total={totalPage}
             onChange={(page) => setCurrentPage(page)}
           />
         )}

@@ -1,9 +1,9 @@
 "use client";
 
-import { IGroup, TGroupMeta } from "@/src/types";
 import { Avatar } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { IGroup, TGroupMeta } from "@/src/types";
 
 const HomePageMyGroups = ({ allGroups }: { allGroups: TGroupMeta }) => {
   const router = useRouter();
@@ -35,8 +35,8 @@ const HomePageMyGroups = ({ allGroups }: { allGroups: TGroupMeta }) => {
                 </span>
               </p>
               <button
-                onClick={() => router.push(`/groups?groupId=${group._id}`)}
                 className="text-primary-500 hover:text-primary-400 underline text-tiny cursor-pointer"
+                onClick={() => router.push(`/groups?groupId=${group._id}`)}
               >
                 view feed
               </button>

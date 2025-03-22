@@ -1,12 +1,11 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import FXForm from "../form/FXForm";
-import FXInput from "../form/FXInput";
 import { Button } from "@nextui-org/react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import FXForm from "../form/FXForm";
+import FXInput from "../form/FXInput";
 import { useCreateGroup, useUpdateGroup } from "@/src/hooks/group.hook";
 import { useUser } from "@/src/context/user.provider";
 import { IGroup } from "@/src/types";
@@ -26,7 +25,7 @@ const GroupManagementCard = ({
     isSuccess,
   } = useCreateGroup(user?.email!);
   const { mutate: updateGroup, isSuccess: updateSuccess } = useUpdateGroup(
-    user?.email!
+    user?.email!,
   );
   const [name, setName] = useState(group?.name || "");
   const [image, setImage] = useState(group?.image[0] || "");
@@ -48,6 +47,7 @@ const GroupManagementCard = ({
   const onSubmit = (data: FieldValues) => {
     if (title === "Add" && !imageFiles[0]) {
       setImgError("Please choose an image!");
+
       return;
     }
 
@@ -74,6 +74,7 @@ const GroupManagementCard = ({
           iamge: image,
         },
       };
+
       updateGroup(groupData);
     }
   };
@@ -120,10 +121,10 @@ const GroupManagementCard = ({
                 <label htmlFor="Title">Title</label>
               </div>
               <FXInput
-                name="name"
                 label="Enter group name"
-                size="sm"
+                name="name"
                 required={true}
+                size="sm"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -135,8 +136,8 @@ const GroupManagementCard = ({
                   <label htmlFor="Title">Upload Image</label>
                 </div>
                 <FXInput
-                  name="image"
                   label="Image"
+                  name="image"
                   size="sm"
                   value={image}
                   onChange={(e) => setImage(e.target.value)}
@@ -158,8 +159,8 @@ const GroupManagementCard = ({
 
                 <input
                   className="hidden"
-                  type="file"
                   id="image"
+                  type="file"
                   onChange={(e) => handleImageChange(e)}
                 />
               </div>

@@ -1,14 +1,14 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@nextui-org/react";
+import { FieldValues } from "react-hook-form";
 import userValidationSchema from "@/src/schemas/user.schema";
 import FXForm from "@/src/components/form/FXForm";
 import FXInput from "@/src/components/form/FXInput";
 import FXTextarea from "@/src/components/form/FXTextarea";
 import { useUser } from "@/src/context/user.provider";
 import { useUpdateUser } from "@/src/hooks/user.hook";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@nextui-org/react";
-import { FieldValues } from "react-hook-form";
 
 export default function UpdateProfile() {
   const { user, isLoading } = useUser();
@@ -57,26 +57,26 @@ export default function UpdateProfile() {
         <h3 className="my-2 text-2xl font-bold">Update Profile</h3>
         <div className="w-full md:w-[90%]">
           <FXForm
-            onSubmit={onSubmit}
             resolver={zodResolver(userValidationSchema)}
+            onSubmit={onSubmit}
           >
             <div className="py-1">
               <div className="py-2 text-base font-semibold">
                 <label htmlFor="Name">Name</label>
               </div>
-              <FXInput name="name" label="Name" size="sm" />
+              <FXInput label="Name" name="name" size="sm" />
             </div>
             <div className="py-1">
               <div className="py-2 text-base font-semibold">
                 <label htmlFor="Image link">Image link</label>
               </div>
-              <FXInput name="image" label="Image link" size="sm" />
+              <FXInput label="Image link" name="image" size="sm" />
             </div>
             <div className="py-1">
               <div className="py-2 text-base font-semibold">
                 <label htmlFor="Bio">Bio</label>
               </div>
-              <FXTextarea name="bio" label="Bio" size="sm" />
+              <FXTextarea label="Bio" name="bio" size="sm" />
             </div>
 
             <Button

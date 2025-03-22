@@ -1,4 +1,4 @@
-import { Gem, Group, KeyRound, PencilRuler, Plus, UserPen } from "lucide-react";
+import { Group, PencilRuler, Plus } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 
 const GroupLeftSidebar = ({
@@ -16,8 +16,8 @@ const GroupLeftSidebar = ({
             onClick={() => setActiveTab("Create Group")}
           >
             <Plus
-              size={20}
               className="border-2 w-8 h-8 p-1 bg-default-300 rounded-full "
+              size={20}
             />
             Create Group
           </button>
@@ -28,8 +28,8 @@ const GroupLeftSidebar = ({
             onClick={() => setActiveTab("Update Group")}
           >
             <PencilRuler
-              size={20}
               className="border-2 w-8 h-8 p-1 bg-default-300 rounded-full "
+              size={20}
             />
             Update Group
           </button>
@@ -40,8 +40,8 @@ const GroupLeftSidebar = ({
             onClick={() => setActiveTab("Groups")}
           >
             <Group
-              size={20}
               className="border-2 w-8 h-8 p-1 bg-default-300 rounded-full "
+              size={20}
             />{" "}
             Groups
           </button>

@@ -1,7 +1,7 @@
 "use server";
-import axiosInstance from "@/src/lib/AxiosInstance";
 import axios from "axios";
 import { FieldValues } from "react-hook-form";
+import axiosInstance from "@/src/lib/AxiosInstance";
 
 export const membershipPayment = async (paymentData: FieldValues) => {
   try {

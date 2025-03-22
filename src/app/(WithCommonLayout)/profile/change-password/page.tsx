@@ -1,13 +1,13 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@nextui-org/react";
+import { FieldValues } from "react-hook-form";
 import userValidationSchema from "@/src/schemas/user.schema";
 import FXForm from "@/src/components/form/FXForm";
 import FXInput from "@/src/components/form/FXInput";
 import { useUser } from "@/src/context/user.provider";
 import { useUpdateUser } from "@/src/hooks/user.hook";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@nextui-org/react";
-import { FieldValues } from "react-hook-form";
 
 export default function ChangePassword() {
   const { user, isLoading } = useUser();
@@ -36,14 +36,14 @@ export default function ChangePassword() {
         <h3 className="my-4 text-2xl font-bold">Update Password</h3>
         <div className="w-full xs:w-[90%] md:w-[80%] ">
           <FXForm
-            onSubmit={onSubmit}
             resolver={zodResolver(userValidationSchema)}
+            onSubmit={onSubmit}
           >
             <div className="py-3">
               <div className="py-2 text-base font-semibold">
                 <label htmlFor="Password">Password</label>
               </div>
-              <FXInput name="password" label="Password" size="sm" />
+              <FXInput label="Password" name="password" size="sm" />
             </div>
 
             <Button

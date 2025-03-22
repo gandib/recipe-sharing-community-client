@@ -1,15 +1,14 @@
 "use client";
 
-import { useUser } from "@/src/context/user.provider";
-import {
-  useGetUser,
-  useGetUserById,
-  useUpdateFollowing,
-  useUpdateUnfollowing,
-} from "@/src/hooks/user.hook";
 import { Button, User } from "@nextui-org/react";
 import { UserRoundPlus, UserRoundX } from "lucide-react";
 import { toast } from "sonner";
+import {
+  useGetUser,
+  useUpdateFollowing,
+  useUpdateUnfollowing,
+} from "@/src/hooks/user.hook";
+import { useUser } from "@/src/context/user.provider";
 
 const HomePageFollowing = () => {
   const { user, isLoading } = useUser();
@@ -38,6 +37,7 @@ const HomePageFollowing = () => {
           following: userId,
         },
       };
+
       updateUnFollowing(unFollowData);
     }
   };
@@ -45,6 +45,7 @@ const HomePageFollowing = () => {
   if (isLoading) {
     <p>Loading...</p>;
   }
+
   return (
     <div className="bg-default-100 rounded p-4 sticky top-20">
       <h1 className="text-base  font-bold mb-6">Who's following</h1>
@@ -72,22 +73,22 @@ const HomePageFollowing = () => {
 
             <div className="flex justify-end col-span-1 items-center">
               <Button
+                className="bg-primary-500 text-default-50 w-24 p-2 m-0 text-sm flex justify-start hover:text-white hover:bg-primary-100"
+                size="sm"
+                variant="light"
                 onPress={() =>
                   handleFollowUnfollow(
                     data?.data?.following?.some(
-                      (following: any) => following._id === follower._id
+                      (following: any) => following._id === follower._id,
                     )
                       ? "following"
                       : "follow",
-                    follower._id
+                    follower._id,
                   )
                 }
-                size="sm"
-                variant="light"
-                className="bg-primary-500 text-default-50 w-24 p-2 m-0 text-sm flex justify-start hover:text-white hover:bg-primary-100"
               >
                 {data?.data?.following?.some(
-                  (following: any) => following._id === follower._id
+                  (following: any) => following._id === follower._id,
                 ) ? (
                   <div className="flex items-center gap-1 justify-start">
                     <UserRoundPlus size={16} /> Unfollow
@@ -100,7 +101,7 @@ const HomePageFollowing = () => {
               </Button>
             </div>
           </div>
-        )
+        ),
       )}
     </div>
   );

@@ -1,7 +1,5 @@
 "use client";
 
-import { useUser } from "@/src/context/user.provider";
-import { IRecipe } from "@/src/types";
 import { Avatar, Button } from "@nextui-org/react";
 import {
   DeleteIcon,
@@ -19,26 +17,27 @@ import moment from "moment";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
+import { FieldValues } from "react-hook-form";
+import FXForm from "../form/FXForm";
+import FXTextarea from "../form/FXTextarea";
+import ShareModal from "./ShareModal";
 import DeletePostModal from "./DeletePostModal";
+import HomePageFollowUnFollowCard from "./HomePageFollowUnfollowCard";
+import HomePageCreatePostModal from "./HomePageCreatePostModal";
 import {
   useDeleteRecipeComment,
   useUpdateDownvote,
   useUpdateRecipeComment,
   useUpdateUpvote,
 } from "@/src/hooks/recipe.hook";
-import ShareModal from "./ShareModal";
-import FXForm from "../form/FXForm";
-import FXTextarea from "../form/FXTextarea";
-import { FieldValues } from "react-hook-form";
-import FollowUnFollowCard from "./FollowUnFollowCard";
-import HomePageFollowUnFollowCard from "./HomePageFollowUnfollowCard";
-import HomePageCreatePostModal from "./HomePageCreatePostModal";
+import { IRecipe } from "@/src/types";
 import {
   useDeleteGroupRecipeComment,
   useUpdateGroupDownvote,
   useUpdateGroupRecipeComment,
   useUpdateGroupUpvote,
 } from "@/src/hooks/group.hook";
+import { useUser } from "@/src/context/user.provider";
 
 const HomePageDisplayCard = ({
   data,
@@ -86,6 +85,7 @@ const HomePageDisplayCard = ({
         upvote: user?._id,
       },
     };
+
     if (!groupId) {
       upvote(upvoteData);
     }
@@ -97,6 +97,7 @@ const HomePageDisplayCard = ({
           upvote: user?._id,
         },
       };
+
       upvoteGroup(upvoteData);
     }
   };
@@ -108,6 +109,7 @@ const HomePageDisplayCard = ({
         downvote: user?._id,
       },
     };
+
     if (!groupId) {
       downvote(downvoteData);
     }
@@ -119,6 +121,7 @@ const HomePageDisplayCard = ({
           downvote: user?._id,
         },
       };
+
       downvoteGroup(downvoteData);
     }
   };
@@ -134,6 +137,7 @@ const HomePageDisplayCard = ({
         comment: formData.comment,
       },
     };
+
     if (!groupId) {
       updateComment(commentData);
     }
@@ -147,6 +151,7 @@ const HomePageDisplayCard = ({
           comment: formData.comment,
         },
       };
+
       updateGroupComment(commentData);
     }
   };
@@ -156,6 +161,7 @@ const HomePageDisplayCard = ({
       id: data?._id,
       commentId: id,
     };
+
     if (!groupId) {
       deleteComment(commentData);
     }
@@ -166,6 +172,7 @@ const HomePageDisplayCard = ({
         recipeId: data?._id,
         commentId: id,
       };
+
       deleteGroupComment(commentData);
     }
   };
@@ -180,15 +187,15 @@ const HomePageDisplayCard = ({
         {/* Avatar and User Info */}
         <div className="flex">
           <Avatar
-            src={data?.user?.image}
             alt="img"
             className="rounded-full bg-primary-500"
+            src={data?.user?.image}
           />
           <div className="pl-2">
             <div className="text-sm flex items-center font-bold text-primary-500">
               <p> {data?.user?.name}</p>
               <div className="">
-                <HomePageFollowUnFollowCard userId={data?.user?._id} />
+                <HomePageFollowUnFollowCard userData={data?.user} />
               </div>
             </div>
             <p className="text-tiny flex">
@@ -203,14 +210,15 @@ const HomePageDisplayCard = ({
         {/* Ellipsis Icon with Dropdown */}
         <div className="text-xs text-primary-500 relative">
           <Ellipsis
-            onClick={() => setShowOptions(!showOptions)}
             className="cursor-pointer"
+            onClick={() => setShowOptions(!showOptions)}
           />
           {showOptions && (
             <div className="absolute right-0 top-full mt-2 w-[150px] shadow-lg rounded-md p-4 bg-default-200 z-50 text-default-900">
               <div className="grid gap-4">
                 {user?._id === data?.user?._id && (
                   <div
+                    className=" cursor-pointer flex items-center hover:text-primary-500"
                     onClick={() => {
                       // router.push(
                       //   `${user?.role === "user" ? `/user-dashboard/update-recipe/${data._id}` : `/admin-dashboard/update-recipe/${data._id}`}`
@@ -218,7 +226,6 @@ const HomePageDisplayCard = ({
                       setShowOptions(false);
                       setIsUpdateModalOpen(true);
                     }}
-                    className=" cursor-pointer flex items-center hover:text-primary-500"
                   >
                     <Pen size={20} /> <span className="pl-2">Edit Post</span>
                   </div>
@@ -226,8 +233,8 @@ const HomePageDisplayCard = ({
 
                 {user?._id === data?.user?._id && (
                   <div
-                    onClick={handleDelete}
                     className=" cursor-pointer flex items-center hover:text-primary-500"
+                    onClick={handleDelete}
                   >
                     <Trash2 size={20} />{" "}
                     <span className="pl-2">Delete Post</span>
@@ -235,10 +242,10 @@ const HomePageDisplayCard = ({
                 )}
 
                 <div
+                  className=" cursor-pointer flex items-center hover:text-primary-500"
                   onClick={() => {
                     setShowOptions(false);
                   }}
-                  className=" cursor-pointer flex items-center hover:text-primary-500"
                 >
                   <Flag size={20} /> <span className="pl-2">Report Post</span>
                 </div>
@@ -250,24 +257,24 @@ const HomePageDisplayCard = ({
 
       {isUpdateModalOpen && (
         <HomePageCreatePostModal
-          title="Update Recipe"
+          groupId={groupId}
+          id={data._id}
           isOpen={isUpdateModalOpen}
           setIsOpen={setIsUpdateModalOpen}
-          singleRecipeData={data}
-          id={data._id}
           setRevalidate={setRevalidate}
           setRevalidateProfile={setRevalidateProfile}
-          groupId={groupId}
+          singleRecipeData={data}
+          title="Update Recipe"
         />
       )}
 
       {isOpen && (
         <DeletePostModal
+          groupId={groupId}
           id={data?._id}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           setRevalidateProfile={setRevalidateProfile}
-          groupId={groupId}
         />
       )}
 
@@ -290,8 +297,8 @@ const HomePageDisplayCard = ({
               ></div>
               {data?.instructions.length > 200 && (
                 <button
-                  onClick={() => setSeeMore(true)}
                   className="text-primary-500"
+                  onClick={() => setSeeMore(true)}
                 >
                   See more
                 </button>
@@ -303,8 +310,8 @@ const HomePageDisplayCard = ({
                 dangerouslySetInnerHTML={{ __html: data?.instructions }}
               ></div>
               <button
-                onClick={() => setSeeMore(false)}
                 className="text-primary-500"
+                onClick={() => setSeeMore(false)}
               >
                 See less
               </button>
@@ -314,11 +321,11 @@ const HomePageDisplayCard = ({
 
         <div className="h-[300px] w-full py-4">
           <Image
-            src={data?.image[0]}
-            width={500}
-            height={500}
             alt="recipe-image"
             className="h-full w-full"
+            height={500}
+            src={data?.image[0]}
+            width={500}
           />
         </div>
       </div>
@@ -326,26 +333,26 @@ const HomePageDisplayCard = ({
       {/* Action Buttons */}
       <div className="flex  mt-1">
         <div
-          onClick={handleUpvote}
           className={`flex items-center  text-sm px-2 py-1 rounded cursor-pointer ${data?.upvote.includes(user?._id) ? "text-green-500 hover:text-blue-500" : "hover:text-blue-500"}`}
+          onClick={handleUpvote}
         >
           <ThumbsUp size={20} />
         </div>
         <div
-          onClick={handleDownvote}
           className={`flex items-center text-sm  p-2 mx-4 rounded cursor-pointer ${data?.downvote.includes(user?._id) ? "text-green-500 hover:text-blue-500 cursor-pointer" : "hover:text-blue-500"}`}
+          onClick={handleDownvote}
         >
           <ThumbsDown size={20} />
         </div>
         <div
-          onClick={() => setCommentShow(!commentShow)}
           className="flex items-center text-sm p-2 rounded cursor-pointer hover:text-primary-500"
+          onClick={() => setCommentShow(!commentShow)}
         >
           <MessageSquare size={20} />
         </div>
         <div
-          onClick={() => setIsShareOpen(true)}
           className="flex items-center text-sm  p-2 mx-4 rounded cursor-pointer hover:text-primary-500"
+          onClick={() => setIsShareOpen(true)}
         >
           <Share2Icon size={20} />
         </div>
@@ -393,7 +400,7 @@ const HomePageDisplayCard = ({
                           />
                         )}
                       </p>
-                      <p className="text-sm" key={comment._id}>
+                      <p key={comment._id} className="text-sm">
                         {comment.comment}
                       </p>
                     </div>

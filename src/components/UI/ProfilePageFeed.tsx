@@ -1,5 +1,8 @@
 "use client";
 
+import { Button, Card } from "@nextui-org/react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import ChangePassword from "@/src/components/UI/ChangePassword";
 import HomePageCreatePost from "@/src/components/UI/HomePageCreatePost";
 import HomePageFeedCard from "@/src/components/UI/HomePageFeedCard";
@@ -12,9 +15,6 @@ import { useUser } from "@/src/context/user.provider";
 import { useGetUser, useUpdateUnfollowing } from "@/src/hooks/user.hook";
 import { getAllMyRecipes, getAllRecipes } from "@/src/services/Recipe";
 import { IUser, TRecipeMeta } from "@/src/types";
-import { Button, Card } from "@nextui-org/react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
 
 export default function ProfilePageFeed({
   allRecipes,
@@ -38,11 +38,13 @@ export default function ProfilePageFeed({
           { name: "sort", value: "-createdAt" },
           { name: "contentType", value: "free" },
         ]);
+
         setRecipe(recipes?.result);
 
         const { data: allRecipes } = await getAllRecipes([
           { name: "sort", value: "-createdAt" },
         ]);
+
         setAllRecipe(allRecipes?.result);
       } catch (error) {
         console.log("Recipe fetch failed", error);
@@ -75,14 +77,14 @@ export default function ProfilePageFeed({
             <div className="">
               {/* create new post section */}
               <HomePageCreatePost
-                setRevalidateProfile={setRevalidateProfile}
                 revalidateProfile={revalidateProfile}
+                setRevalidateProfile={setRevalidateProfile}
               />
               <div className=" mb-8">
                 <HomePageFeedCard
                   recipe={recipe!}
-                  setRevalidateProfile={setRevalidateProfile}
                   revalidateProfile={revalidateProfile}
+                  setRevalidateProfile={setRevalidateProfile}
                 />
               </div>
             </div>
@@ -94,22 +96,22 @@ export default function ProfilePageFeed({
             <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-4">
               {user?.data?.following?.map((following: IUser, index: number) => (
                 <Card
-                  className="shadow-lg w-full h-48 flex flex-col justify-center items-center"
                   key={index}
+                  className="shadow-lg w-full h-48 flex flex-col justify-center items-center"
                 >
                   <div className="h-[100px] w-[100px]  ">
                     <Image
-                      src={following.image}
-                      width={100}
-                      height={100}
                       alt="User"
                       className="h-full w-full border-2 border-primary-500 rounded-lg"
+                      height={100}
+                      src={following.image}
+                      width={100}
                     />
                   </div>
                   <p className="my-2 font-semibold">{following.name}</p>
                   <Button
-                    size="sm"
                     className="text-white bg-primary-500 py-3 my-2 font-semibold"
+                    size="sm"
                     onPress={() => handleUnFollowing(following._id)}
                   >
                     Unfollow
@@ -125,16 +127,16 @@ export default function ProfilePageFeed({
             <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-4">
               {user?.data?.follower?.map((follower: IUser, index: number) => (
                 <Card
-                  className="shadow-lg w-full h-48 flex flex-col justify-center items-center"
                   key={index}
+                  className="shadow-lg w-full h-48 flex flex-col justify-center items-center"
                 >
                   <div className="h-[100px] w-[100px]  ">
                     <Image
-                      src={follower.image}
-                      width={100}
-                      height={100}
                       alt="User"
                       className="h-full w-full border-2 border-primary-500 rounded-lg"
+                      height={100}
+                      src={follower.image}
+                      width={100}
                     />
                   </div>
                   <p className="my-2 font-semibold">{follower.name}</p>
@@ -203,7 +205,7 @@ export default function ProfilePageFeed({
         <div className="hidden flex-col lg:flex lg:col-span-1 p-4 w-full gap-4">
           <ProfileLeftSidebar setActiveTab={setActiveTab} />
           <div className="sticky top-20">
-            <HomePageRecentPost title="Latest Recipes" recipes={allRecipe!} />
+            <HomePageRecentPost recipes={allRecipe!} title="Latest Recipes" />
           </div>
         </div>
 
@@ -213,9 +215,9 @@ export default function ProfilePageFeed({
             <div className="absolute top-6 left-1/2 transform -translate-x-1/2 flex items-center flex-col">
               <div className="w-20 h-20 rounded-full border-4 border-white overflow-hidden">
                 <img
-                  src={user?.data?.image as string}
                   alt="Profile"
                   className="w-full h-full object-cover"
+                  src={user?.data?.image as string}
                 />
               </div>
               <h2 className="text-xl font-semibold mt-2 text-white">
@@ -230,12 +232,12 @@ export default function ProfilePageFeed({
                 {["Timeline", "Followers", "Following", "About"].map((tab) => (
                   <button
                     key={tab}
-                    onClick={() => setActiveTab(tab)}
                     className={`px-4 py-2  font-semibold text-base ${
                       activeTab === tab
                         ? "text-blue-600 font-bold bg-white rounded-se-3xl"
                         : "text-white"
                     }`}
+                    onClick={() => setActiveTab(tab)}
                   >
                     {tab}
                   </button>
@@ -249,7 +251,7 @@ export default function ProfilePageFeed({
 
         <div className="hidden md:flex md:col-span-1  p-4 rounded  sticky top-5">
           <div className="hidden flex-col md:flex md:col-span-1 w-full gap-4">
-            <HomePageRecentPost title="My Recent Posts" recipes={recipe!} />
+            <HomePageRecentPost recipes={recipe!} title="My Recent Posts" />
             <HomePageFollowing />
           </div>
         </div>

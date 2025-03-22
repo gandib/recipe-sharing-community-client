@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 const NotFoundPage = () => {
   const router = useRouter();
+
   return (
     <div className="flex justify-center items-center mt-24">
       <div>

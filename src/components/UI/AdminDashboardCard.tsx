@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@/src/context/user.provider";
 import { useEffect, useState } from "react";
 import {
   Pagination,
@@ -15,13 +14,14 @@ import {
   CardHeader,
 } from "@nextui-org/react";
 import { FieldValues, useForm } from "react-hook-form";
+import Image from "next/image";
+import PieCharts from "./PieChart";
+import LineChartComponent from "./LineChart";
+import { useUser } from "@/src/context/user.provider";
 import useDebounce from "@/src/hooks/debounce.hook";
 import { IRecipe, queryParams, TRecipeMeta, TTags } from "@/src/types";
 import { getAllRecipes } from "@/src/services/Recipe";
 import { useGetAllUser } from "@/src/hooks/user.hook";
-import PieCharts from "./PieChart";
-import LineChartComponent from "./LineChart";
-import Image from "next/image";
 
 const AdminDashboardCard = ({
   recipe,
@@ -50,6 +50,7 @@ const AdminDashboardCard = ({
     }
 
     const query: queryParams[] = [];
+
     if (limit) {
       query.push({ name: "limit", value: limit });
     }
@@ -68,6 +69,7 @@ const AdminDashboardCard = ({
 
     const fetchData = async () => {
       const { data: allRecipe } = await getAllRecipes(query);
+
       setRecipeData(allRecipe?.result);
       setTotalPage(allRecipe?.meta?.totalPage);
     };
@@ -109,22 +111,22 @@ const AdminDashboardCard = ({
             <CardHeader>
               <div className=" flex gap-2">
                 <Image
-                  width={100}
-                  height={100}
-                  src={recipe.image[0]}
                   alt="recipe"
                   className="w-24 h-24"
+                  height={100}
+                  src={recipe.image[0]}
+                  width={100}
                 />
                 <div>
                   <h1 className="text-secondary-500">{recipe.title}</h1>
                   <h3 className="text-lg font-semibold">{recipe.user.name}</h3>
                   <div
-                    className="text-sm"
                     dangerouslySetInnerHTML={{
                       __html:
                         recipe?.instructions.slice(0, 100) +
                         `${recipe.instructions.length > 100 ? "..." : ""}`,
                     }}
+                    className="text-sm"
                   ></div>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import { ChangeEventHandler, ElementType, FormEvent, SVGProps } from "react";
+import { ChangeEventHandler, ElementType, SVGProps } from "react";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;

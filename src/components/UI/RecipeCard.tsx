@@ -1,19 +1,20 @@
 "use client";
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic"; // Dynamically import Quill
 
 const ReactQuill = dynamic(() => import("react-quill"), {
   ssr: false,
 });
+
 import "react-quill-new/dist/quill.snow.css";
-import FXForm from "@/src/components/form/FXForm";
-import FXInput from "@/src/components/form/FXInput";
 import { Button } from "@nextui-org/react";
 import { FieldValues } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import FXForm from "@/src/components/form/FXForm";
+import FXInput from "@/src/components/form/FXInput";
 import FXSelect from "@/src/components/form/FXSelect";
 import { useUser } from "@/src/context/user.provider";
 import { useCreateRecipe, useUpdateRecipe } from "@/src/hooks/recipe.hook";
-import { zodResolver } from "@hookform/resolvers/zod";
 import createRecipeValidationSchema from "@/src/schemas/create-recipe.schema";
 import updateRecipeValidationSchema from "@/src/schemas/update-recipe.schema";
 import { IRecipe } from "@/src/types";
@@ -31,14 +32,14 @@ const RecipeCard = ({
   const [value, setValue] = useState("");
   const [instructions, setInstructions] = useState(" ");
   const { mutate: handleCreateRecipe, isPending } = useCreateRecipe(
-    user?.email!
+    user?.email!,
   );
   const [recipeTitle, setRecipeTitle] = useState(
-    singleRecipeData?.title! || ""
+    singleRecipeData?.title! || "",
   );
   const [tags, setTags] = useState(singleRecipeData?.tags! || "");
   const [instruction, setInstruction] = useState(
-    singleRecipeData?.instructions! || ""
+    singleRecipeData?.instructions! || "",
   );
   const { mutate: handleUpdateRecipe } = useUpdateRecipe(user?.email!);
 
@@ -71,17 +72,21 @@ const RecipeCard = ({
 
   const extractImages = (htmlContent: string) => {
     const tempDiv = document.createElement("div");
+
     tempDiv.innerHTML = htmlContent;
     const images = tempDiv.querySelectorAll("img");
     const imageSources = Array.from(images).map((img) => img.src);
+
     return imageSources;
   };
 
   const removeImagesFromContent = (htmlContent: string) => {
     const tempDiv = document.createElement("div");
+
     tempDiv.innerHTML = htmlContent;
 
     const images = tempDiv.querySelectorAll("img");
+
     images.forEach((img) => img.remove());
 
     return tempDiv.innerHTML;
@@ -92,13 +97,16 @@ const RecipeCard = ({
     const instructionsWithoutImages = removeImagesFromContent(value);
     const finalInstructions =
       value && value.trim() !== "" ? instructionsWithoutImages : instruction;
+
     setInstructions(finalInstructions);
 
     const formData = new FormData();
+
     imageSources.forEach((src, index) => {
       if (src.startsWith("data:image")) {
         // If image is in base64 format, convert it to File
         const file = base64ToFile(src, `image${index}.png`);
+
         formData.append("file", file);
       }
     });
@@ -128,6 +136,7 @@ const RecipeCard = ({
           instructions: finalInstructions,
         },
       };
+
       setInstructions(finalInstructions);
 
       handleUpdateRecipe(updatedData);
@@ -162,20 +171,20 @@ const RecipeCard = ({
         <h3 className="my-2 text-2xl font-bold">{title}</h3>
         <div className="w-full p-2 ">
           <FXForm
-            onSubmit={onSubmit}
             resolver={zodResolver(
-              id ? updateRecipeValidationSchema : createRecipeValidationSchema
+              id ? updateRecipeValidationSchema : createRecipeValidationSchema,
             )}
+            onSubmit={onSubmit}
           >
             <div className="py-1">
               <div className="py-2 text-base font-semibold">
                 <label htmlFor="Title">Title</label>
               </div>
               <FXInput
-                name="title"
                 label="Enter title"
-                size="sm"
+                name="title"
                 required={true}
+                size="sm"
                 value={recipeTitle}
                 onChange={(e) => setRecipeTitle(e.target.value)}
               />
@@ -185,10 +194,10 @@ const RecipeCard = ({
                 <label htmlFor="Tags">Tags</label>
               </div>
               <FXInput
-                name="tags"
                 label="Tags"
-                size="sm"
+                name="tags"
                 required={true}
+                size="sm"
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
               />
@@ -198,11 +207,11 @@ const RecipeCard = ({
                 <label htmlFor="Content Type">Content Type</label>
               </div>
               <FXSelect
-                options={contentOptions}
-                name="contentType"
                 label="Content Type"
-                size="sm"
+                name="contentType"
+                options={contentOptions}
                 required={true}
+                size="sm"
               />
             </div>
 
@@ -211,12 +220,12 @@ const RecipeCard = ({
                 <label htmlFor="Content Type">Image and Instructions</label>
               </div>
               <ReactQuill
-                modules={modules}
-                theme="snow"
                 className="h-36"
+                modules={modules}
+                placeholder="Please type instructions and give an image"
+                theme="snow"
                 value={value || instruction}
                 onChange={setValue}
-                placeholder="Please type instructions and give an image"
               />
             </div>
             {!instructions && (

@@ -10,15 +10,15 @@ import {
 } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
 import NextLink from "next/link";
-import { siteConfig } from "@/src/config/site";
-import { Logo } from "@/src/components/icons";
+import { usePathname, useRouter } from "next/navigation";
+import { Group, LayoutDashboard, UserRound, Zap } from "lucide-react";
 import NavbarDropDown from "./navbarDropDown";
 import { ThemeSwitch } from "./theme-switch";
+import { siteConfig } from "@/src/config/site";
+import { Logo } from "@/src/components/icons";
 import { useUser } from "@/src/context/user.provider";
-import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/src/services/AuthService";
 import { protectedRoutes } from "@/src/utils/constant";
-import { Group, LayoutDashboard, UserRound, Zap } from "lucide-react";
 
 export const NavbarLower = () => {
   const router = useRouter();
@@ -37,6 +37,7 @@ export const NavbarLower = () => {
   if (isLoading) {
     <p>Loading...</p>;
   }
+
   return (
     <NextUINavbar
       className="border-t-1 border-b-1 fixed "
@@ -99,8 +100,8 @@ export const NavbarLower = () => {
       </NavbarContent>
 
       <NavbarContent
-        justify="center"
         className="hidden lg:flex gap-16 justify-center items-center"
+        justify="center"
       >
         <NavbarItem>
           <NextLink
@@ -275,8 +276,8 @@ export const NavbarLower = () => {
             {user?.role === "admin" ? (
               <NavbarItem>
                 <NextLink
-                  href={"/admin-dashboard"}
                   className={`text-lg  ${pathname === "/admin-dashboard" ? "text-primary-500" : ""}`}
+                  href={"/admin-dashboard"}
                 >
                   Dashboard
                 </NextLink>
@@ -305,8 +306,8 @@ export const NavbarLower = () => {
 
           {user && user.email ? (
             <p
-              onClick={handleLogout}
               className="font-bold cursor-pointer bg-default-200 hover:bg-red-500 w-fit py-2 px-4 rounded-md"
+              onClick={handleLogout}
             >
               Logout
             </p>

@@ -1,10 +1,10 @@
 "use client";
 
-import { useUser } from "@/src/context/user.provider";
 import { Spinner } from "@nextui-org/react";
-import { useGetUser } from "@/src/hooks/user.hook";
 import AdminSidebarOptions from "./AdminSidebarOptions";
 import { adminLinks } from "./constant";
+import { useGetUser } from "@/src/hooks/user.hook";
+import { useUser } from "@/src/context/user.provider";
 
 const AdminSidebar = () => {
   const { user: userData, isLoading } = useUser();

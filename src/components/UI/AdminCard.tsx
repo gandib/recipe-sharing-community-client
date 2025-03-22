@@ -1,16 +1,15 @@
 "use client";
 
-import FXForm from "@/src/components/form/FXForm";
-import FXInput from "@/src/components/form/FXInput";
-import { useUserRegistration } from "@/src/hooks/auth.hook";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/react";
 import { FieldValues } from "react-hook-form";
 import { ChangeEvent, useEffect, useState } from "react";
+import Loading from "./Loading";
+import FXForm from "@/src/components/form/FXForm";
+import FXInput from "@/src/components/form/FXInput";
+import { useUserRegistration } from "@/src/hooks/auth.hook";
 import registerValidationSchema from "@/src/schemas/register.schemas";
 import { useGetUser, useUpdateUser } from "@/src/hooks/user.hook";
-import Loading from "./Loading";
-import userValidationSchema from "@/src/schemas/user.schema";
 import updateAdminValidationSchema from "@/src/schemas/update-admin.schema";
 
 export default function AdminCard({
@@ -62,6 +61,7 @@ export default function AdminCard({
         id: id,
         data: userData,
       };
+
       handleUpdate(updatedData);
     }
   };
@@ -92,18 +92,18 @@ export default function AdminCard({
         <h3 className="my-2 text-2xl font-bold">{title}</h3>
         <div className="w-full">
           <FXForm
-            onSubmit={onSubmit}
             resolver={zodResolver(
-              email ? updateAdminValidationSchema : registerValidationSchema
+              email ? updateAdminValidationSchema : registerValidationSchema,
             )}
+            onSubmit={onSubmit}
           >
             <div className="py-1">
               <div className="py-2 text-base font-semibold">
                 <label htmlFor="Name">Name</label>
               </div>
               <FXInput
-                name="name"
                 label="Name"
+                name="name"
                 size="sm"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -114,7 +114,7 @@ export default function AdminCard({
                 <div className="py-2 text-base font-semibold">
                   <label htmlFor="Email">Email</label>
                 </div>
-                <FXInput name="email" type="email" label="Email" size="sm" />
+                <FXInput label="Email" name="email" size="sm" type="email" />
               </div>
             )}
             <div className="py-1">
@@ -122,10 +122,10 @@ export default function AdminCard({
                 <label htmlFor="Password">Password</label>
               </div>
               <FXInput
-                name="password"
-                type="password"
                 label="Password"
+                name="password"
                 size="sm"
+                type="password"
               />
             </div>
             {email && (
@@ -134,10 +134,10 @@ export default function AdminCard({
                   <label htmlFor="Upload Image">Upload Image</label>
                 </div>
                 <FXInput
-                  name="image"
-                  type="text"
                   label="Image"
+                  name="image"
                   size="sm"
+                  type="text"
                   value={image}
                   onChange={(e) => setImage(e.target.value)}
                 />
@@ -150,8 +150,8 @@ export default function AdminCard({
                   <label htmlFor="Bio">Bio</label>
                 </div>
                 <FXInput
-                  name="bio"
                   label="Bio"
+                  name="bio"
                   size="sm"
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
@@ -171,8 +171,8 @@ export default function AdminCard({
                 </label>
                 <input
                   className="hidden"
-                  type="file"
                   id="image"
+                  type="file"
                   onChange={(e) => handleImageChange(e)}
                 />
               </div>

@@ -1,7 +1,4 @@
 "use client";
-import { useUser } from "@/src/context/user.provider";
-import { logout } from "@/src/services/AuthService";
-import { protectedRoutes } from "@/src/utils/constant";
 import { Avatar } from "@nextui-org/react";
 import {
   Dropdown,
@@ -10,6 +7,7 @@ import {
   DropdownTrigger,
 } from "@nextui-org/react";
 import { usePathname, useRouter } from "next/navigation";
+import { useUser } from "@/src/context/user.provider";
 
 const NavbarDropDown = () => {
   const router = useRouter();
@@ -47,8 +45,8 @@ const NavbarDropDown = () => {
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
         <DropdownItem
-          onPress={() => handleNavigation("/profile")}
           key={"Profile"}
+          onPress={() => handleNavigation("/profile")}
         >
           Profile
         </DropdownItem>
@@ -74,10 +72,10 @@ const NavbarDropDown = () => {
         </DropdownItem> */}
 
         <DropdownItem
-          onPress={handleLogout}
           key="delete"
           className="text-danger"
           color="danger"
+          onPress={handleLogout}
         >
           Logout
         </DropdownItem>

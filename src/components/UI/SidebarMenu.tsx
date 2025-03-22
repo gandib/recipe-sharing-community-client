@@ -25,16 +25,16 @@ const SidebarMenu = ({ links }: { links: TLinks[] }) => {
   return (
     <div>
       <Popover
-        isOpen={isOpen}
-        onOpenChange={setIsOpen}
-        placement="bottom-start"
         color="secondary"
+        isOpen={isOpen}
+        placement="bottom-start"
+        onOpenChange={setIsOpen}
       >
         <PopoverTrigger>
           <Button
+            className="capitalize"
             color="secondary"
             variant="flat"
-            className="capitalize"
             onClick={handleMenuClick}
           >
             <Menu />
@@ -46,9 +46,9 @@ const SidebarMenu = ({ links }: { links: TLinks[] }) => {
               {links?.map((link) => (
                 <Link
                   key={link.href}
-                  onClick={handleClose}
                   className="p-2 text-white"
                   href={link.href}
+                  onClick={handleClose}
                 >
                   {link.label}
                 </Link>

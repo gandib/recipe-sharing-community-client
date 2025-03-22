@@ -1,12 +1,12 @@
 "use server";
 
-import envConfig from "@/src/config/envConfig";
-import axiosInstance from "@/src/lib/AxiosInstance";
-import { queryParams } from "@/src/types";
 import axios from "axios";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
+import { queryParams } from "@/src/types";
+import axiosInstance from "@/src/lib/AxiosInstance";
+import envConfig from "@/src/config/envConfig";
 
 export const createGroup = async (recipeData: FieldValues) => {
   try {
@@ -14,6 +14,7 @@ export const createGroup = async (recipeData: FieldValues) => {
       `/group/create-group`,
       recipeData
     );
+
     revalidateTag("GROUP");
 
     return data;
@@ -32,6 +33,7 @@ export const createGroupRecipe = async (recipeData: FieldValues) => {
       `/group/create-group-post/${recipeData.groupId}`,
       recipeData.data
     );
+
     revalidateTag("GROUP_RECIPE");
 
     return data;
@@ -47,6 +49,7 @@ export const createGroupRecipe = async (recipeData: FieldValues) => {
 export const getAllGroupRecipe = async (query: queryParams[]) => {
   try {
     const params = new URLSearchParams();
+
     if (query) {
       query.forEach((item) => {
         params.append(item.name, item.value as string);
@@ -68,6 +71,7 @@ export const getAllGroupRecipe = async (query: queryParams[]) => {
 
 export const getAllMyGroupRecipes = async (query: queryParams[]) => {
   const params = new URLSearchParams();
+
   if (query) {
     query.forEach((item) => {
       params.append(item.name, item.value as string);
@@ -101,6 +105,7 @@ export const getAllMyGroupRecipes = async (query: queryParams[]) => {
 
 export const getAllGroups = async (query: queryParams[]) => {
   const params = new URLSearchParams();
+
   if (query) {
     query.forEach((item) => {
       params.append(item.name, item.value as string);
@@ -134,6 +139,7 @@ export const getAllGroups = async (query: queryParams[]) => {
 
 export const getAllMyGroups = async (query: queryParams[]) => {
   const params = new URLSearchParams();
+
   if (query) {
     query.forEach((item) => {
       params.append(item.name, item.value as string);
@@ -146,6 +152,7 @@ export const getAllMyGroups = async (query: queryParams[]) => {
     const res = await fetch(url, {
       method: "GET",
       cache: "no-store",
+      credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -188,6 +195,7 @@ export const getAllGroupRecipeForStatusChange = async () => {
 export const getAllMyGroupRecipe = async (query: queryParams[]) => {
   try {
     const params = new URLSearchParams();
+
     if (query) {
       query.forEach((item) => {
         params.append(item.name, item.value as string);
@@ -270,6 +278,7 @@ export const deleteGroupRecipe = async (recipeData: FieldValues) => {
     const { data } = await axiosInstance.delete(
       `/group/recipe/${recipeData.groupId}/${recipeData.recipeId}`
     );
+
     revalidateTag("GROUP_RECIPE");
 
     return data;
@@ -288,6 +297,7 @@ export const updateGroup = async (groupData: FieldValues) => {
       `/group/${groupData.id}`,
       groupData.data
     );
+
     revalidateTag("GROUP_RECIPE");
 
     return data;
@@ -306,6 +316,7 @@ export const updateGroupRecipe = async (recipeData: FieldValues) => {
       `/group/recipe/${recipeData.groupId}/${recipeData.recipeId}`,
       recipeData.data
     );
+
     revalidateTag("GROUP_RECIPE");
 
     return data;
@@ -350,6 +361,7 @@ export const getSingleGroupRecipe = async (recipeId: string) => {
   if (!res.ok) {
     throw new Error("Failed to fetch data!");
   }
+
   return res.json();
 };
 
@@ -359,6 +371,7 @@ export const updateGroupRecipeComment = async (commentData: FieldValues) => {
       `/group/recipe/comment/${commentData.groupId}/${commentData.recipeId}`,
       commentData.data
     );
+
     revalidateTag("GROUP_RECIPE");
 
     return data;
@@ -376,6 +389,7 @@ export const deleteGroupRecipeComment = async (commentData: FieldValues) => {
     const { data } = await axiosInstance.delete(
       `/group/recipe/comment/${commentData.groupId}/${commentData.recipeId}?commentId=${commentData.commentId}`
     );
+
     revalidateTag("GROUP_RECIPE");
 
     return data;
@@ -394,6 +408,7 @@ export const updateGroupUpvote = async (upvoteData: FieldValues) => {
       `/group/recipe/upvote/${upvoteData.groupId}/${upvoteData.recipeId}`,
       upvoteData.data
     );
+
     revalidateTag("GROUP_RECIPE");
 
     return data;
@@ -412,6 +427,7 @@ export const updateGroupDownvote = async (downvoteData: FieldValues) => {
       `/group/recipe/downvote/${downvoteData.groupId}/${downvoteData.recipeId}`,
       downvoteData.data
     );
+
     revalidateTag("GROUP_RECIPE");
 
     return data;
@@ -430,6 +446,7 @@ export const updateGroupRating = async (ratingData: FieldValues) => {
       `/group/rating/${ratingData.id}`,
       ratingData.data
     );
+
     revalidateTag("GROUP_RECIPE");
 
     return data;
@@ -448,6 +465,7 @@ export const updateGroupRecipeStatus = async (recipeData: FieldValues) => {
       `/group/status/${recipeData.id}`,
       recipeData.data
     );
+
     revalidateTag("GROUP_RECIPE");
 
     return data;

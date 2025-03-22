@@ -1,13 +1,9 @@
 "use client";
-import { Button } from "@nextui-org/react";
-import Link from "next/link";
-import { useUser } from "@/src/context/user.provider";
 import { Spinner } from "@nextui-org/react";
-import Image from "next/image";
 import ProfileSidebarOptions from "./ProfileSidebarOptions";
 import { profileLinks } from "./constant";
 import { useGetUser } from "@/src/hooks/user.hook";
-import { useEffect } from "react";
+import { useUser } from "@/src/context/user.provider";
 
 const ProfileSidebar = () => {
   const { user: userData, isLoading } = useUser();

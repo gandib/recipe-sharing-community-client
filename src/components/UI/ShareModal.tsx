@@ -9,8 +9,8 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
-import { TwitterIcon } from "../icons";
 import { Facebook, Linkedin } from "lucide-react";
+import { TwitterIcon } from "../icons";
 
 const ShareModal = ({
   id,
@@ -22,10 +22,11 @@ const ShareModal = ({
   setIsOpen: any;
 }) => {
   const { onOpen, onOpenChange } = useDisclosure();
+
   return (
     <div>
       {/* <Button onPress={onOpen}>Open Modal</Button> */}
-      <Modal size="xs" isOpen={isOpen} onOpenChange={setIsOpen}>
+      <Modal isOpen={isOpen} size="xs" onOpenChange={setIsOpen}>
         <ModalContent className="w-full">
           {(onClose) => (
             <>
@@ -39,7 +40,7 @@ const ShareModal = ({
                     onClick={() =>
                       window.open(
                         `https://twitter.com/share?url=${encodeURIComponent(`${window.location.origin}/profile/${id}`)}`,
-                        "_blank"
+                        "_blank",
                       )
                     }
                   >
@@ -50,7 +51,7 @@ const ShareModal = ({
                     onClick={() =>
                       window.open(
                         `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${window.location.origin}/profile/${id}`)}`,
-                        "_blank"
+                        "_blank",
                       )
                     }
                   >
@@ -61,7 +62,7 @@ const ShareModal = ({
                     onClick={() =>
                       window.open(
                         `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`${window.location.origin}/profile/${id}`)}&title=${encodeURIComponent("Check out this profile!")}&summary=${encodeURIComponent("This is an amazing profile you should see.")}&source=${encodeURIComponent(window.location.origin)}`,
-                        "_blank"
+                        "_blank",
                       )
                     }
                   >

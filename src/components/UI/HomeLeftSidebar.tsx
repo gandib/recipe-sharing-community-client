@@ -10,12 +10,12 @@ const HomeLeftSidebar = () => {
       <div className="flex flex-col gap-4">
         <div>
           <Link
-            href={"/"}
             className="flex justify-start items-center gap-2 font-semibold"
+            href={"/"}
           >
             <Home
-              size={20}
               className="border-2 w-8 h-8 p-1 bg-default-300 rounded-full "
+              size={20}
             />
             Home
           </Link>
@@ -23,12 +23,12 @@ const HomeLeftSidebar = () => {
 
         <div>
           <Link
-            href={"/profile"}
             className="flex justify-start items-center gap-2 font-semibold"
+            href={"/profile"}
           >
             <User
-              size={20}
               className="border-2 w-8 h-8 p-1 bg-default-300 rounded-full "
+              size={20}
             />
             My Profile
           </Link>
@@ -36,12 +36,12 @@ const HomeLeftSidebar = () => {
 
         <div>
           <Link
-            href={"/groups"}
             className="flex justify-start items-center gap-2 font-semibold"
+            href={"/groups"}
           >
             <Group
-              size={20}
               className="border-2 w-8 h-8 p-1 bg-default-300 rounded-full "
+              size={20}
             />
             Groups
           </Link>
@@ -49,12 +49,12 @@ const HomeLeftSidebar = () => {
 
         <div>
           <Link
-            href={"/contact"}
             className="flex justify-start items-center gap-2 font-semibold"
+            href={"/contact"}
           >
             <Contact
-              size={20}
               className="border-2 w-8 h-8 p-1 bg-default-300 rounded-full "
+              size={20}
             />{" "}
             Contact Us
           </Link>
@@ -62,12 +62,12 @@ const HomeLeftSidebar = () => {
 
         <div>
           <Link
-            href={"/about"}
             className="flex justify-start items-center gap-2 font-semibold"
+            href={"/about"}
           >
             <Info
-              size={20}
               className="border-2 w-8 h-8 p-1 bg-default-300 rounded-full "
+              size={20}
             />{" "}
             About Us
           </Link>

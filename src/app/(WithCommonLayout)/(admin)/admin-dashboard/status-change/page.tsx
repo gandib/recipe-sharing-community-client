@@ -1,8 +1,6 @@
+export const dynamic = "force-dynamic";
 import StatusChangeCard from "@/src/components/UI/StatusChangeCard";
-import {
-  getAllRecipeForStatusChange,
-  getAllRecipes,
-} from "@/src/services/Recipe";
+import { getAllRecipeForStatusChange } from "@/src/services/Recipe";
 
 const StatusChange = async () => {
   //   const { data: allRecipe } = await getAllRecipes([

@@ -9,22 +9,19 @@ import {
   NavbarMenuItem,
 } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
-import { link as linkStyles } from "@nextui-org/react";
 import NextLink from "next/link";
-import clsx from "clsx";
-import { siteConfig } from "@/src/config/site";
-import { Logo } from "@/src/components/icons";
-import NavbarDropDown from "./navbarDropDown";
-import { ThemeSwitch } from "./theme-switch";
-import { useUser } from "@/src/context/user.provider";
-import { Button } from "@nextui-org/react";
 import { usePathname, useRouter } from "next/navigation";
-import { logout } from "@/src/services/AuthService";
-import { protectedRoutes } from "@/src/utils/constant";
 import { Input } from "@nextui-org/react";
 import { SearchIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
+import { ThemeSwitch } from "./theme-switch";
+import NavbarDropDown from "./navbarDropDown";
+import { protectedRoutes } from "@/src/utils/constant";
+import { logout } from "@/src/services/AuthService";
+import { useUser } from "@/src/context/user.provider";
+import { siteConfig } from "@/src/config/site";
+import { Logo } from "@/src/components/icons";
 import useDebounce from "@/src/hooks/debounce.hook";
 import { getAllMyRecipes } from "@/src/services/Recipe";
 import { IRecipe, queryParams } from "@/src/types";
@@ -54,11 +51,13 @@ export const Navbar = () => {
 
   useEffect(() => {
     const query: queryParams[] = [];
+
     query.push({ name: "limit", value: 10 });
     query.push({ name: "searchTerm", value: searchText });
 
     const fetchData = async () => {
       const { data: allRecipes } = await getAllMyRecipes(query);
+
       setRecipeData(allRecipes);
       setLoading(false);
     };
@@ -76,6 +75,7 @@ export const Navbar = () => {
   if (isLoading) {
     <p>Loading...</p>;
   }
+
   return (
     <NextUINavbar
       className="border-b-1 fixed bg-default-50"
@@ -95,12 +95,12 @@ export const Navbar = () => {
             <Input
               {...register("search")}
               aria-label="Search"
+              color="primary"
               placeholder="Search..."
               size="md"
               startContent={
                 <SearchIcon className="pointer-events-none flex-shrink-0 text-base text-default-400" />
               }
-              color="primary"
               type="text"
             />
           </form>
@@ -199,8 +199,8 @@ export const Navbar = () => {
             {user?.role === "admin" ? (
               <NavbarItem>
                 <NextLink
-                  href={"/admin-dashboard"}
                   className={`text-lg  ${pathname === "/admin-dashboard" ? "text-primary-500" : ""}`}
+                  href={"/admin-dashboard"}
                 >
                   Dashboard
                 </NextLink>
@@ -222,8 +222,8 @@ export const Navbar = () => {
 
           {user && user.email ? (
             <p
-              onClick={handleLogout}
               className="font-bold cursor-pointer bg-default-200 hover:bg-red-500 w-fit py-2 px-4 rounded-md"
+              onClick={handleLogout}
             >
               Logout
             </p>

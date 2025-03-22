@@ -1,9 +1,7 @@
+import React from "react";
 import AdminSidebar from "@/src/components/UI/AdminSidebar";
 import { adminLinks } from "@/src/components/UI/AdminSidebar/constant";
-import Container from "@/src/components/UI/Container";
-import ProfileSidebar from "@/src/components/UI/ProfileSidebar";
 import SidebarMenu from "@/src/components/UI/SidebarMenu";
-import React from "react";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   return (

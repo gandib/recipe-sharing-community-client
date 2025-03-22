@@ -1,8 +1,7 @@
 "use client";
-import { useUser } from "@/src/context/user.provider";
 import { Button } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-import { use } from "react";
+import { useUser } from "@/src/context/user.provider";
 
 const RecipeUpdateButton = ({ id }: { id: string }) => {
   const { user, isLoading } = useUser();
@@ -10,7 +9,7 @@ const RecipeUpdateButton = ({ id }: { id: string }) => {
 
   const handleUpdate = () => {
     router.push(
-      `${user?.role === "user" ? `/user-dashboard/update-recipe/${id}` : `/admin-dashboard/update-recipe/${id}`}`
+      `${user?.role === "user" ? `/user-dashboard/update-recipe/${id}` : `/admin-dashboard/update-recipe/${id}`}`,
     );
   };
 
