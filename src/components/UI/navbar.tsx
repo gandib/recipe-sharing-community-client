@@ -37,7 +37,7 @@ type TRecipeMeta = {
 export const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { user, setIsLoading } = useUser();
+  const { user, setIsLoading, isLoading } = useUser();
   const [recipeData, setRecipeData] = useState<TRecipeMeta>();
   const { register, handleSubmit, watch, setValue } = useForm();
   const searchText = useDebounce(watch("search"));
@@ -72,6 +72,10 @@ export const Navbar = () => {
   }, [searchText]);
 
   const onSubmit = (data: FieldValues) => {};
+
+  if (isLoading) {
+    <p>Loading...</p>;
+  }
   return (
     <NextUINavbar
       className="border-b-1 fixed bg-default-50"

@@ -20,8 +20,8 @@ export default function ProfilePageFeed({
   allRecipes,
   recipes,
 }: {
-  allRecipes: TRecipeMeta;
-  recipes: TRecipeMeta;
+  allRecipes?: TRecipeMeta;
+  recipes?: TRecipeMeta;
 }) {
   const [activeTab, setActiveTab] = useState("Timeline");
   const { user: userData, isLoading } = useUser();

@@ -18,10 +18,10 @@ const HomePageCard = ({
   recipe,
   allGroups,
 }: {
-  recipe: IRecipe[];
-  allGroups: TGroupMeta;
+  recipe?: IRecipe[];
+  allGroups?: TGroupMeta;
 }) => {
-  const [recipeData, setRecipeData] = useState<IRecipe[]>(recipe);
+  const [recipeData, setRecipeData] = useState<IRecipe[]>(recipe!);
   const { register, handleSubmit, watch, setValue } = useForm();
   const searchText = useDebounce(watch("search"));
   const [loading, setLoading] = useState(false);
@@ -60,7 +60,7 @@ const HomePageCard = ({
       <div className="hidden flex-col lg:flex lg:col-span-1 gap-4">
         <HomeLeftSidebar />
         <div className="sticky top-20">
-          <HomePageRecentPost title="Recent Posts" recipes={recipe} />
+          <HomePageRecentPost title="Recent Posts" recipes={recipe!} />
         </div>
       </div>
 
@@ -93,7 +93,7 @@ const HomePageCard = ({
 
       <div className="hidden md:flex md:col-span-1 mt-4 lg:mt-0 flex-col gap-4">
         {/* my groups */}
-        <HomePageMyGroups allGroups={allGroups} />
+        <HomePageMyGroups allGroups={allGroups!} />
 
         {/* following */}
         <HomePageFollowing />

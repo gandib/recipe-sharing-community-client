@@ -3,21 +3,32 @@ import { getAllMyGroups } from "@/src/services/GroupService";
 import { getAllRecipes } from "@/src/services/Recipe";
 
 const Home = async () => {
-  const { data: allRecipe } = await getAllRecipes([
-    { name: "sort", value: "-createdAt" },
-    { name: "contentType", value: "free" },
-  ]);
+  try {
+    const [recipesResponse, groupsResponse] = await Promise.all([
+      getAllRecipes([
+        { name: "sort", value: "-createdAt" },
+        { name: "contentType", value: "free" },
+      ]),
+      getAllMyGroups([{ name: "sort", value: "-createdAt" }]),
+    ]);
 
-  const { data: allGroups } = await getAllMyGroups([
-    { name: "sort", value: "-createdAt" },
-  ]);
+    const allRecipe = recipesResponse?.data?.result || [];
+    const allGroups = groupsResponse?.data || [];
 
-  return (
-    <div className="container mx-auto max-w-screen-2xl pt-4 px-6 flex-grow min-h-screen mt-12 lg:mt-16">
-      <HomePageCard recipe={allRecipe?.result} allGroups={allGroups} />
-      {/* <RecipeFeedCard recipe={allRecipe} tags={allTag} /> */}
-    </div>
-  );
+    return (
+      <div className="container mx-auto max-w-screen-2xl pt-4 px-6 flex-grow min-h-screen mt-12 lg:mt-16">
+        <HomePageCard recipe={allRecipe} allGroups={allGroups} />
+      </div>
+    );
+  } catch (error) {
+    console.error("Error fetching data:", error);
+
+    return (
+      <div className="container mx-auto max-w-screen-2xl pt-4 px-6 flex-grow min-h-screen mt-12 lg:mt-16">
+        <HomePageCard />
+      </div>
+    );
+  }
 };
 
 export default Home;
